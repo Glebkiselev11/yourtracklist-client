@@ -3,10 +3,9 @@
   <div class="wrap">
 
     <!-- Верхняя шапка с заголовком и кнопкой -->
-    <div class="top-bar">
-      <h2>Архив релизов</h2>
-      <Button />
-    </div>
+    <TopBar 
+      Title="Архив релизов"
+    />
 
     <!-- Обертка под релизы, который мы будем итерировать циклом -->
     <div class="releases-wrap">
@@ -41,20 +40,16 @@
         <p class="release-name">DITA REDRUM — Shadowrun</p>
       </div>
 
-
-
-
     </div>
-
   </div>
 </template>
 
 <script>
-import Button from '@/components/app/Button.vue'
+import TopBar from '@/components/home/TopBar.vue'
 export default {
   name: 'ReleaseArchiveHome',
   components: {
-    Button
+    TopBar
   }
 }
 </script>
@@ -64,18 +59,6 @@ export default {
     margin-top: 150px;
     width: 100%;
     min-height: 525px;
-  }
-
-  .top-bar {
-    width: 100%;
-    margin-bottom: 50px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .top-bar h2 {
-    font-size: 40px;
-    font-weight: 300;
   }
 
   /* Обертка под релизы */

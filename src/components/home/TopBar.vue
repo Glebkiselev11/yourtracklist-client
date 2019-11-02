@@ -1,13 +1,18 @@
 <template>
-<!-- Компонент кнопки (показать больше) -->
-  <button @click="click">
-    показать больше
-  </button>
+  <!-- На главной странице у секций вверху находится заголовок и кнопка -->
+  <div class="top-bar">
+    <h2>{{Title}}</h2>
+    
+    <button @click="click">
+      показать больше
+    </button>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'button',
+  name: 'TopBar',
+  props: ['Title'],
   methods: {
     // Отправляем родительскому компоненту сигнал, что кнопка нажата
     click() {
@@ -18,6 +23,20 @@ export default {
 </script>
 
 <style scoped>
+  .top-bar {
+    width: 100%;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .top-bar h2 {
+    font-size: 40px;
+    font-weight: 300;
+  }
+
+
+  /* Для кнопки */
   button {
     max-height: 35px;
     border: 1px solid black;

@@ -7,16 +7,20 @@
     <!-- Промо блок с архивом релизов, где выводим 4 последний релиза -->
     <ReleaseArchiveHome />
 
+    <!-- Промо блок с видео записями, где выводим 3 последних видоса -->
+    <ViedeoHome />
   </div>
 </template>
 
 <script>
-import Hero from '@/components/Hero.vue'
-import ReleaseArchiveHome from '@/components/ReleaseArchiveHome.vue'
+import Hero from '@/components/home/Hero.vue'
+import ReleaseArchiveHome from '@/components/home/ReleaseArchiveHome.vue'
+import ViedeoHome from '@/components/home/VideoHome.vue'
+
 export default {
   name: 'Home',
   components: {
-    Hero, ReleaseArchiveHome
+    Hero, ReleaseArchiveHome, ViedeoHome
   }
 }
 </script>
