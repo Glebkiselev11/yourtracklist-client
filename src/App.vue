@@ -1,20 +1,30 @@
 <template>
   <div id="app">
-    <navbar />
+    <Navbar />
+
     <router-view/>
+
+    <Footer />
+
   </div>
 </template>
 
 <script>
-import navbar from '@/components/Navbar'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 export default {
   components: {
-    navbar
+    Navbar, Footer
   }
 }
 </script>
 
 <style>
+  #app {
+    max-width: 1200px;
+    margin: auto;
+  }
+
   * {
     padding: 0;
     margin: 0;
@@ -32,13 +42,19 @@ export default {
     color: black;
   }
 
+  button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
   /* Временно пока сюда скидываем общие стили */
-  .release-date {
+  .release-date, .mix-date {
     font-size: 16px;
     font-weight: 300;
   }
 
-  .release-name {
+  .release-name, .mix-name {
     font-size: 18px;
     font-weight: 600;
     margin-top: 7px;

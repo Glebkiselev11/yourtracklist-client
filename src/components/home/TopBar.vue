@@ -25,7 +25,7 @@ export default {
 <style scoped>
   .top-bar {
     width: 100%;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
   }
