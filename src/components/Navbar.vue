@@ -40,14 +40,14 @@ export default {
     max-width: 1200px;
     margin: 0 auto 20px auto;
     padding: 20px 0;
-    border-bottom: 1px solid black;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-end;
   }
     
   .navbar-link-list {
     display: flex;
+    margin-left: 152px;
     width: 600px;
     justify-content: space-between;
   }
@@ -59,7 +59,9 @@ export default {
     opacity: 1;
   }
 
-
+  .search-wrap {
+    margin-left: auto;
+  }
     
 
 </style>

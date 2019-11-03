@@ -48,6 +48,7 @@
         title="Стать участником лейбла"
         styles="font-size: 30px; font-weight: 300; color: white;"
         arrow-color='white'
+        forward="true"
       /> 
     </div>
 
