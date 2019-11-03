@@ -19,7 +19,10 @@
         
         <!-- Обертка под название и дату релиза -->
         <div class="release-info--name-date-wrap">
-          <h1>evryn — Vanished</h1>
+          <h1>Vanished</h1>
+
+          <h2>by evryn</h2>
+
           <p>released August 16, 2019</p>
         </div>
 
@@ -46,14 +49,6 @@
         </div>
 
 
-        <ArrowButton 
-          class="release-in-button"
-          title="Все релизы исполнителя"
-          styles="font-size: 20px; font-weight: 700; color: black;"
-          arrow-color='black'
-          forward="true"
-        /> 
-
       </div>
 
     </div>
@@ -75,7 +70,7 @@ export default {
 
   .wrap {
     width: 100%;
-    height: 658px;
+    min-height: 550px;
     margin-top: 110px;
     margin-bottom: 200px;
     display: flex;
@@ -120,17 +115,22 @@ export default {
 
 
   .release-info--name-date-wrap {
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     border-bottom: 1px solid grey;
   }
   .release-info--name-date-wrap h1 {
     font-size: 35px;
     font-weight: 800;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+  }
+  .release-info--name-date-wrap h2{
+    margin-bottom: 40px;
+    font-size: 20px;
+    font-weight: 500;
   }
   .release-info--name-date-wrap p {
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 400;
   }
 
 
@@ -138,15 +138,5 @@ export default {
     margin-top: 40px;
   }
 
-  .release-tags {
-    border-bottom: 1px solid grey;
-    padding-bottom: 40px;
-  }
 
-
-  .release-in-button {
-    position: absolute;
-    left: 80px;
-    bottom: 30px;
-  }
 </style>
