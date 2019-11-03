@@ -53,6 +53,7 @@ export default {
   }
   .navbar-link-item a {
     opacity: 0.5;
+    font-size: 25px;
   }
 
   .navbar-link-item a:hover {

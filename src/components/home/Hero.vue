@@ -8,34 +8,44 @@
     <div class="random-releases-wrap">
 
       <!-- Релиз, который итерируем 3 раза -->
-      <div class="random-release-item bottom-border">
-        <img class="random-release-item--image" src="https://sun1-26.userapi.com/c857328/v857328358/22c8c/ZyA6w5gy3z8.jpg" alt="Release image">
-        <span class="random-release-item--date">October 27, 2019</span>
-        <p class="random-release-item--name">DITA REDRUM — Shadowrun</p>
+      <div class="random-release-item" 
+        v-for="(element, index) in threeRandomArtistsArray"
+        :key="index"
+        :class="index < 2 ? 'bottom-border': ''"
+      > 
+        <!-- Ссылка на альбом, а внутри картинка -->
+        <router-link 
+          :to="element.releaseName.href"
+          class="image-link"
+        >
+          <img class="random-release-item--image" :src="element.cover" alt="Release cover">
+        </router-link>
+        
+        <!-- Компонент с информацией о данном релизе -->
+        <PrevInfo 
+          :date="element.date"
+          :release-name="element.releaseName"
+          :releaseArtist="element.artists"
+        />
       </div>
-
-      <!-- То что ниже это временно для демонстрации, потому что потом мы это будем выводить через цикл -->
-      <div class="random-release-item bottom-border">
-        <img class="random-release-item--image" src="https://sun1-26.userapi.com/c857328/v857328358/22c8c/ZyA6w5gy3z8.jpg" alt="Release image">
-        <span class="random-release-item--date">October 27, 2019</span>
-        <p class="random-release-item--name">DITA REDRUM — Shadowrun</p>
-      </div>
-
-      <div class="random-release-item">
-        <img class="random-release-item--image" src="https://sun1-26.userapi.com/c857328/v857328358/22c8c/ZyA6w5gy3z8.jpg" alt="Release image">
-        <span class="random-release-item--date">October 27, 2019</span>
-        <p class="random-release-item--name">DITA REDRUM — Shadowrun</p>
-      </div>
-
-
 
     </div>
   </div>
 </template>
 
 <script>
+import PrevInfo from '@/components/app/PrevInfo.vue'
+import {mapGetters} from 'vuex'
 export default {
   name: 'Hero',
+  data: () => ({
+    // Эксперемент с релизаме, где может быть 2 и более исполнителей
+    artists: []
+  }),
+  components: {
+    PrevInfo // Компонент с информацией о релизе рядом с обложкой которая
+  },
+  computed: {...mapGetters(['threeRandomArtistsArray'])},
   
 }
 </script>
@@ -60,16 +70,21 @@ export default {
     width: 390px;
     height: 165px;
     margin-top: 15px;
+    display: flex;
   }
   .bottom-border {
     border-bottom: 1px solid black;
   }
 
+  /* Ссылка на релиз, в которую вшита картинка */
+  .image-link {
+    width: 150px;
+    height: 150px;
+    margin-right: 15px;
+  }
   .random-release-item--image {
     width: 150px;
     height: 150px;
-    float: left;
-    margin-right: 15px;
   }
 
   .random-release-item--date {

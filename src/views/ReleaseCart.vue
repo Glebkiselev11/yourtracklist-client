@@ -21,6 +21,7 @@
         <div class="release-info--name-date-wrap">
           <h1>Vanished</h1>
 
+          <!-- FIXME: Здесь будет черзе & ссылки на архив исполнителей, который учавствовали в этом альбоме -->
           <h2>by evryn</h2>
 
           <p>released August 16, 2019</p>

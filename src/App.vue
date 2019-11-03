@@ -30,7 +30,6 @@ export default {
     margin: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
-    font-size: 25px;
   }
 
   li {
@@ -48,16 +47,5 @@ export default {
     cursor: pointer;
   }
 
-  /* Временно пока сюда скидываем общие стили */
-  .release-date, .mix-date {
-    font-size: 16px;
-    font-weight: 300;
-  }
-
-  .release-name, .mix-name {
-    font-size: 18px;
-    font-weight: 600;
-    margin-top: 7px;
-  }
 </style>
 
