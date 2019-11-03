@@ -13,12 +13,19 @@ const router = new Router({
       meta: {layout: 'main', auth: true}, // Обертка под наше приложение
       component: () => import('@/views/Home.vue')
     },
+    {
+      path: '/release-cart',
+      name: 'Release-cart',
+      meta: {layout: 'main', auth: true}, // Обертка под наше приложение
+      component: () => import('@/views/ReleaseCart.vue')
+    },
+
     // {
     //   path: '/authorization',
     //   name: 'Authorization',
     //   meta: {layout: 'empty'},
     //   component: () => import('./views/Authorization.vue')
-    // },
+    // }, 
 
   ]
 })

@@ -42,12 +42,13 @@
 
     <!-- Призыв стать участником лейбла -->
     <div class="label-promo">
-
-      <div class="label-promo-title-wrap">
-        <button class="label-promo-title">Стать участником лейбла</button>
-        <span class="arraw"></span>
-      </div>
       
+      <ArrowButton 
+        class="label-button"
+        title="Стать участником лейбла"
+        styles="font-size: 30px; font-weight: 300; color: white;"
+        arrow-color='white'
+      /> 
     </div>
 
   </div>
@@ -55,10 +56,11 @@
 
 <script>
 import TopBar from '@/components/home/TopBar.vue'
+import ArrowButton from '@/components/app/ArrowButton.vue'
 export default {
   name: 'LabelHome',
   components: {
-    TopBar
+    TopBar, ArrowButton
   }
 }
 </script>
@@ -103,31 +105,10 @@ export default {
     position: relative;
   }
 
-  .label-promo-title-wrap {
+  .label-button {
     position: absolute;
     right: 25px;
     bottom: 25px;
   }
 
-  .label-promo-title {
-    color: white;
-    font-size: 30px;
-    font-weight: 300;
-    z-index: 3;
-  }
-  
-  .arraw {
-    width: 50px;
-    height: 28px;
-    position: absolute;
-    left: -80px;
-    top: 5px;
-    background: url('~@/../public/img/appicons/arrow.svg');
-    transition: all 400ms ease; 
-  }
-
-  .label-promo-title:hover ~ .arraw {
-    transition: all 0.5s ease;
-    transform: translateX(10px)
-  }
 </style>

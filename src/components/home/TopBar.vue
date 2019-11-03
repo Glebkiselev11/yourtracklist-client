@@ -1,7 +1,7 @@
 <template>
   <!-- На главной странице у секций вверху находится заголовок и кнопка -->
   <div class="top-bar">
-    <h2>{{Title}}</h2>
+    <h2>{{title}}</h2>
     
     <button @click="click">
       показать больше
@@ -12,7 +12,7 @@
 <script>
 export default {
   name: 'TopBar',
-  props: ['Title'],
+  props: ['title'],
   methods: {
     // Отправляем родительскому компоненту сигнал, что кнопка нажата
     click() {

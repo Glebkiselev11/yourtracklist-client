@@ -2,7 +2,7 @@
   <!-- Компонент миксов, который отображаем на главной странице -->
   <div class="wrap">
     <TopBar 
-      Title="Миксы"
+      title="Миксы"
     />
     <div class="mixes-wrap">
 
