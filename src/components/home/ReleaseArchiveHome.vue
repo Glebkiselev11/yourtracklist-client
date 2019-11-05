@@ -10,34 +10,24 @@
     <!-- Обертка под релизы, который мы будем итерировать циклом -->
     <div class="releases-wrap">
       
-      <!-- Сама карточка релиза -->
-      <div class="release-item">
-        <span class="release-tags">808</span>
-        <img class="release-image" src="https://sun1-26.userapi.com/c857328/v857328358/22c8c/ZyA6w5gy3z8.jpg" alt="">
-        <span class="release-date">October 25, 2019</span>
-        <p class="release-name">DITA REDRUM — Shadowrun</p>
-      </div>
+      <!-- Итерируем карточку релиза -->
+      <div class="release-item" 
+        v-for="(release, index) in fourLatestReleases"
+        :key="index"
+        >
+        <!-- Итерируем теги (пока только как названия) -->
+        <span 
+          class="release-tags" 
+          v-for="tags in release.tags"
+          :key="tags"
+        >{{tags}}</span>
 
-      <!-- Временно пока добавил для визуализации -->
-      <div class="release-item">
-        <span class="release-tags">808</span>
-        <img class="release-image" src="https://sun1-26.userapi.com/c857328/v857328358/22c8c/ZyA6w5gy3z8.jpg" alt="">
-        <span class="release-date">October 25, 2019</span>
-        <p class="release-name">DITA REDRUM — Shadowrun</p>
-      </div>
-
-      <div class="release-item">
-        <span class="release-tags">808</span>
-        <img class="release-image" src="https://sun1-26.userapi.com/c857328/v857328358/22c8c/ZyA6w5gy3z8.jpg" alt="">
-        <span class="release-date">October 25, 2019</span>
-        <p class="release-name">DITA REDRUM — Shadowrun</p>
-      </div>
-
-      <div class="release-item">
-        <span class="release-tags">808</span>
-        <img class="release-image" src="https://sun1-26.userapi.com/c857328/v857328358/22c8c/ZyA6w5gy3z8.jpg" alt="">
-        <span class="release-date">October 25, 2019</span>
-        <p class="release-name">DITA REDRUM — Shadowrun</p>
+        <img class="release-image" :src="release.cover" alt="cover">
+        <PrevInfo 
+          :date="release.date"
+          :release-name="release.releaseName"
+          :releaseArtist="release.artists"
+        />
       </div>
 
     </div>
@@ -46,11 +36,17 @@
 
 <script>
 import TopBar from '@/components/home/TopBar.vue'
+import PrevInfo from '@/components/app/PrevInfo.vue'
+import {mapGetters} from 'vuex'
+
 export default {
   name: 'ReleaseArchiveHome',
   components: {
-    TopBar
-  }
+    TopBar, PrevInfo
+  },
+  computed: {
+    ...mapGetters(['fourLatestReleases'])
+  },
 }
 </script>
 
@@ -77,13 +73,18 @@ export default {
   }
 
   .release-tags {
+    display: inline-block;
+    margin-top: 7px;
+    margin-bottom: 10px;
+    margin-right: 5px;
     font-size: 14px;
-    font-weight: 200;
+    font-weight: 300;
   }
 
   .release-image {
     width: 280px;
     height: 280px;
+    margin-bottom: 10px;
   }
 
 </style>

@@ -1,4 +1,5 @@
 import randomReleases from './random-releases.js'
+import lastReleases from './last-releases.js'
 
 // Основной модуль, под страницу главную страницу
 export default {
@@ -9,6 +10,6 @@ export default {
   state: {
   },
   modules: {
-    randomReleases
+    randomReleases, lastReleases
   }
 }

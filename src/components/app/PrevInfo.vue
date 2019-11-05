@@ -1,7 +1,7 @@
 <template>
   <!-- Компонент информации о релизе / видео которая распологается в предпросмотре (дата/ название и автор )-->
-  <div class="wrap">
-    <span class="release-date">{{date}}</span>
+  <div>
+    <span v-if="date" class="release-date">{{date}}</span>
     <router-link :to="releaseName.href" class="release-name">{{releaseName.name}}</router-link>
 
     <p class="release-artist">by
