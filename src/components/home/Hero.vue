@@ -15,7 +15,7 @@
       > 
         <!-- Ссылка на альбом, а внутри картинка -->
         <router-link 
-          :to="element.releaseName.href"
+          :to="element.nameInfo.href"
           class="image-link"
         >
           <img class="random-release-item--image" :src="element.cover" alt="Release cover">
@@ -24,8 +24,8 @@
         <!-- Компонент с информацией о данном релизе -->
         <PrevInfo 
           :date="element.date"
-          :release-name="element.releaseName"
-          :releaseArtist="element.artists"
+          :nameInfo="element.nameInfo"
+          :releaseAuthors="element.authors"
         />
       </div>
 

@@ -25,8 +25,8 @@
         <img class="release-image" :src="release.cover" alt="cover">
         <PrevInfo 
           :date="release.date"
-          :release-name="release.releaseName"
-          :releaseArtist="release.artists"
+          :nameInfo="release.nameInfo"
+          :releaseAuthors="release.authors"
         />
       </div>
 

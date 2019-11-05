@@ -2,16 +2,16 @@
   <!-- Компонент информации о релизе / видео которая распологается в предпросмотре (дата/ название и автор )-->
   <div>
     <span v-if="date" class="release-date">{{date}}</span>
-    <router-link :to="releaseName.href" class="release-name">{{releaseName.name}}</router-link>
+    <router-link :to="nameInfo.href" class="release-name">{{nameInfo.name}}</router-link>
 
     <p class="release-artist">by
       <!-- Здесь выводим ссылку на дискографию артиста, если он не один, то через цикл -->
       <router-link 
-        v-for="(element, index) in this.releaseArtist"
+        v-for="(element, index) in this.releaseAuthors"
         :key="index"
         :to="element.href"
         :class="element.href !== '/' ? 'active-link': 'not-active-link'"
-      >{{element.artist}}</router-link>
+      >{{element.author}}</router-link>
     </p>
   </div>
 </template>
@@ -19,7 +19,7 @@
 <script>
 export default {
   name: 'Prev-info',
-  props: ['date', 'releaseName', 'releaseArtist']
+  props: ['date', 'nameInfo', 'releaseAuthors']
 }
 </script>
 

@@ -1,33 +1,34 @@
-// Блок на главной, где мы выводим 3 рандомных релиза
+// Модуль для главной страницы, где мы с бэкенда подгружаем 3 последних видео
 export default {
   actions: {
   },
   mutations: {
   },
   state: {
-    // Три рандомных артиста, которых мы выводим на главную
-    // Пока только как фейковое api
-    threeRandomArtistsArray: [
+    // 3 последних видео, которые мы отображаем на главной странице
+    threeLatestVideos: [
         { 
-          cover: 'https://sun9-51.userapi.com/c856036/v856036734/148c14/aNaufG1zQQ0.jpg',
+          cover: 'https://img.youtube.com/vi/QjMME7LGoJw/hqdefault.jpg',
+          url: 'https://youtu.be/QjMME7LGoJw',
           date: 'October 30, 2019',
           nameInfo: {
             name : 'Love',
-            href: '/release-cart/Kuroi-Ame--love'
+            href: 'https://youtu.be/QjMME7LGoJw'
           },
           authors: [
             {
-              author: 'Kuroi Ame',
-              href: '/Kuroi-Ame'
+              author: 'Cat soup',
+              href: '/Cat-soup'
             }
           ],  
         },
         { 
-          cover: 'https://sun9-45.userapi.com/c836630/v836630028/b76e/Z7m-LXxoqt0.jpg',
+          cover: 'https://img.youtube.com/vi/QjMME7LGoJw/hqdefault.jpg',
+          url: 'https://youtu.be/QjMME7LGoJw',
           date: 'November 1, 2016',
           nameInfo: {
             name : 'uaudé°',
-            href: '/release-cart/seng-evryn-havec--uaud'
+            href: 'https://youtu.be/QjMME7LGoJw'
           },
           authors: [
               {
@@ -53,11 +54,12 @@ export default {
           ],  
         },
         {
-          cover: 'https://sun9-56.userapi.com/c626427/v626427028/17d4f/9JwRqYv8CHs.jpg',
+          cover: 'https://img.youtube.com/vi/QjMME7LGoJw/hqdefault.jpg',
+          url: 'https://youtu.be/QjMME7LGoJw',
           date: 'July 1, 2016',
           nameInfo: {
             name : 'flyugrom',
-            href: '/release-cart/rflc--flyugrom'
+            href: 'https://youtu.be/QjMME7LGoJw'
           },
           authors: [
               {
@@ -69,8 +71,9 @@ export default {
     ] 
   },
   getters: {
-    threeRandomArtistsArray(state) {
-      return state.threeRandomArtistsArray
+    threeLatestVideos(state) {
+      return state.threeLatestVideos
     }
   }
 }
+

@@ -11,13 +11,13 @@ export default {
           cover: 'https://sun9-51.userapi.com/c856036/v856036734/148c14/aNaufG1zQQ0.jpg',
           date: 'October 30, 2019',
           tags: ['808', 'ambient'],
-          releaseName: {
+          nameInfo: {
             name : 'Love',
             href: '/release-cart/Kuroi-Ame--love'
           },
-          artists: [
+          authors: [
             {
-              artist: 'Kuroi Ame',
+              author: 'Kuroi Ame',
               href: '/Kuroi-Ame'
             }
           ],  
@@ -26,29 +26,29 @@ export default {
           cover: 'https://sun9-45.userapi.com/c836630/v836630028/b76e/Z7m-LXxoqt0.jpg',
           date: 'November 1, 2016',
           tags: ['ambient'],
-          releaseName: {
+          nameInfo: {
             name : 'uaudé°',
             href: '/release-cart/seng-evryn-havec--uaud'
           },
-          artists: [
+          authors: [
               {
-                artist: 'seng°',
+                author: 'seng°',
                 href: '/seng°'
               },
               {
-                artist: ' & ',
+                author: ' & ',
                 href: '/'
               },
               {
-                artist: 'evryn',
+                author: 'evryn',
                 href: '/evryn'
               },
               {
-                artist: ' & ',
+                author: ' & ',
                 href: '/'
               },
               {
-                artist: 'havec',
+                author: 'havec',
                 href: '/havec'
               }
           ],  
@@ -57,13 +57,13 @@ export default {
           cover: 'https://sun9-56.userapi.com/c626427/v626427028/17d4f/9JwRqYv8CHs.jpg',
           date: 'July 1, 2016',
           tags: ['witch house'],
-          releaseName: {
+          nameInfo: {
             name : 'flyugrom',
             href: '/release-cart/rflc--flyugrom'
           },
-          artists: [
+          authors: [
               {
-                artist: 'rflc',
+                author: 'rflc',
                 href: '/rflc'
               }
           ],  
@@ -72,13 +72,13 @@ export default {
           cover: 'https://sun9-46.userapi.com/c857320/v857320198/da1c/GqYJSqC-O5c.jpg',
           date: 'July 1, 2018',
           tags: ['witch house'],
-          releaseName: {
+          nameInfo: {
             name : 'sad',
             href: '/release-cart/tsumetai--sad'
           },
-          artists: [
+          authors: [
               {
-                artist: 'tsumetai',
+                author: 'tsumetai',
                 href: '/tsumetai'
               }
           ],  
