@@ -8,7 +8,7 @@ export default {
     // 3 последних видео, которые мы отображаем на главной странице
     threeLatestVideos: [
         { 
-          cover: 'https://img.youtube.com/vi/QjMME7LGoJw/hqdefault.jpg',
+          cover: 'https://img.youtube.com/vi/gumHp7sXnMY/hqdefault.jpg',
           url: 'https://youtu.be/QjMME7LGoJw',
           platform: 'YouTube',
           duration: '2:26',
@@ -25,7 +25,7 @@ export default {
           ],  
         },
         { 
-          cover: 'https://img.youtube.com/vi/QjMME7LGoJw/hqdefault.jpg',
+          cover: 'https://img.youtube.com/vi/LxZLBs5oZSA/hqdefault.jpg',
           url: 'https://youtu.be/QjMME7LGoJw',
           date: 'November 1, 2016',
           duration: '4:36',

@@ -4,36 +4,29 @@
     <TopBar 
       title="Миксы"
     />
-    <div class="mixes-wrap">
+
 
       <!-- Сама карточка микса -->
-      <div class="mix-item">
-        <span class="mix-tags">techno</span>
-        <img class="mix-image" src="https://sun9-37.userapi.com/c855632/v855632495/126f60/Ob3bw1S-FoM.jpg" alt="">
-        <span class="mix-date">October 25, 2019</span>
-        <p class="mix-name">yourtracklist — techno mix #5</p>
-      </div>
+    <div class="mixes-wrap">
+      
+      <!-- Итерируем карточку релиза -->
+      <div class="mix-item" 
+        v-for="(release, index) in fourLatestMixes"
+        :key="index"
+        >
+        <!-- Итерируем теги (пока только как названия) -->
+        <span 
+          class="mix-tags" 
+          v-for="tags in release.tags"
+          :key="tags"
+        >{{tags}}</span>
 
-      <!-- Временно пока добавил для визуализации -->
-      <div class="mix-item">
-        <span class="mix-tags">808</span>
-        <img class="mix-image" src="https://sun1-26.userapi.com/c857328/v857328358/22c8c/ZyA6w5gy3z8.jpg" alt="">
-        <span class="mix-date">October 25, 2019</span>
-        <p class="mix-name">DITA REDRUM — Shadowrun</p>
-      </div>
-
-      <div class="mix-item">
-        <span class="mix-tags">808</span>
-        <img class="mix-image" src="https://sun1-26.userapi.com/c857328/v857328358/22c8c/ZyA6w5gy3z8.jpg" alt="">
-        <span class="mix-date">October 25, 2019</span>
-        <p class="mix-name">DITA REDRUM — Shadowrun</p>
-      </div>
-
-      <div class="mix-item">
-        <span class="mix-tags">808</span>
-        <img class="mix-image" src="https://sun1-26.userapi.com/c857328/v857328358/22c8c/ZyA6w5gy3z8.jpg" alt="">
-        <span class="mix-date">October 25, 2019</span>
-        <p class="mix-name">DITA REDRUM — Shadowrun</p>
+        <img class="mix-image" :src="release.cover" alt="cover" >
+        <PrevInfo 
+          :date="release.date"
+          :nameInfo="release.nameInfo"
+          :releaseAuthors="release.authors"
+        />
       </div>
     </div>
   </div>
@@ -41,11 +34,16 @@
 
 <script>
 import TopBar from '@/components/home/TopBar.vue'
+import PrevInfo from '@/components/app/PrevInfo.vue'
+import {mapGetters} from 'vuex'
 export default {
   name: 'MixesHome',
   components: {
-    TopBar
-  }
+    TopBar, PrevInfo
+  },
+  computed: {
+    ...mapGetters(['fourLatestMixes'])
+  },
 }
 </script>
 
@@ -69,12 +67,17 @@ export default {
   }
 
   .mix-tags {
+    display: inline-block;
+    margin-top: 7px;
+    margin-bottom: 10px;
+    margin-right: 5px;
     font-size: 14px;
-    font-weight: 200;
+    font-weight: 300;
   }
 
   .mix-image {
     width: 280px;
     height: 280px;
+    margin-bottom: 16px;
   }
 </style>

@@ -44,12 +44,12 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-right: 200px;
+    padding-right: 355px;
     margin-bottom: 50px;
   }
 
   .nav-wrap {
-    width: 416px;
+    width: 258px;
     display: flex;
     justify-content: space-between;
   }
