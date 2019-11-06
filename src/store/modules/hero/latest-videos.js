@@ -10,6 +10,8 @@ export default {
         { 
           cover: 'https://img.youtube.com/vi/QjMME7LGoJw/hqdefault.jpg',
           url: 'https://youtu.be/QjMME7LGoJw',
+          platform: 'YouTube',
+          duration: '2:26',
           date: 'October 30, 2019',
           nameInfo: {
             name : 'Love',
@@ -26,6 +28,8 @@ export default {
           cover: 'https://img.youtube.com/vi/QjMME7LGoJw/hqdefault.jpg',
           url: 'https://youtu.be/QjMME7LGoJw',
           date: 'November 1, 2016',
+          duration: '4:36',
+          platform: 'YouTube',
           nameInfo: {
             name : 'uaudé°',
             href: 'https://youtu.be/QjMME7LGoJw'
@@ -57,6 +61,8 @@ export default {
           cover: 'https://img.youtube.com/vi/QjMME7LGoJw/hqdefault.jpg',
           url: 'https://youtu.be/QjMME7LGoJw',
           date: 'July 1, 2016',
+          duration: '1:56',
+          platform: 'YouTube',
           nameInfo: {
             name : 'flyugrom',
             href: 'https://youtu.be/QjMME7LGoJw'

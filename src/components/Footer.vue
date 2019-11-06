@@ -15,13 +15,6 @@
         </ul>
       </div>
 
-      <div class="search-wrap">
-        <ul>
-          Поиск
-          <li>По тегам</li>
-          <li>По артистам</li>
-        </ul>
-      </div>
 
       <div class="social-wrap">
         <ul>

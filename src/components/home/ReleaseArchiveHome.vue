@@ -84,7 +84,7 @@ export default {
   .release-image {
     width: 280px;
     height: 280px;
-    margin-bottom: 10px;
+    margin-bottom: 16px;
   }
 
 </style>

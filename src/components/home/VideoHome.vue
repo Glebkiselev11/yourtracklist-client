@@ -29,7 +29,16 @@
               <circle cx="50" cy="50" r="49.5" stroke="white"/>
               <path d="M65 50L42.5 62.9904V37.0096L65 50Z" fill="white"/>
             </svg>
+
+
+            <!-- Компонент который отображает длительность видео и его платформу -->
+            <PrevVideoInfo 
+              :duration="video.duration"
+              :platform="video.platform"
+            />
           </a>
+
+          
         </div>
         
         <PrevInfo 
@@ -49,10 +58,12 @@
 import PrevInfo from '@/components/app/PrevInfo.vue'
 import TopBar from '@/components/home/TopBar.vue'
 import {mapGetters} from 'vuex'
+import PrevVideoInfo from '@/components/app/PrevVideoInfo.vue'
+
 export default {
   name: 'ViedeoHome',
   components: {
-    TopBar, PrevInfo
+    TopBar, PrevInfo, PrevVideoInfo
   },
 
   computed: {
@@ -86,17 +97,12 @@ export default {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    display: block;
-    transform: scale(1);
-    transition: all 1s;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
   }
-
-  .video-cover:hover {
-    transform: scale(1.02);
-  }
+  
 
   /* Класс для первого видео, которое у нас самое большое */
   .big-video {
