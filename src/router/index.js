@@ -19,6 +19,12 @@ const router = new Router({
       meta: {layout: 'main', auth: true}, // Обертка под наше приложение
       component: () => import('@/views/ReleaseCart.vue')
     },
+    {
+      path: '/author/:id',
+      name: 'Author-page',
+      meta: {layout: 'main', auth: true},
+      component: () => import('@/views/AuthorPage.vue')
+    }
 
     // {
     //   path: '/authorization',
