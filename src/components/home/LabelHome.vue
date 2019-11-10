@@ -13,8 +13,8 @@
         v-for="(release, index) in fourLatestReleases"
         :key="index"
         >
-        <!-- Итерируем теги (пока только как названия) -->
-
+        
+        <!-- Передаем в компонент отвечающий за отображание тегов - массив с тегами -->
         <PrevTagsHeader 
           link-to="/label-archive/" 
           :tags-array="release.tags"

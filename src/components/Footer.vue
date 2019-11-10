@@ -45,7 +45,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding-right: 355px;
-    margin-bottom: 50px;
+    margin-bottom: 50px; 
   }
 
   .nav-wrap {

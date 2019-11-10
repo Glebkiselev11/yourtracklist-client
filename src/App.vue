@@ -2,10 +2,9 @@
   <div id="app">
     <Navbar />
 
-    <router-view/>
+    <router-view class="body"/>
 
     <Footer />
-
   </div>
 </template>
 
@@ -24,6 +23,11 @@ export default {
     max-width: 1200px;
     margin: auto;
   }
+
+  .body {
+    min-height: 60vh;
+  }
+
 
   * {
     padding: 0;
@@ -45,6 +49,37 @@ export default {
     border: none;
     background: transparent;
     cursor: pointer;
+  }
+
+
+  .archive-title {
+    font-size: 40px;
+    font-weight: 300;
+  }
+
+  /* Пагинация */
+  .pagination {
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .page-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid black;
+  }
+
+  .page-active {
+    background: black;
+  }
+
+  .page-active a {
+    color: white;
   }
 
 </style>

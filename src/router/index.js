@@ -14,6 +14,12 @@ const router = new Router({
       component: () => import('@/views/Home.vue')
     },
     {
+      path: '/releases-archive',
+      name: 'Releases-archive',
+      meta: {layout: 'main', auth: true}, // Обертка под наше приложение
+      component: () => import('@/views/ReleasesArchive')
+    },
+    {
       path: '/release-cart',
       name: 'Release-cart',
       meta: {layout: 'main', auth: true}, // Обертка под наше приложение

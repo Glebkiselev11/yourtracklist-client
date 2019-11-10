@@ -14,7 +14,7 @@
         v-for="(release, index) in fourLatestMixes"
         :key="index"
         >
-        <!-- Итерируем теги (пока только как названия) -->
+        <!-- Передаем в компонент отвечающий за отображание тегов - массив с тегами -->
         <PrevTagsHeader 
           link-to="/mixes-archive/" 
           :tags-array="release.tags"

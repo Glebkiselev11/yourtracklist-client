@@ -17,7 +17,7 @@
         >
         <!-- Передаем в компонент отвечающий за отображание тегов - массив с тегами -->
         <PrevTagsHeader
-          link-to="/release-archive/" 
+          link-to="/releases-archive/" 
           :tags-array="release.tags"
         />
 
