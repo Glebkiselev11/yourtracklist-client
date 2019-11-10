@@ -15,7 +15,7 @@ export default {
 
   .sort-side-bar-wrap {
     height: 100%;
-    width: 180px;
+    width: 280px;
   }
   
 </style>

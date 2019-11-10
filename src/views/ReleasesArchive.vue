@@ -9,8 +9,10 @@
       <SortSideBar />
       
       <!-- Основное окно куда выводим релизы -->
+      <!-- linkTo туда передаем начальный кусок ссылки -->
       <ArchiveWindow 
         :releases="this.releases"
+        linkTo="/release-cart/"
       />
 
 
@@ -45,5 +47,7 @@ export default {
 
   .container {
     display: flex;
+    width: 100%;
+    justify-content: space-between;
   }
 </style>

@@ -82,6 +82,81 @@ export default {
               href: '/rflc'
             }
         ],  
+      },
+      {
+        cover: 'https://sun9-56.userapi.com/c626427/v626427028/17d4f/9JwRqYv8CHs.jpg',
+        date: 'July 1, 2016',
+        tags: ['witch house'],
+        nameInfo: {
+          name : 'flyugrom',
+          href: '/release-cart/rflc--flyugrom'
+        },
+        authors: [
+            {
+              author: 'rflc',
+              href: '/rflc'
+            }
+        ],  
+      },
+      {
+        cover: 'https://sun9-56.userapi.com/c626427/v626427028/17d4f/9JwRqYv8CHs.jpg',
+        date: 'July 1, 2016',
+        tags: ['witch house'],
+        nameInfo: {
+          name : 'flyugrom',
+          href: '/release-cart/rflc--flyugrom'
+        },
+        authors: [
+            {
+              author: 'rflc',
+              href: '/rflc'
+            }
+        ],  
+      },
+      {
+        cover: 'https://sun9-56.userapi.com/c626427/v626427028/17d4f/9JwRqYv8CHs.jpg',
+        date: 'July 1, 2016',
+        tags: ['witch house'],
+        nameInfo: {
+          name : 'flyugrom',
+          href: '/release-cart/rflc--flyugrom'
+        },
+        authors: [
+            {
+              author: 'rflc',
+              href: '/rflc'
+            }
+        ],  
+      },
+      {
+        cover: 'https://sun9-56.userapi.com/c626427/v626427028/17d4f/9JwRqYv8CHs.jpg',
+        date: 'July 1, 2016',
+        tags: ['witch house'],
+        nameInfo: {
+          name : 'flyugrom',
+          href: '/release-cart/rflc--flyugrom'
+        },
+        authors: [
+            {
+              author: 'rflc',
+              href: '/rflc'
+            }
+        ],  
+      },
+      {
+        cover: 'https://sun9-56.userapi.com/c626427/v626427028/17d4f/9JwRqYv8CHs.jpg',
+        date: 'July 1, 2016',
+        tags: ['witch house'],
+        nameInfo: {
+          name : 'flyugrom',
+          href: '/release-cart/rflc--flyugrom'
+        },
+        authors: [
+            {
+              author: 'rflc',
+              href: '/rflc'
+            }
+        ],  
       }
     ]
   },
