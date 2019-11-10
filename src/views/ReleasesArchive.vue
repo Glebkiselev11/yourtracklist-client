@@ -46,6 +46,7 @@ export default {
   }
 
   .container {
+    margin-top: 50px;
     display: flex;
     width: 100%;
     justify-content: space-between;
