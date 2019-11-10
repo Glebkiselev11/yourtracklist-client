@@ -15,12 +15,11 @@
         v-for="(release, index) in fourLatestReleases"
         :key="index"
         >
-        <!-- Итерируем теги (пока только как названия) -->
-        <span 
-          class="release-tags" 
-          v-for="tags in release.tags"
-          :key="tags"
-        >{{tags}}</span>
+        <!-- Передаем в компонент отвечающий за отображание тегов - массив с тегами -->
+        <PrevTagsHeader
+          link-to="/release-archive/" 
+          :tags-array="release.tags"
+        />
 
         <img class="release-image" :src="release.cover" alt="cover">
         <PrevInfo 
@@ -37,12 +36,13 @@
 <script>
 import TopBar from '@/components/home/TopBar.vue'
 import PrevInfo from '@/components/app/PrevInfo.vue'
+import PrevTagsHeader from '@/components/app/tags/PrevTagsHeader.vue'
 import {mapGetters} from 'vuex'
 
 export default {
   name: 'ReleaseArchiveHome',
   components: {
-    TopBar, PrevInfo
+    TopBar, PrevInfo, PrevTagsHeader
   },
   computed: {
     ...mapGetters(['fourLatestReleases'])
@@ -72,14 +72,6 @@ export default {
     border-top: 1px solid black;
   }
 
-  .release-tags {
-    display: inline-block;
-    margin-top: 7px;
-    margin-bottom: 10px;
-    margin-right: 5px;
-    font-size: 14px;
-    font-weight: 300;
-  }
 
   .release-image {
     width: 280px;

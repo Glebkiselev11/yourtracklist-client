@@ -21,7 +21,10 @@
 
     <!-- Тут будет поиск -->
     <div class="search-wrap">
-      Поиск
+      <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="9.5" stroke="black"/>
+        <line x1="17.3536" y1="16.6464" x2="25.8388" y2="25.1317" stroke="black"/>
+      </svg>
     </div>
 
   </div>

@@ -15,11 +15,10 @@
         :key="index"
         >
         <!-- Итерируем теги (пока только как названия) -->
-        <span 
-          class="mix-tags" 
-          v-for="tags in release.tags"
-          :key="tags"
-        >{{tags}}</span>
+        <PrevTagsHeader 
+          link-to="/mixes-archive/" 
+          :tags-array="release.tags"
+        />
 
         <img class="mix-image" :src="release.cover" alt="cover" >
         <PrevInfo 
@@ -35,11 +34,12 @@
 <script>
 import TopBar from '@/components/home/TopBar.vue'
 import PrevInfo from '@/components/app/PrevInfo.vue'
+import PrevTagsHeader from '@/components/app/tags/PrevTagsHeader.vue'
 import {mapGetters} from 'vuex'
 export default {
   name: 'MixesHome',
   components: {
-    TopBar, PrevInfo
+    TopBar, PrevInfo, PrevTagsHeader
   },
   computed: {
     ...mapGetters(['fourLatestMixes'])
@@ -66,14 +66,6 @@ export default {
     border-top: 1px solid black;
   }
 
-  .mix-tags {
-    display: inline-block;
-    margin-top: 7px;
-    margin-bottom: 10px;
-    margin-right: 5px;
-    font-size: 14px;
-    font-weight: 300;
-  }
 
   .mix-image {
     width: 280px;

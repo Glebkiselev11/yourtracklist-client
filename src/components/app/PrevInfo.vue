@@ -4,7 +4,7 @@
     <span v-if="date" class="release-date">{{date}}</span>
     <router-link :to="nameInfo.href" class="release-name">{{nameInfo.name}}</router-link>
 
-    <p class="release-artist">by
+    <p class="release-artist">
       <!-- Здесь выводим ссылку на дискографию артиста, если он не один, то через цикл -->
       <router-link 
         v-for="(element, index) in this.releaseAuthors"

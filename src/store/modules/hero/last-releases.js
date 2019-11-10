@@ -10,7 +10,7 @@ export default {
         { 
           cover: 'https://sun9-51.userapi.com/c856036/v856036734/148c14/aNaufG1zQQ0.jpg',
           date: 'October 30, 2019',
-          tags: ['808', 'ambient'],
+          tags: ['808', 'ambient', 'post-internet'],
           nameInfo: {
             name : 'Love',
             href: '/release-cart/Kuroi-Ame--love'

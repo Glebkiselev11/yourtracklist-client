@@ -14,11 +14,11 @@
         :key="index"
         >
         <!-- Итерируем теги (пока только как названия) -->
-        <span 
-          class="release-tags" 
-          v-for="tags in release.tags"
-          :key="tags"
-        >{{tags}}</span>
+
+        <PrevTagsHeader 
+          link-to="/label-archive/" 
+          :tags-array="release.tags"
+        />
 
         <img class="release-image" :src="release.cover" alt="cover">
         <PrevInfo 
@@ -49,12 +49,13 @@
 import TopBar from '@/components/home/TopBar.vue'
 import ArrowButton from '@/components/app/ArrowButton.vue'
 import PrevInfo from '@/components/app/PrevInfo.vue'
+import PrevTagsHeader from '@/components/app/tags/PrevTagsHeader.vue'
 import {mapGetters} from 'vuex'
 
 export default {
   name: 'LabelHome',
   components: {
-    TopBar, ArrowButton, PrevInfo
+    TopBar, ArrowButton, PrevInfo, PrevTagsHeader
   },
   computed: {
     // Пока временно получает из стора 4 последних релиза (не лейбла)
