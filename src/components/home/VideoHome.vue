@@ -25,10 +25,9 @@
             :style="{ 'backgroundImage' : 'url(' + video.cover + ')' }"
           > 
             <!-- Значок плея (если первое видео, то 100% размер, если второе и третье то меньше) -->
-            <svg :width=" index < 1 ? 100 : 50" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="49.5" stroke="white"/>
-              <path d="M65 50L42.5 62.9904V37.0096L65 50Z" fill="white"/>
-            </svg>
+            <VideoPlayButton 
+              :size="index < 1 ? 100 : 50"
+            />
 
 
             <!-- Компонент который отображает длительность видео и его платформу -->
@@ -58,12 +57,14 @@
 import PrevInfo from '@/components/app/PrevInfo.vue'
 import TopBar from '@/components/home/TopBar.vue'
 import {mapGetters} from 'vuex'
-import PrevVideoInfo from '@/components/app/PrevVideoInfo.vue'
+
+import PrevVideoInfo from '@/components/app/video/PrevVideoInfo.vue'
+import VideoPlayButton from '@/components/app/video/VideoPlayButton.vue'
 
 export default {
   name: 'ViedeoHome',
   components: {
-    TopBar, PrevInfo, PrevVideoInfo
+    TopBar, PrevInfo, PrevVideoInfo, VideoPlayButton
   },
 
   computed: {
