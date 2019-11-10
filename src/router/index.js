@@ -10,26 +10,32 @@ const router = new Router({
     {
       path: '/',
       name: 'Home',
-      meta: {layout: 'main', auth: true}, // Обертка под наше приложение
+      meta: {layout: 'main'}, // Обертка под наше приложение
       component: () => import('@/views/Home.vue')
     },
     {
       path: '/releases-archive',
       name: 'Releases-archive',
-      meta: {layout: 'main', auth: true}, // Обертка под наше приложение
+      meta: {layout: 'main'}, // Обертка под наше приложение
       component: () => import('@/views/ReleasesArchive')
     },
     {
       path: '/release-cart',
       name: 'Release-cart',
-      meta: {layout: 'main', auth: true}, // Обертка под наше приложение
+      meta: {layout: 'main'}, // Обертка под наше приложение
       component: () => import('@/views/ReleaseCart.vue')
     },
     {
       path: '/author/:id',
       name: 'Author-page',
-      meta: {layout: 'main', auth: true},
+      meta: {layout: 'main'},
       component: () => import('@/views/AuthorPage.vue')
+    },
+    {
+      path: '/video-archive',
+      name: 'Video-archive',
+      meta: {layout: 'main', auth: true},
+      component: () => import('@/views/VideoArchive.vue')
     }
 
     // {
