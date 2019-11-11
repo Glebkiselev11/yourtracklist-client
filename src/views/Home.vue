@@ -5,7 +5,9 @@
     <Hero />
 
     <!-- Промо блок с архивом релизов, где выводим 4 последний релиза -->
-    <ReleaseArchiveHome />
+    <ReleaseArchivePrev 
+      :four-latest-releases="this.fourLatestReleases"
+    />
 
     <!-- Промо блок с видео записями, где выводим 3 последних видоса -->
     <ViedeoHome />
@@ -20,16 +22,20 @@
 
 <script>
 import Hero from '@/components/home/Hero.vue'
-import ReleaseArchiveHome from '@/components/home/ReleaseArchiveHome.vue'
+import ReleaseArchivePrev from '@/components/ReleaseArchivePrev.vue'
 import ViedeoHome from '@/components/home/VideoHome.vue'
 import MixesHome from '@/components/home/MixesHome.vue'
 import LabelHome from '@/components/home/LabelHome.vue'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'Home',
   components: {
-    Hero, ReleaseArchiveHome, ViedeoHome, MixesHome, LabelHome
-  }
+    Hero, ReleaseArchivePrev, ViedeoHome, MixesHome, LabelHome
+  },
+  computed: {
+    ...mapGetters(['fourLatestReleases'])
+  },
 }
 </script>
 

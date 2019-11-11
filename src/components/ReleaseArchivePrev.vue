@@ -1,10 +1,11 @@
 <template>  
-  <!-- Компонент релизов, который показывает последние 4 релиза на главной странице -->
+  <!-- Компонент релизов, который показывает 4 релиза, которые мы ему передаем как пропсы,
+  используется на главной странице и в дискографии автора одновременно -->
   <div class="wrap">
 
     <!-- Верхняя шапка с заголовком и кнопкой -->
     <TopBar 
-      title="Архив релизов"
+      title="Релизы"
     />
 
     <!-- Обертка под релизы, который мы будем итерировать циклом -->
@@ -37,16 +38,14 @@
 import TopBar from '@/components/home/TopBar.vue'
 import PrevInfo from '@/components/app/PrevInfo.vue'
 import PrevTagsHeader from '@/components/app/tags/PrevTagsHeader.vue'
-import {mapGetters} from 'vuex'
 
 export default {
-  name: 'ReleaseArchiveHome',
+  name: 'ReleaseArchivePrev',
+  props: ['fourLatestReleases'],
   components: {
     TopBar, PrevInfo, PrevTagsHeader
   },
-  computed: {
-    ...mapGetters(['fourLatestReleases'])
-  },
+  
 }
 </script>
 
