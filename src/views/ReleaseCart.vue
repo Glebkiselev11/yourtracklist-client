@@ -63,7 +63,10 @@ export default {
   name: 'Release-cart',
   components: {
     ArrowButton
-  }
+  },
+  async mounted() {
+    await this.$store.dispatch('getReleaseInfo')
+  },
 }
 </script>
 
