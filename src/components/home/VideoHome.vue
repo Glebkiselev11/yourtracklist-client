@@ -55,7 +55,7 @@
 
 <script>
 import PrevInfo from '@/components/app/PrevInfo.vue'
-import TopBar from '@/components/home/TopBar.vue'
+import TopBar from '@/components/app/TopBar.vue'
 import {mapGetters} from 'vuex'
 
 import PrevVideoInfo from '@/components/app/video/PrevVideoInfo.vue'

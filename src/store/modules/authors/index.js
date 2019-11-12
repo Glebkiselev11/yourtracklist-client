@@ -1,5 +1,6 @@
 import axios from 'axios'
 import authorReleases from './author-releases'
+import authorVideo from './author-video'
 
 // Основной модуль, под Авторов
 export default {
@@ -23,7 +24,6 @@ export default {
   },
   mutations: {
     setAuthorInfo(state, data) {
-      
       state.authorInfo = data
     }
   },
@@ -37,6 +37,7 @@ export default {
   },
 
   modules: {
-    authorReleases
+    authorReleases, authorVideo
+
   }
 }

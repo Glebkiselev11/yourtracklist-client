@@ -47,12 +47,17 @@
       :four-latest-releases="this.fakeLastFourRel"
     />
 
+    <VideoPrevAuthor 
+      
+    />
+
     </div>
     
   </div>
 </template>
 
 <script>
+import VideoPrevAuthor from '@/components/VideoPrevAuthor.vue'
 import ReleaseArchivePrev from '@/components/ReleaseArchivePrev.vue'
 import {mapGetters} from 'vuex'
 export default {
@@ -61,7 +66,7 @@ export default {
     fakeLastFourRel: []
   }),
   components: {
-    ReleaseArchivePrev
+    ReleaseArchivePrev, VideoPrevAuthor
   },
   async mounted() {
     await this.$store.dispatch('getAuthorById', this.$route.params.id)

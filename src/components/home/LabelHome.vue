@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import TopBar from '@/components/home/TopBar.vue'
+import TopBar from '@/components/app/TopBar.vue'
 import ArrowButton from '@/components/app/ArrowButton.vue'
 import PrevInfo from '@/components/app/PrevInfo.vue'
 import PrevTagsHeader from '@/components/app/tags/PrevTagsHeader.vue'
