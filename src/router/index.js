@@ -26,7 +26,7 @@ const router = new Router({
       component: () => import('@/views/ReleaseCart.vue')
     },
     {
-      path: '/author/:id',
+      path: '/author/:permalink',
       name: 'Author-page',
       meta: {layout: 'main'},
       component: () => import('@/views/AuthorPage.vue')
@@ -36,6 +36,12 @@ const router = new Router({
       name: 'Video-archive',
       meta: {layout: 'main', auth: true},
       component: () => import('@/views/VideoArchive.vue')
+    },
+    {
+      path: '/admin--panel',
+      name: 'Admin-panel',
+      meta: {layout: 'main', auth: true},
+      component: () => import('@/views/AdminPanel.vue')
     }
 
     // {

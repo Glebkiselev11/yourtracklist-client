@@ -69,7 +69,7 @@ export default {
     ReleaseArchivePrev, VideoPrevAuthor
   },
   async mounted() {
-    await this.$store.dispatch('getAuthorById', this.$route.params.id)
+    await this.$store.dispatch('getAuthorById', this.$route.params.permalink)
   },
   computed: {
     ...mapGetters(['authorInfo'])

@@ -6,10 +6,10 @@ import authorVideo from './author-video'
 export default {
   actions: {
     // Получаем автора по ID
-    async getAuthorById({commit}, id) {
+    async getAuthorById({commit}, permalink) {
       
 
-      const {data} = await axios.post('http://localhost:3000/get-author-by-id', { id })
+      const {data} = await axios.post('http://localhost:3000/get-author-by-id', { permalink })
 
       for (let link in data.links) {
 
