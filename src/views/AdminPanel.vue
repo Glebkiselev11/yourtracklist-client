@@ -6,16 +6,22 @@
     <!--  модуль для добавления нового автора в базу -->
     <AddNewAuthor /> 
 
+    <hr>
+
+    <AddNewRelease />
+    
+
     
   </div>
 </template>
 
 <script>
 import AddNewAuthor from '@/components/admin-panel/AddNewAuthor.vue'
+import AddNewRelease from '@/components/admin-panel/AddNewRelease.vue'
 export default {
   name: 'Admin-panel',
   components: {
-    AddNewAuthor
+    AddNewAuthor, AddNewRelease
   },
   
 }
@@ -24,7 +30,7 @@ export default {
 <style scoped>
   .admin-wrap {
     height: 100%;
-
+    width: 100%;
   }
   
 </style>

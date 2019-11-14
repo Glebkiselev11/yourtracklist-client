@@ -20,19 +20,34 @@ export default {
       }
 
       commit('setAuthorInfo', data)
+    },
+
+    // Получаем всех авторов (а именно их имена и пермалинки)
+    async getAuthors({commit}) {
+      const {data} = await axios.post('http://localhost:3000/get-authors-list')
+
+      commit('setAuthors', data)
     }
   },
   mutations: {
     setAuthorInfo(state, data) {
       state.authorInfo = data
+    },
+
+    setAuthors(state, data) {
+      state.authorsArray = data
     }
   },
   state: {
     authorInfo: undefined, // Информация об авторе, котору мы выводим на страницу authorPage
+    authorsArray: undefined, // Массив всех авторов которых мы нашли, содержит в себе только название и пермалинки
   },
   getters: {
     authorInfo(s) {
       return s.authorInfo
+    },
+    authorsArray(s) {
+      return s.authorsArray
     }
   },
 

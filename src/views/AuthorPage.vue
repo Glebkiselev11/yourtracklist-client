@@ -35,7 +35,7 @@
             <a 
               v-for="(link, linkName) of authorInfo.links" 
               :key="linkName" 
-              href=""
+              :href="link"
             >{{linkName}}</a>
           </div>
         </div>

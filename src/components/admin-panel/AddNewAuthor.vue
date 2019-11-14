@@ -52,6 +52,10 @@
           <input type="text" id="author-permalink" v-model="itunes">
         </div>
         <div class="input-item">
+          <label for="author-permalink">instagram</label>
+          <input type="text" id="author-permalink" v-model="instagram">
+        </div>
+        <div class="input-item">
           <label for="author-permalink">soundcloud</label>
           <input type="text" id="author-permalink" v-model="soundcloud">
         </div>
@@ -94,7 +98,6 @@ export default {
   }),
   methods: {
     async addNewAuthor() {
-      console.log(this.tags)
 
       // Отправляем данные о авторе на бэкенд
       try {
@@ -115,6 +118,21 @@ export default {
           }
         })
 
+        // После добавления нового автора очищаем инпуты
+        this.name = ''
+        this.permalink = ''
+        this.avatar = ''
+        this.tags = []
+        this.vk = ''
+        this.bandcamp = ''
+        this.spotify = ''
+        this.youtube = ''
+        this.instagram = ''
+        this.twitter = ''
+        this.soundcloud = ''
+        this.itunes = ''
+
+
       } catch(errow) {
         console.log(errow)
       }
@@ -132,6 +150,7 @@ export default {
 
 <style scoped>
   .form-wrap {
+    margin-bottom: 50px;
     width: 600px;
     max-height: 670px;
     margin-top: 50px;
