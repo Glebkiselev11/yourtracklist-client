@@ -7,21 +7,41 @@ export default {
     // Добавляет автора в нашу коллекцию, доступно только для администратора
     async admin_addAuthor({commit}, formData) {
       try {
-        await axios.post('http://localhost:3000/add-author', {formData})
+        const {data} = await axios.post('http://localhost:3000/add-author', {formData})
+
+        console.log(data)
+        let statusMessage = {}
+
+        // Обрабатываем ошибки базы данных
+        if (data.code === '23505') {statusMessage.message = 'Такой исполнитель уже есть в базе'; statusMessage.status = 'error'}
+        if (data.code === '42P18') {statusMessage.message = 'Обязательно укажите хотя бы одну ссылку и тег'; statusMessage.status = 'error'}
+        if (data === 'ok') {statusMessage.message = 'Автор успешно добавлен'; statusMessage.status = 'ok'}
+
+        commit('setStatusForAuthor', statusMessage)
       } catch(error) {
         console.log(error)
       }
-      console.log(commit)
+      
+      
     },
 
     // Добавляет релиз в нашу коллекицию
     async admin_addRelease({commit}, formData) {
       try {
-        await axios.post('http://localhost:3000/add-release', {formData})
+        const {data} = await axios.post('http://localhost:3000/add-release', {formData})
+
+        let statusMessage = {}
+
+        // Обрабатываем ошибки базы данных
+        if (data.code === '23505') {statusMessage.message = 'Такой релиз уже есть в базе'; statusMessage.status = 'error'}
+        if (data.code === '42P18') {statusMessage.message = 'Обязательно укажите хотя бы одну ссылку и тег'; statusMessage.status = 'error'}
+        if (data === 'ok') {statusMessage.message = 'Релиз успешно добавлен'; statusMessage.status = 'ok'}
+
+        commit('setStatusForRelease', statusMessage)
       } catch(error) {
         console.log(error)
       }
-      console.log(commit)
+
     },
 
 
@@ -42,15 +62,27 @@ export default {
   mutations: {
     setSocialsNameList(state, data) {
       state.socialsNameList = data
+    },
+
+
+    setStatusForAuthor(state, statusMessage) {
+      state.statusForAuthor = statusMessage
+    },
+
+    setStatusForRelease(state, statusMessage) {
+      state.statusForRelease = statusMessage
     }
   },
   state: {
+    statusForAuthor: undefined, // Статус о добавлении нового пользователя
+    statusForRelease: undefined, // Статус о добавление нового релиза
     socialsNameList: [], // Список всех возможных социальных сетей
   },
   getters: {
-    socialsNameList(s) {
-      return s.socialsNameList
-    }
+    statusForAuthor: s => s.statusForAuthor,
+    socialsNameList: s => s.socialsNameList,
+    statusForRelease: s => s.statusForRelease
+
   },
   modules: {
 

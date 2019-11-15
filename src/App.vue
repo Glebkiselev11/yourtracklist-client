@@ -28,6 +28,13 @@ export default {
     min-height: 60vh;
   }
 
+  .status-ok {
+    color: green;
+  }
+
+  .status-error {
+    color: red;
+  }
 
   * {
     padding: 0;

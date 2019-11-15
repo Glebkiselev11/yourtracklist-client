@@ -13,11 +13,6 @@
         </div>
 
         <div class="input-item">
-          <label for="author-permalink">permalink</label>
-          <input type="text" id="author-permalink" v-model="permalink" required>
-        </div>
-
-        <div class="input-item">
           <label for="cover">Ссылка на обложку</label>
           <input type="text" id="cover" v-model="cover" required>
         </div>
@@ -78,7 +73,8 @@
       </div>
     </div>
     
-    
+    <!-- Отображаем здесь статус о том добавился ли релиз или нет -->
+    <p v-if="statusForRelease" :class="statusForRelease.status === 'ok' ? 'status-ok' : 'status-error' ">{{statusForRelease.message}}</p>
 
     <button type="submit">Добавить</button>
   </form>
@@ -91,7 +87,6 @@ export default {
   data: () => ({
     dateRel: '',
     name: '',
-    permalink: '', // Уникальное название альбома, по нему мы будем получать с базы данных этот релиз
     cover: '', // Ссылка на обложку
     socialsNameListObj: {}, // Ссылки на релизы
     tags: [], // Теги релиза
@@ -106,40 +101,35 @@ export default {
     await this.$store.dispatch('admin_getSocialsNameList')
   },
   computed: {
-    ...mapGetters(['releaseTags', 'authorsArray', 'socialsNameList'])
+    ...mapGetters(['releaseTags', 'authorsArray', 'socialsNameList', 'statusForRelease'])
   },
   methods: {
     // Добавляем новый релиз в базу данных
     async addNewRelease() {
-      
-      try {
-        await this.$store.dispatch('admin_addRelease', {
-          name: this.name,
-          permalink: this.permalink,
-          cover: this.cover,
-          tags: this.tags,
-          duration: this.duration,
-          number_of_tracks: this.number_of_tracks,
-          authors: this.authors,
-          date: this.dateRel,
-          links: this.socialsNameListObj
-        })
 
-        // После добавления нового автора очищаем инпуты
+      await this.$store.dispatch('admin_addRelease', {
+        name: this.name,
+        cover: this.cover,
+        tags: this.tags,
+        duration: this.duration,
+        number_of_tracks: this.number_of_tracks,
+        authors: this.authors,
+        date: this.dateRel,
+        links: this.socialsNameListObj
+      })
+
+      // После добавления нового автора очищаем инпуты, если нету ошибки
+      if (this.statusForRelease.status === 'ok') {
         this.name = ''
         this.dateRel = ''
-        this.permalink = ''
         this.cover = ''
         this.tags = []
         this.duration = ''
         this.number_of_tracks = 0
         this.authors = []
         this.socialsNameListObj = {}
-
-
-      } catch(errow) {
-        console.log(errow)
       }
+
     }
   },
 }

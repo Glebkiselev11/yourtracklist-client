@@ -13,10 +13,6 @@
           <input type="text" id="author-name" v-model="name">
         </div>
 
-        <div class="input-item">
-          <label for="author-permalink">Уникальный ник (permalink)</label>
-          <input type="text" id="author-permalink" v-model="permalink">
-        </div>
 
         <div class="input-item">
           <label for="author-permalink">Ссылка на аватарку артиста (необязательно)</label>
@@ -26,39 +22,17 @@
       
 
       <!-- Социальные сети -->
+      <!-- Социальные сети (Итерируем с бэкенда)-->
       <div class="social-wrap">
-        <div class="input-item">
-          <label for="author-permalink">VK</label>
-          <input type="text" id="author-permalink" v-model="vk">
+
+        <div class="input-item" 
+          v-for="(soc, index) in socialsNameList" 
+          :key="index"
+        >
+          <label :for="index">{{soc.name}}</label>
+          <input type="text" :id="index" v-model="socialsNameListObj[soc.name]">
         </div>
-        <div class="input-item">
-          <label for="author-permalink">bandcamp</label>
-          <input type="text" id="author-permalink" v-model="bandcamp">
-        </div>
-        <div class="input-item">
-          <label for="author-permalink">spotify</label>
-          <input type="text" id="author-permalink" v-model="spotify">
-        </div>
-        <div class="input-item">
-          <label for="author-permalink">youtube</label>
-          <input type="text" id="author-permalink" v-model="youtube">
-        </div>
-        <div class="input-item">
-          <label for="author-permalink">twitter</label>
-          <input type="text" id="author-permalink" v-model="twitter">
-        </div>
-        <div class="input-item">
-          <label for="author-permalink">itunes</label>
-          <input type="text" id="author-permalink" v-model="itunes">
-        </div>
-        <div class="input-item">
-          <label for="author-permalink">instagram</label>
-          <input type="text" id="author-permalink" v-model="instagram">
-        </div>
-        <div class="input-item">
-          <label for="author-permalink">soundcloud</label>
-          <input type="text" id="author-permalink" v-model="soundcloud">
-        </div>
+
       </div>
       
       <!-- Теги которые мы получаем с базы данных -->
@@ -71,7 +45,8 @@
       </div>
     </div>
     
-    
+    <!-- Отображаем здесь статус о том добавился ли пользователь или нет -->
+    <p v-if="statusForAuthor" :class="statusForAuthor.status === 'ok' ? 'status-ok' : 'status-error' ">{{statusForAuthor.message}}</p>
 
     <button type="submit">Добавить</button>
   </form>
@@ -84,17 +59,9 @@ export default {
   name: 'Add-new-author',
   data: () => ({
     name: '',
-    permalink: '', // Уникальный ник, по нему мы будем получать с базы данных этого артиста
     avatar: '', // Ссылка на картинку автора
     tags: [], // Теги автора
-    vk: '',
-    bandcamp: '',
-    spotify: '',
-    youtube: '',
-    instagram: '',
-    twitter: '',
-    soundcloud: '',
-    itunes: ''
+    socialsNameListObj: {},
   }),
   methods: {
     async addNewAuthor() {
@@ -103,36 +70,19 @@ export default {
       try {
         await this.$store.dispatch('admin_addAuthor', {
           name: this.name,
-          permalink: this.permalink,
           avatar: this.avatar,
           tags: this.tags,
-          links: {
-            vk: this.vk,
-            bandcamp: this.bandcamp,
-            spotify: this.spotify,
-            youtube: this.youtube,
-            instagram: this.instagram,
-            twitter: this.twitter,
-            soundcloud: this.soundcloud,
-            itunes: this.itunes
-          }
+          links: this.socialsNameListObj
         })
 
-        // После добавления нового автора очищаем инпуты
-        this.name = ''
-        this.permalink = ''
-        this.avatar = ''
-        this.tags = []
-        this.vk = ''
-        this.bandcamp = ''
-        this.spotify = ''
-        this.youtube = ''
-        this.instagram = ''
-        this.twitter = ''
-        this.soundcloud = ''
-        this.itunes = ''
-
-
+        // После добавления нового автора очищаем инпуты, если не было ошибки
+        if (this.statusForAuthor.status === 'ok') {
+          this.name = ''
+          this.avatar = ''
+          this.tags = []
+          this.socialsNameListObj = {}
+        }
+        
       } catch(errow) {
         console.log(errow)
       }
@@ -142,7 +92,7 @@ export default {
     await this.$store.dispatch('getReleaseTags')
   },
   computed: {
-    ...mapGetters(['releaseTags'])
+    ...mapGetters(['releaseTags', 'socialsNameList', 'statusForAuthor'])
   },
 }
 </script>
@@ -189,4 +139,6 @@ export default {
     font-size: 16px;
     padding: 7px 20px;
   }
+
+
 </style>

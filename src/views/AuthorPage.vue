@@ -36,6 +36,7 @@
               v-for="(link, linkName) of authorInfo.links" 
               :key="linkName" 
               :href="link"
+              target="_blank"
             >{{linkName}}</a>
           </div>
         </div>
