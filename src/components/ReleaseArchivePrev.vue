@@ -25,8 +25,9 @@
         <img class="release-image" :src="release.cover" alt="cover">
         <PrevInfo 
           :date="release.date"
-          :nameInfo="release.nameInfo"
-          :releaseAuthors="release.authors"
+          :name="release.name"
+          :permalink="'/release-cart/' + release.permalink"
+          :authors="release.authors"
         />
       </div>
 
