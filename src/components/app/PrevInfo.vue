@@ -2,7 +2,7 @@
   <!-- Компонент информации о релизе / видео которая распологается в предпросмотре (дата/ название и автор )-->
   <div>
     <!-- Здесь преобразуем формат времени в ISO в более привлекательный формат -->
-    <span v-if="date" class="release-date">{{new Date(date).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'})}}</span>
+    <span v-if="date" class="release-date">{{new Date(date).toLocaleDateString('ru-RU', {month: 'long', day: 'numeric', year: 'numeric'})}}</span>
     <router-link :to="permalink" class="release-name">{{name}}</router-link>
 
     <!-- Здесь выводим ссылку на дискографию артиста, если он не один, то через цикл -->

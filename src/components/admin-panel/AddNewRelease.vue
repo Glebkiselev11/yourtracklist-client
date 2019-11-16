@@ -33,17 +33,10 @@
         </div>
 
 
-        <!-- Список возможных авторов, который мы получаем с бэкенда -->
-        <div class="input-item">
-          <label for="authors">Автор(ы)</label>
-          <select v-model="authors" id="authors" multiple>
-            <option 
-              v-for="(author, index) in authorsArray" 
-              :key="index" 
-              :value="author.permalink"
-            >{{author.name}}</option>
-          </select>
-        </div>
+        <!-- Компоненты куда мы подгружаем всех возможных авторов с базы данных -->
+        <AuthorSelectList
+          @selected="selectedAuthors"
+        />
 
       </div>
 
@@ -71,6 +64,8 @@
         </label>
         
       </div>
+
+      
     </div>
     
     <!-- Отображаем здесь статус о том добавился ли релиз или нет -->
@@ -81,9 +76,13 @@
 </template>
 
 <script>
+import AuthorSelectList from '@/components/app/AuthorsSelectList.vue'
 import {mapGetters} from 'vuex'
 export default {
   name: 'Add-new-release',
+  components: {
+    AuthorSelectList
+  },
   data: () => ({
     dateRel: '',
     name: '',
@@ -97,13 +96,17 @@ export default {
   }),
   async mounted() {
     await this.$store.dispatch('getReleaseTags'),
-    await this.$store.dispatch('getAuthors'),
     await this.$store.dispatch('admin_getSocialsNameList')
   },
   computed: {
-    ...mapGetters(['releaseTags', 'authorsArray', 'socialsNameList', 'statusForRelease'])
+    ...mapGetters(['releaseTags', 'socialsNameList', 'statusForRelease'])
   },
   methods: {
+    // Обрабатываем выбранных авторов из дочернего комопнента (AuthorSelectList)
+    selectedAuthors(authors) {
+      this.authors = authors
+    },
+
     // Добавляем новый релиз в базу данных
     async addNewRelease() {
 

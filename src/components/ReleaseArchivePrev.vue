@@ -22,7 +22,7 @@
           :tags-array="release.tags"
         />
 
-        <img class="release-image" :src="release.cover" alt="cover">
+        <img class="release-image" :src="release.cover" alt="cover" @click="openRelease('/release-cart/' + release.permalink)">
         <PrevInfo 
           :date="release.date"
           :name="release.name"
@@ -47,6 +47,12 @@ export default {
     TopBar, PrevInfo, PrevTagsHeader
   },
   
+  methods: {
+    // Открывает релиз (по клику на обложку)
+    openRelease(link) {
+      this.$router.push(link)
+    }
+  },
 }
 </script>
 
@@ -74,6 +80,7 @@ export default {
 
 
   .release-image {
+    cursor: pointer;
     width: 280px;
     height: 280px;
     margin-bottom: 16px;

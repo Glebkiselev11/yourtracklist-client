@@ -16,7 +16,7 @@
     <MixesHome />
 
     <!-- Промо блок с лейблом, где выводим 4 рандомных релиза лейбла -->
-    <LabelHome />
+    <!-- <LabelHome /> -->
   </div>
 </template>
 
@@ -25,14 +25,14 @@
 import ReleaseArchivePrev from '@/components/ReleaseArchivePrev.vue'
 import ViedeoHome from '@/components/home/VideoHome.vue'
 import MixesHome from '@/components/home/MixesHome.vue'
-import LabelHome from '@/components/home/LabelHome.vue'
+// import LabelHome from '@/components/home/LabelHome.vue'
 import {mapGetters} from 'vuex'
 
 export default {
   name: 'Home',
   components: {
-    // Hero, 
-    ReleaseArchivePrev, ViedeoHome, MixesHome, LabelHome
+    // Hero, LabelHome,
+    ReleaseArchivePrev, ViedeoHome, MixesHome, 
   },
   async mounted() {
     await this.$store.dispatch('getFourLatesReleases')
