@@ -8,6 +8,11 @@
         <label for="url">Ссылка на видео</label>
         <input type="text" id="url" v-model="url" required>
       </div>
+
+      <div class="input-item">
+        <label for="date">Дата выхода видео</label>
+        <input type="date" id="date" v-model="date" required>
+      </div>
       
       <div class="input-item">
         <label for="name">Название видео</label>
@@ -48,15 +53,20 @@
       @selected="selectedAuthors"
     />
 
+    <!-- Отображаем здесь статус о том добавился ли видос или нет -->
+    <p v-if="statusForVideo" :class="statusForVideo.status === 'ok' ? 'status-ok' : 'status-error' ">{{statusForVideo.message}}</p>
+
     <button type="submit">Добавить</button>
   </form>
 </template>
 
 <script>
 import AuthorSelectList from '@/components/app/AuthorsSelectList.vue'
+import { mapGetters } from 'vuex'
 export default {
   name: 'Add-new-vide',
   data: () => ({
+    date: '',
     authors: [],
     cover: '',
     name: '',
@@ -67,16 +77,37 @@ export default {
   components: {
     AuthorSelectList
   },
+  computed: {
+    ...mapGetters(['statusForVideo'])
+  },
   methods: {
     // Обрабатываем выбранных авторов из дочернего комопнента (AuthorSelectList)
     selectedAuthors(authors) {
-      console.log(authors)
       this.authors = authors
     },
 
     // Добавляем новое видео в базу
     async addNewVideo() {
+      await this.$store.dispatch('addNewVideo', {
+        name: this.name,
+        cover: this.cover,
+        duration: this.duration,
+        authors: this.authors,
+        date: this.date,
+        url: this.url,
+        platform: this.platform
+      })
 
+      // После добавления нового автора очищаем инпуты, если нету ошибки
+      if (this.statusForVideo.status === 'ok') {
+        this.name = ''
+        this.date = ''
+        this.cover = ''
+        this.duration = ''
+        this.authors = []
+        this.url = ''
+        this.platform = ''
+      }
     }
   },
 }
@@ -85,13 +116,13 @@ export default {
 <style scoped>
 
   .form-wrap {
-    width: 600px;
+    width: 1000px;
     max-height: 670px;
     margin-top: 50px;
     margin-bottom: 50px;
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
+    flex-wrap: wrap;
   }
 
   .input-wrap {

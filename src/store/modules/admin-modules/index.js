@@ -1,6 +1,7 @@
 // Все Админские переменные начинаются с admin_
 // Основной админский модуль
 import axios from 'axios'
+import admitVideo from './admin-video.js'
 
 export default {
   actions: {
@@ -55,7 +56,9 @@ export default {
       } catch(error) {
         console.log(error)
       }
-    }
+    },
+
+
 
 
   },
@@ -85,6 +88,6 @@ export default {
 
   },
   modules: {
-
+    admitVideo
   }
 }
