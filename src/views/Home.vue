@@ -1,8 +1,8 @@
 <template>
   <div class="home-wrap">
 
-    <!-- Промо блок в самом верху сайта, там мы показываем новости, и 3 рандомных релиза -->
-    <!-- <Hero /> -->
+    <!-- Промо блок в самом верху сайта, там мы показываем новости -->
+    <Hero />
 
     <!-- Промо блок с архивом релизов, где выводим 4 последних релиза -->
     <ReleaseArchivePrev 
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-// import Hero from '@/components/home/Hero.vue'
+import Hero from '@/components/home/Hero.vue'
 import ReleaseArchivePrev from '@/components/ReleaseArchivePrev.vue'
 import ViedeoHome from '@/components/home/VideoHome.vue'
 import MixesHome from '@/components/home/MixesHome.vue'
@@ -33,8 +33,8 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'Home',
   components: {
-    // Hero, LabelHome,
-    ReleaseArchivePrev, ViedeoHome, MixesHome, 
+    // LabelHome,
+    ReleaseArchivePrev, ViedeoHome, MixesHome, Hero
   },
   async mounted() {
     // При загрузке компонента вызываем релизы, видео для главной страницы

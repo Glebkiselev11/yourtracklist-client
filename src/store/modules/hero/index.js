@@ -1,4 +1,3 @@
-import randomReleases from './random-releases.js'
 import lastReleases from './last-releases.js'
 import latestVideo from './latest-videos'
 import lastMixes from './last-mixes'
@@ -12,6 +11,6 @@ export default {
   state: {
   },
   modules: {
-    randomReleases, lastReleases, latestVideo, lastMixes
+    lastReleases, latestVideo, lastMixes
   }
 }
