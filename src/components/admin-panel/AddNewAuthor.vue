@@ -81,6 +81,12 @@ export default {
           this.avatar = ''
           this.tags = []
           this.socialsNameListObj = {}
+
+
+          // И спустя 10 секунд он удаляет из стора статус
+          setTimeout(() => {
+            this.$store.commit('setStatusForAuthor', undefined)
+          }, 10000)
         }
         
       } catch(errow) {

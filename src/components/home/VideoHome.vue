@@ -1,5 +1,5 @@
 <template>
-  <!-- Секция на главной странице, где выводим последние видео -->
+  <!-- Секция на главной странице, где выводим последние 3 видео -->
   <div class="wrap">
     <!-- Верхняя шапка с заголовком и кнопкой -->
     <TopBar 
@@ -42,8 +42,9 @@
         
         <PrevInfo 
           :date="video.date"
-          :nameInfo="video.nameInfo"
-          :releaseAuthors="video.authors"
+          :name="video.name"
+          :authors="video.authors"
+          :url="video.url"
         />
       </div>
       
@@ -56,19 +57,15 @@
 <script>
 import PrevInfo from '@/components/app/PrevInfo.vue'
 import TopBar from '@/components/app/TopBar.vue'
-import {mapGetters} from 'vuex'
 
 import PrevVideoInfo from '@/components/app/video/PrevVideoInfo.vue'
 import VideoPlayButton from '@/components/app/video/VideoPlayButton.vue'
 
 export default {
   name: 'ViedeoHome',
+  props: ['threeLatestVideos'],
   components: {
     TopBar, PrevInfo, PrevVideoInfo, VideoPlayButton
-  },
-
-  computed: {
-    ...mapGetters(['threeLatestVideos'])
   },
 
 }

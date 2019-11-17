@@ -2,11 +2,16 @@
   <!-- Компонент информации о релизе / видео которая распологается в предпросмотре (дата/ название и автор )-->
   <div>
     <!-- Здесь преобразуем формат времени в ISO в более привлекательный формат -->
-    <span v-if="date" class="release-date">{{new Date(date).toLocaleDateString('ru-RU', {month: 'long', day: 'numeric', year: 'numeric'})}}</span>
-    <router-link :to="permalink" class="release-name">{{name}}</router-link>
+    <span v-if="date" class="date">{{new Date(date).toLocaleDateString('ru-RU', {month: 'long', day: 'numeric', year: 'numeric'})}}</span>
+    
+    <!-- Если есть permalink то показываем его, это переход по приложению -->
+    <router-link v-if="permalink" :to="permalink" class="name">{{name}}</router-link>
+    
+    <!-- А если нету, то тогда должен быть url это уже внешний переход -->
+    <a v-else :href="url" class="name" target="_blank">{{name}}</a>
 
     <!-- Здесь выводим ссылку на дискографию артиста, если он не один, то через цикл -->
-    <p class="release-artist"  
+    <p class="author"  
       v-for="(author, index) in this.authors"
       :key="index"
     >
@@ -24,34 +29,34 @@
 <script>
 export default {
   name: 'Prev-info',
-  props: ['date', 'permalink', 'name', 'authors']
+  props: ['date', 'permalink', 'name', 'authors', 'url']
 }
 </script>
 
 <style scoped>
 
-  .release-date {
+  .date {
     font-size: 14px;
     font-weight: 400;
     display: block;
     margin-bottom: 8px;
   }
 
-  .release-name {
+  .name {
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 4px;
     display: block;
   }
 
-  .release-artist {
+  .author {
     font-size: 16px;
     font-weight: 500;
     display: inline-flex;
   }
 
 
-  .release-artist span {
+  .author span {
     margin: 0 5px;
   }  
   .active-link:hover {

@@ -1,7 +1,11 @@
 <template>
   <!-- Компонент информации о видео которая отображается прямо внутри обложки (платформа и длительность видео)-->
   <div class="prev-video-wrap">
-    <span>{{platform}} {{duration}}</span>
+    <!-- Если видео большое и там есть часы, то показываем с часами -->
+    <span v-if="duration.hours">{{platform}} {{duration.hours + ':' + duration.minutes + ':' + duration.seconds}}</span>
+
+    <!-- А если нету часов (что по сути чаще всего) то показываем только минуты и секунды -->
+    <span v-else>{{platform}} {{duration.minutes + ':' + duration.seconds}}</span>
   </div>
 </template>
 

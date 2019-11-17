@@ -10,7 +10,9 @@
     />
 
     <!-- Промо блок с видео записями, где выводим 3 последних видоса -->
-    <ViedeoHome />
+    <ViedeoHome 
+      :three-latest-videos="this.threeLatestVideos"
+    />
 
     <!-- Промо блок с миксами, где выводим 4 рандомных микса -->
     <MixesHome />
@@ -35,10 +37,13 @@ export default {
     ReleaseArchivePrev, ViedeoHome, MixesHome, 
   },
   async mounted() {
+    // При загрузке компонента вызываем релизы, видео для главной страницы
     await this.$store.dispatch('getFourLatesReleases')
+    await this.$store.dispatch('getThreeLatesVideos')
   },
   computed: {
-    ...mapGetters(['fourLatestReleases'])
+    // Забираем значения из стора
+    ...mapGetters(['fourLatestReleases', 'threeLatestVideos'])
   },
   beforeDestroy() {
     // После закрытия главной страницы мы очищаем из стора загруженные данные, чтобы избежать утечки памяти

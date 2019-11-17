@@ -26,7 +26,7 @@
 
       <div class="input-item">
         <label for="duration">Длительность видео</label>
-        <input type="text" id="duration" v-model="duration">
+        <input type="time" id="duration" v-model="duration" step="1">
       </div>
 
       <div class="input-item">
@@ -107,6 +107,11 @@ export default {
         this.authors = []
         this.url = ''
         this.platform = ''
+
+        // И спустя 10 секунд он удаляет из стора статус
+        setTimeout(() => {
+          this.$store.commit('setStatusForVideo', undefined)
+        }, 10000)
       }
     }
   },

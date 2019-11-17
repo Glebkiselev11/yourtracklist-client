@@ -19,7 +19,7 @@
 
         <div class="input-item">
           <label for="duration">Длительность релиза</label>
-          <input type="text" id="duration" v-model="duration">
+          <input type="time" id="duration" v-model="duration" step="1">
         </div>
 
         <div class="input-item">
@@ -131,6 +131,11 @@ export default {
         this.number_of_tracks = 0
         this.authors = []
         this.socialsNameListObj = {}
+
+        // И спустя 10 секунд он удаляет из стора статус
+        setTimeout(() => {
+          this.$store.commit('setStatusForRelease', undefined)
+        }, 10000)
       }
 
     }
