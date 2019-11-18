@@ -28,8 +28,9 @@ const router = new Router({
       meta: {layout: 'main'}, // Обертка под наше приложение
       component: () => import('@/views/ReleasesArchive')
     },
-    {
-      path: '/release-cart',
+    { 
+      // Тут к примеру мы заходим в релиз /release-cart/tidecruz/ambient-vol-1
+      path: '/release-cart/:author_permalink/:release_permalink',
       name: 'Release-cart',
       meta: {layout: 'main'}, // Обертка под наше приложение
       component: () => import('@/views/ReleaseCart.vue')

@@ -65,7 +65,9 @@ export default {
     ArrowButton
   },
   async mounted() {
-    await this.$store.dispatch('getReleaseInfo')
+    const author = this.$route.params.author_permalink
+    const release = this.$route.params.release_permalink
+    await this.$store.dispatch('getReleaseInfo', {author, release})
   },
 }
 </script>
