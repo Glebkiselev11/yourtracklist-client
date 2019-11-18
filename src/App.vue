@@ -1,16 +1,24 @@
 <template>
   <div id="app">
-    <Navbar />
 
-    <router-view class="body"/>
+    <!-- Контейнер с максимальной шириной 1200px -->
+    <div class="container">
 
+      <Navbar />
+
+      <router-view class="body"/>
+
+    </div>
+    
+    <!-- Для футера у нас установлен контейнер в самом футере -->
     <Footer />
   </div>
+
 </template>
 
 <script>
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+import Navbar from '@/layouts/Navbar'
+import Footer from '@/layouts/Footer'
 export default {
   components: {
     Navbar, Footer
@@ -19,7 +27,7 @@ export default {
 </script>
 
 <style>
-  #app {
+  .container {
     max-width: 1200px;
     margin: auto;
   }
