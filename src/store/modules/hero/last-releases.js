@@ -7,7 +7,6 @@ export default {
       try {
         const {data} = await axios.post('http://localhost:3000/get-four-lates-releases')
         commit('setFourLatesReleases', data)
-        console.log(data)
       } catch(error) {
         console.log(error)
       }
@@ -18,6 +17,11 @@ export default {
   mutations: {
     setFourLatesReleases(state, data) {
       state.fourLatestReleases = data
+    },
+
+    // Обычно эти методы (clear_) мы вызываем когда закрываем компонет, чтобы очистить стор
+    clearFourLatesReleases(state) {
+      state.fourLatestReleases = undefined
     }
   },
   state: {

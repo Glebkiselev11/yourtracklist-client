@@ -113,7 +113,7 @@ export default {
   },
   beforeDestroy() {
     // ! После закрытия мы очищаем стор от загруженного релиза
-    this.$store.commit('setReleaseInfo', undefined) // Релиз
+    this.$store.commit('clearReleaseInfo') // Релиз
   }
 }
 </script>

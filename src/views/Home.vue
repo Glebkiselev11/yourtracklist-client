@@ -47,8 +47,8 @@ export default {
   },
   beforeDestroy() {
     // ! После закрытия главной страницы мы очищаем из стора загруженные данные, чтобы избежать утечки памяти
-    this.$store.commit('setFourLatesReleases', undefined) // Релизы
-    this.$store.commit('setThreeLatesVideos', undefined) // Видео
+    this.$store.commit('clearFourLatesReleases') // Релизы
+    this.$store.commit('clearThreeLatesVideos') // Видео
   }
 }
 </script>

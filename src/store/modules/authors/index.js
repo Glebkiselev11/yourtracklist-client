@@ -36,6 +36,11 @@ export default {
 
     setAuthors(state, data) {
       state.authorsArray = data
+    },
+
+    // При закрытие окна автора мы чистим инфу из стейта
+    clearAuthorInfo(state) {
+      state.authorInfo = undefined
     }
   },
   state: {

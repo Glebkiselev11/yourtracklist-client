@@ -15,6 +15,10 @@ export default {
   mutations: {
     setThreeLatesVideos(state, videos) {
       state.threeLatestVideos = videos
+    },
+
+    clearThreeLatesVideos(state) {
+      state.threeLatestVideos = undefined
     }
   },
   state: {

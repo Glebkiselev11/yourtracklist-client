@@ -75,6 +75,11 @@ export default {
   computed: {
     ...mapGetters(['authorInfo'])
   },
+  beforeDestroy() {
+    // ! После закрытия страницы автора, мы очищаем инфу о нем из стейта
+    this.$store.commit('clearAuthorInfo') // Инфа об авторе
+    // ! После тут еще добаваться методы на очистку видосов и релизов
+  }
 }
 </script>
 

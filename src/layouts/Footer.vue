@@ -116,6 +116,6 @@ export default {
   }
 
   .footer-descrip p {
-    margin-right: 172px;
+    margin-right: 160px;
   }
 </style>

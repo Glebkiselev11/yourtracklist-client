@@ -18,6 +18,10 @@ export default {
   mutations: {
     setReleaseInfo(state, releaseInfo) {
       state.releaseInfo = releaseInfo
+    },
+
+    clearReleaseInfo(state) {
+      state.releaseInfo = undefined
     }
   },
   state: {
