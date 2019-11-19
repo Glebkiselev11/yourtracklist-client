@@ -8,10 +8,6 @@ export default {
 
       try {
         const {data} = await await axios.post('http://localhost:3000/api/get-release-cart', {formData})
-
-        // ! Получили данные, но нужно их доработать, например продолжительность релиза
-        // ? /release-cart/88b+niur/stages для теста пока у нас такой запрос
-        console.log(data)
         commit('setReleaseInfo', data)
       } catch (error) {
         console.log(error)

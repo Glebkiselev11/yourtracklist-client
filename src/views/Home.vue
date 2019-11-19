@@ -46,8 +46,9 @@ export default {
     ...mapGetters(['fourLatestReleases', 'threeLatestVideos'])
   },
   beforeDestroy() {
-    // После закрытия главной страницы мы очищаем из стора загруженные данные, чтобы избежать утечки памяти
+    // ! После закрытия главной страницы мы очищаем из стора загруженные данные, чтобы избежать утечки памяти
     this.$store.commit('setFourLatesReleases', undefined) // Релизы
+    this.$store.commit('setThreeLatesVideos', undefined) // Видео
   }
 }
 </script>

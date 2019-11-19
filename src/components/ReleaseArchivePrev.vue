@@ -22,11 +22,11 @@
           :tags-array="release.tags"
         />
 
-        <img class="release-image" :src="release.cover" alt="cover" @click="openRelease('/release-cart/' + release.permalink)">
+        <img class="release-image" :src="release.cover" alt="cover" @click="openRelease('/release-cart/' + release.authors[0].permalink + '/' + release.permalink)">
         <PrevInfo 
           :date="release.date"
           :name="release.name"
-          :permalink="'/release-cart/' + release.permalink"
+          :permalink="'/release-cart/' + release.authors[0].permalink + '/' + release.permalink"
           :authors="release.authors"
         />
       </div>

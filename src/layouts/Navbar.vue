@@ -1,7 +1,7 @@
 <template>
   <!-- Компонент навигационной панели, которая отображается на всех страницах приложения -->
   <div class="navbar-wrap">
-    <img src="@/../public/img/logo/yt-logo.svg" alt="">
+    <img class="yt-logo" src="@/../public/img/logo/yt-logo.svg" @click="goToHomePage" alt="">
 
     <!-- Сама навигация -->
     <ul class="navbar-link-list">
@@ -32,7 +32,14 @@
 
 <script>
 export default {
-  name: 'navbar'
+  name: 'navbar',
+  methods: {
+    goToHomePage() {
+      // ! Тут какая то ошибка вылазит, надо подумать что с этим можно сделать
+      this.$router.push('/')
+      
+    }
+  },
   
 }
 </script>
@@ -46,6 +53,10 @@ export default {
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
+  }
+
+  .yt-logo {
+    cursor: pointer;
   }
     
   .navbar-link-list {
