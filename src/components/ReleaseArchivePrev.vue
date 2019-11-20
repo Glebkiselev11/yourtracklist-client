@@ -27,7 +27,7 @@
         <PrevInfo 
           :date="release.date"
           :name="release.name"
-          :permalink="'/release-cart/' + release.authors[0].permalink + '/' + release.permalink"
+          :permalink="release.permalink"
           :authors="release.authors"
         />
       </div>

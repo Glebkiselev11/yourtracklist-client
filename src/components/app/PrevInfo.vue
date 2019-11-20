@@ -5,7 +5,7 @@
     <span v-if="date" class="date">{{new Date(date).toLocaleDateString('ru-RU', {month: 'long', day: 'numeric', year: 'numeric'})}}</span>
     
     <!-- Если есть permalink то показываем его, это переход по приложению -->
-    <router-link v-if="permalink" :to="permalink" class="name">{{name}}</router-link>
+    <a  v-if="permalink" @click.prevent="goToReleaseCart" class="name">{{name}}</a>
     
     <!-- А если нету, то тогда должен быть url это уже внешний переход -->
     <a v-else :href="url" class="name" target="_blank">{{name}}</a>
@@ -29,7 +29,23 @@
 <script>
 export default {
   name: 'Prev-info',
-  props: ['date', 'permalink', 'name', 'authors', 'url']
+  props: ['date', 'permalink', 'name', 'authors', 'url'],
+  methods: {
+    // Через этот метод мы переходим к карточке релиза
+    goToReleaseCart() {
+      // Возможно это костыль, но по сути у нас не бывает больше 4 авторов в одном релизе
+      if (this.authors.length === 1) {
+        this.$router.push(`/release-cart/${this.authors[0]['permalink']}/${this.permalink}`)
+      } else if (this.authors.length === 2) {
+        this.$router.push(`/release-cart/${this.authors[0]['permalink']}+${this.authors[1]['permalink']}/${this.permalink}`)
+      } else if (this.authors.length === 3) {
+        this.$router.push(`/release-cart/${this.authors[0]['permalink']}+${this.authors[1]['permalink']}+${this.authors[2]['permalink']}/${this.permalink}`)
+      } else {
+        this.$router.push(`/release-cart/${this.authors[0]['permalink']}+${this.authors[1]['permalink']}+${this.authors[2]['permalink']}+${this.authors[3]['permalink']}/${this.permalink}`)
+      }
+      
+    }
+  }
 }
 </script>
 
@@ -47,6 +63,7 @@ export default {
     font-weight: 700;
     margin-bottom: 4px;
     display: block;
+    cursor: pointer;
   }
 
   .author {
