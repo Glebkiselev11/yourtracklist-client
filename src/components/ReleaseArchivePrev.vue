@@ -23,7 +23,7 @@
         />
 
         <!-- Здесь надо будет пофиксить переход к карточки релиза, потому что пока мы переходим по 1 исполнителю, а нужно по всем через + (niur+88b Например) -->
-        <img class="release-image" :src="release.cover" alt="cover" @click="openRelease('/release-cart/' + release.authors[0].permalink + '/' + release.permalink)">
+        <img class="release-image" :src="release.cover" alt="cover" @click="openRelease(release.authors, release.permalink)">
         <PrevInfo 
           :date="release.date"
           :name="release.name"
@@ -50,8 +50,18 @@ export default {
   
   methods: {
     // Открывает релиз (по клику на обложку)
-    openRelease(link) {
-      this.$router.push(link)
+    openRelease(authors, release) {
+
+      // Возможно это костыль, но по сути у нас не бывает больше 4 авторов в одном релизе
+      if (authors.length === 1) {
+        this.$router.push(`/release-cart/${authors[0]['permalink']}/${release}`)
+      } else if (authors.length === 2) {
+        this.$router.push(`/release-cart/${authors[0]['permalink']}+${authors[1]['permalink']}/${release}`)
+      } else if (authors.length === 3) {
+        this.$router.push(`/release-cart/${authors[0]['permalink']}+${authors[1]['permalink']}+${authors[2]['permalink']}/${release}`)
+      } else {
+        this.$router.push(`/release-cart/${authors[0]['permalink']}+${authors[1]['permalink']}+${authors[2]['permalink']}+${authors[3]['permalink']}/${release}`)
+      }
     }
   },
 }
