@@ -69,7 +69,7 @@ export default {
   .author {
     font-size: 16px;
     font-weight: 500;
-    display: inline-flex;
+    display: inline;
   }
 
 

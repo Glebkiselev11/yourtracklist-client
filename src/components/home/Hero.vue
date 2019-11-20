@@ -41,6 +41,7 @@ export default {
     padding: 51px 0 0 130px;
     font-size: 25px;
     font-weight: 400;
+    line-height: 140%;
   }
 
   .hero-logo {

@@ -6,16 +6,13 @@
     <!-- Сама навигация -->
     <ul class="navbar-link-list">
       <li class="navbar-link-item"> 
-        <router-link to="#">Архив релизов</router-link> 
+        <router-link to="#">Релизы</router-link> 
       </li>
       <li class="navbar-link-item"> 
         <router-link to="#">Видео</router-link> 
       </li>
       <li class="navbar-link-item"> 
         <router-link to="#">Миксы</router-link> 
-      </li>
-      <li class="navbar-link-item"> 
-        <router-link to="#">Лейбл</router-link> 
       </li>
     </ul>
 
@@ -61,17 +58,16 @@ export default {
     
   .navbar-link-list {
     display: flex;
-    margin-left: 152px;
-    width: 600px;
+    margin-left: 175px;
+    width: 380px;
     justify-content: space-between;
   }
   .navbar-link-item a {
-    opacity: 0.5;
     font-size: 25px;
   }
 
   .navbar-link-item a:hover {
-    opacity: 1;
+    border-bottom: 1px solid black;
   }
 
   .search-wrap {
