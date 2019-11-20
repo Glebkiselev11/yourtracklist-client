@@ -78,7 +78,11 @@ export default {
   .releases-wrap {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+  }
+
+  .releases-wrap:not(:first-child) .release-item {
+    margin-right: 26px;
   }
 
 

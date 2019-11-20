@@ -126,22 +126,21 @@ export default {
     margin-top: 110px;
     margin-bottom: 200px;
     display: flex;
-
     box-sizing: content-box;
   }
 
  
   .release-wrap {
     margin-top: 82px;
-    margin-left: 282px;
+    margin-left: 130px;
     width: 100%;
     display: flex;
     
   }
 
   .release-cover {
-    width: 305px;
-    height: 305px;
+    width: 348px;
+    height: 348px;
   }
 
 
@@ -150,7 +149,7 @@ export default {
     position: relative;
     height: 100%;
     width: 100%;
-    margin-left: 73px;
+    margin-left: 109px;
   }
 
 

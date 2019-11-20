@@ -45,7 +45,7 @@
 
     <!-- Здесь показываем 4 релиза, пока используем тот же компонент что и на главной -->
     <ReleaseArchivePrev 
-      :four-latest-releases="this.fakeLastFourRel"
+      :four-latest-releases="this.fourLastReleasesForAuthor"
     />
 
     <VideoPrevAuthor 
@@ -69,17 +69,37 @@ export default {
   components: {
     ReleaseArchivePrev, VideoPrevAuthor
   },
-  async mounted() {
+  async created() {
     await this.$store.dispatch('getAuthorById', this.$route.params.permalink)
+    await this.$store.dispatch('getFourLatesReleasesForAuthorById', this.$route.params.permalink)
   },
   computed: {
-    ...mapGetters(['authorInfo'])
+    ...mapGetters(['authorInfo', 'fourLastReleasesForAuthor'])
   },
   beforeDestroy() {
     // ! После закрытия страницы автора, мы очищаем инфу о нем из стейта
     this.$store.commit('clearAuthorInfo') // Инфа об авторе
-    // ! После тут еще добаваться методы на очистку видосов и релизов
-  }
+    this.$store.commit('clearFourLastReleasesForAuthor') // Чистим из стора инфу о релизах
+    // ! После тут еще добаваться методы на очистку видосов
+  },
+
+  // Вызывается когда маршрут, что рендерит этот компонент изменился
+  async beforeRouteUpdate(to, from, next) {
+    
+    // Вот эти все манипуляции в этом хуке нужны для того чтобы, если ты находясь на странице автора, выбрал из релизов другого
+    // совместного автора и корректно к нему перешел, там был некий баг, но благодаря этой штуке все окич
+
+    this.$store.commit('clearAuthorInfo') // Инфа об авторе
+    this.$store.commit('clearFourLastReleasesForAuthor') // Чистим из стора инфу о релизах
+
+    console.log(from)
+    await this.$store.dispatch('getAuthorById', to.params.permalink)
+    await this.$store.dispatch('getFourLatesReleasesForAuthorById', to.params.permalink)
+    
+    next()
+  },
+
+
 }
 </script>
 
