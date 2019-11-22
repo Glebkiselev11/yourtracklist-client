@@ -23,7 +23,7 @@ const router = new Router({
       component: () => import('@/views/Home.vue')
     },
     {
-      path: '/releases-archive',
+      path: '/releases-archive/:sorting?',
       name: 'Releases-archive',
       meta: {layout: 'main'}, // Обертка под наше приложение
       component: () => import('@/views/ReleasesArchive')

@@ -42,6 +42,13 @@ export default {
   computed: {
     ...mapGetters(['releaseTags'])
   },
+  watch: {
+    // Пушит в адресную строку фильтер
+    sorting(sorting) {
+      this.$emit('selected', sorting)
+    }
+  },
+
 
 }
 </script>

@@ -4,9 +4,13 @@ import axios from 'axios'
 export default {
   actions: {
     // Получает пока 9 релизов с базы
-    async getReleases({commit}) {
+    async getReleases({commit}, params) {
+
+      // Если нету сортировки, то по умолчанию запрашиваем как новые релизы
+      const {sorting} = params
+
       try {
-        const {data} = await axios.post('/api/get-release')
+        const {data} = await axios.post('/api/get-release', {sorting})
         console.log(data)
         commit('setReleases', data)
       } catch (error) {
