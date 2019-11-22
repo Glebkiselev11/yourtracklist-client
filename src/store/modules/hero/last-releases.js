@@ -5,7 +5,7 @@ export default {
   actions: {
     async getFourLatesReleases({commit}) {
       try {
-        const {data} = await axios.post('http://localhost:3000/get-four-lates-releases')
+        const {data} = await axios.post('/api/get-four-lates-releases')
         commit('setFourLatesReleases', data)
       } catch(error) {
         console.log(error)

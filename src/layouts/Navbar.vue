@@ -6,7 +6,7 @@
     <!-- Сама навигация -->
     <ul class="navbar-link-list">
       <li class="navbar-link-item"> 
-        <router-link to="#">Релизы</router-link> 
+        <router-link to="/releases-archive">Релизы</router-link> 
       </li>
       <li class="navbar-link-item"> 
         <router-link to="#">Видео</router-link> 

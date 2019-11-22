@@ -6,7 +6,7 @@ export default {
     // Последние 4 релиза автора для предпоказа
     async getFourLatesReleasesForAuthorById({commit}, authorPermalink) {
       try {
-        const {data} = await axios.post('http://localhost:3000/get-four-lates-releases-for-author', {authorPermalink})
+        const {data} = await axios.post('/api/get-four-lates-releases-for-author', {authorPermalink})
         commit('setFourLastReleasesForAuthor', data)
       } catch(error) {
         console.log(error)

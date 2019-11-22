@@ -9,8 +9,9 @@ export default {
     async getAuthorById({commit}, permalink) {
       
 
-      const {data} = await axios.post('http://localhost:3000/get-author-by-id', { permalink })
+      const {data} = await axios.post('/api/get-author-by-id', { permalink })
 
+      // ! Вот это походу больше не нужно
       for (let link in data.links) {
 
         // Если поле ссылки пришло пустым, то мы удаляем его из массива
@@ -24,7 +25,7 @@ export default {
 
     // Получаем всех авторов (а именно их имена и пермалинки)
     async getAuthors({commit}) {
-      const {data} = await axios.post('http://localhost:3000/get-authors-list')
+      const {data} = await axios.post('/api/get-authors-list')
 
       commit('setAuthors', data)
     }

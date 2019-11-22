@@ -8,7 +8,7 @@ export default {
     // Добавляет автора в нашу коллекцию, доступно только для администратора
     async admin_addAuthor({commit}, formData) {
       try {
-        const {data} = await axios.post('http://localhost:3000/add-author', {formData})
+        const {data} = await axios.post('/api/add-author', {formData})
 
         console.log(data)
         let statusMessage = {}
@@ -29,7 +29,7 @@ export default {
     // Добавляет релиз в нашу коллекицию
     async admin_addRelease({commit}, formData) {
       try {
-        const {data} = await axios.post('http://localhost:3000/add-release', {formData})
+        const {data} = await axios.post('/api/add-release', {formData})
 
         let statusMessage = {}
 
@@ -49,7 +49,7 @@ export default {
     // Возвращает список всех возможных социальных сетей, пока нужен только для админ кабинета, чтобы не пладить кучу инпутов в шаблоне
     async admin_getSocialsNameList({commit}) {
       try {
-        const {data} =  await axios.post('http://localhost:3000/get-socials')
+        const {data} =  await axios.post('/api/get-socials')
 
         // Полученный массив названий социальных сетей устанавливаем в стейт
         commit('setSocialsNameList', data)

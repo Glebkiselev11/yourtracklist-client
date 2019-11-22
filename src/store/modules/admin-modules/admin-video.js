@@ -9,7 +9,7 @@ export default {
     async addNewVideo({commit}, formData) {
 
       try {
-        const {data} = await axios.post('http://localhost:3000/add-video', {formData})
+        const {data} = await axios.post('/api/add-video', {formData})
         
         let statusMessage = {}
 

@@ -5,7 +5,7 @@ export default {
   actions: {
     // Получает с бэкенда список всех доступных тегов
     async getReleaseTags({commit}) {
-      const {data : tags} = await axios.post('http://localhost:3000/get-release-tags')
+      const {data : tags} = await axios.post('/api/get-release-tags')
 
 
       commit('setReleaseTags', tags)
