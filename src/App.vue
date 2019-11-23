@@ -80,7 +80,7 @@ export default {
     align-items: baseline;
   }
 
-  .page-item {
+  .page-item a {
     display: flex;
     justify-content: center;
     align-items: center;

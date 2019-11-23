@@ -4,7 +4,7 @@
     <div class="window-wrap">
      
       <!-- Количество найденых релизов -->
-      <span class="number-of-releases">Найдено 50 релизов</span>
+      <span class="number-of-releases">Найдено {{count}} релизов</span>
 
       <!-- Сюда итерируем сами релизы / миксы -->
       <div class="archive-wrap">
@@ -53,7 +53,7 @@ import paginationMixin from '@/mixins/pagination.mixin.js'
 
 export default {
   name: 'Archive-window',
-  props: ['releases', 'linkTo'],
+  props: ['releases', 'linkTo', 'count'],
   components: {
     PrevInfo, PrevTagsHeader
   },
@@ -73,6 +73,11 @@ export default {
         this.$router.push(`/release-cart/${authors[0]['permalink']}+${authors[1]['permalink']}+${authors[2]['permalink']}+${authors[3]['permalink']}/${release}`)
       }
     }
+  },
+  
+  beforeDestroy() {
+    // Когда закрываем этот компонент то чистим стор от тех релизов которые были загружены до этого
+    this.$store.commit('clearReleases')
   },
 }
 </script>

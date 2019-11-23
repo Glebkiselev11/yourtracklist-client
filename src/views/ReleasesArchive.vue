@@ -11,10 +11,12 @@
         @checkedTags="getReleasesWithTags"
       />
       
+      
       <!-- Основное окно куда выводим релизы -->
       <!-- linkTo туда передаем начальный кусок ссылки -->
       <ArchiveWindow 
         :releases="this.releases"
+        :count="this.count"
         linkTo="/release-cart/"
       />
 
@@ -29,25 +31,37 @@ import SortSideBar from '@/components/side-sort-bar/SortSideBar.vue'
 import ArchiveWindow from '@/components/archive-window/ArchiveWindow.vue'
 export default {
   name: 'Releases-archive',
+  data: () => ({
+    filters: undefined
+  }),
   components: {
     ArchiveWindow, // Компонент для отобржаения релизов
     SortSideBar, // Боковая панель с фильтрами и сортировками
   },
   computed: {
-    ...mapGetters(['releases'])
+    ...mapGetters(['releases', 'count'])
   },
   methods: {
     // Этот метод мы будем вызывать когда применили фильтр, он вызывает когда в сайд баре выбран какой либо фильтр
+    // То есть получается когда прогрузился сайд бар, так сразу вызывается этот метод
     async getReleasesWithFilter(sorting) {
+
       // Ставим в роутер нужный фильтр
-      this.$router.push(`/releases-archive/${sorting}`)
+      this.$router.push({ query: { ...this.$route.query, sorting }})
+
       // И запрашиваем с бэка по этому фильтру релизы
-      await this.$store.dispatch('getReleases', { sorting: this.$route.params.sorting})
+      await this.$store.dispatch('getReleases', { sorting: this.$route.query.sorting})
     },
 
     // Через этот метод будем загружать только релизы выбранных жанров
-    async getReleasesWithTags(tags) {
-      console.log(tags)
+    async getReleasesWithTags(tag) {
+      
+      // Пушим в роутер нужные теги, при этом не перебиваем другие query параметры
+      this.$router.push({ query: { ...this.$route.query, tag }})
+
+      // ! Завтра начнем отсюда, добавлять функционал тегов
+      console.log(this.$route.query)
+
     }
   }
 }

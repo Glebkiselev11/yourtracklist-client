@@ -10,9 +10,13 @@ export default {
       const {sorting} = params
 
       try {
-        const {data} = await axios.post('/api/get-release', {sorting})
-        console.log(data)
-        commit('setReleases', data)
+        const {data : {releases, count}} = await axios.post('/api/get-release', {sorting})
+
+        // Вносим релизы
+        commit('setReleases', releases)
+
+        // И количество найденых релизов
+        commit('setCountReleases', count)
       } catch (error) {
         console.log(error)
       }
@@ -23,16 +27,20 @@ export default {
       state.releases = releases
     },
 
+    setCountReleases(state, count) {
+      state.count = count
+    },
+
     clearReleases(state) {
       state.releases = undefined
     }
   },
   state: {
-    releases: undefined // релизы одной страницы пагинации, у нас там пока только 9 релизов на одной страница, возможно в будущем
+    releases: undefined, // релизы одной страницы пагинации, у нас там пока только 9 релизов на одной страница, возможно в будущем
+    count: undefined, // Количество найденых релизов
   },
   getters: {
-    releases(state) {
-      return state.releases
-    }
+    releases: state => state.releases,
+    count: state => state.count
   }
 }

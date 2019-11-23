@@ -46,7 +46,7 @@ export default {
   created() {
     // При открытие в первый раз сортировки, мы смотрим что у нас есть в роуторе
     // Нужно чтобы селектор, где мы выбираем тип сортировки - синхронизировался с адресной строкой
-    switch(this.$route.params.sorting) {
+    switch(this.$route.query.sorting) {
       case 'old' : 
         this.sorting = 'old'
         break
