@@ -81,7 +81,7 @@ export default {
     justify-content: flex-start;
   }
 
-  .releases-wrap:not(:first-child) .release-item {
+  .release-item:not(:nth-child(4))  {
     margin-right: 26px;
   }
 

@@ -5,10 +5,13 @@ export default {
   actions: {
     // Получает с бэкенда список всех доступных тегов
     async getReleaseTags({commit}) {
-      const {data : tags} = await axios.post('/api/get-release-tags')
-
-
-      commit('setReleaseTags', tags)
+      try {
+        const {data : tags} = await axios.post('/api/get-release-tags')
+        commit('setReleaseTags', tags)
+      } catch (error) {
+        console.log(error)
+      }
+      
     }
   },
   mutations: {
@@ -17,7 +20,7 @@ export default {
     }
   },
   state: {
-    // Все возможные теги, храним пока тут, в будущем будем получать их из базы данных, а может всегда будут храниться здесь
+    // Все возможные теги
     releaseTags: []
   },
   getters: {

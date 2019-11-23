@@ -7,7 +7,7 @@ export default {
 
 
       try {
-        const {data} = await await axios.post('/api/api/get-release-cart', {formData})
+        const {data} = await await axios.post('/api/get-release-cart', {formData})
         commit('setReleaseInfo', data)
       } catch (error) {
         console.log(error)

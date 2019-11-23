@@ -19,8 +19,8 @@
         v-for="(tag, index) of releaseTags"
         :key="index"
       > 
-        <input type="checkbox" :id="tag"  :value="tag" v-model="checkedTags">
-        <label :for="tag">{{tag}}</label>
+        <input type="checkbox" :id="tag.tag_name"  :value="tag.tag_name" v-model="checkedTags">
+        <label :for="tag.tag_name">{{tag.tag_name}}</label>
         
       </div>
       
@@ -38,6 +38,11 @@ export default {
     sorting: undefined, // Тип сортировки берется из роутера, если там нет ничего, то ставится 'new'
     checkedTags: [], // Массив тегов, которые выбраны
   }),
+  
+  async mounted() {
+    // Здесь мы вызываем подгрузку тегов с бэкенда
+    await this.$store.dispatch('getReleaseTags')
+  },
   created() {
     // При открытие в первый раз сортировки, мы смотрим что у нас есть в роуторе
     // Нужно чтобы селектор, где мы выбираем тип сортировки - синхронизировался с адресной строкой
@@ -65,6 +70,11 @@ export default {
     // Отправляет в родителя выбранную сортировку
     sorting(sorting) {
       this.$emit('selected', sorting)
+    },
+
+    // Следит за выбранными тегами и отравляет их в родителя, оттуда мы делаем уже запрос на получение релизов по тегам
+    checkedTags(tags) {
+      this.$emit('checkedTags', tags)
     }
   },
 

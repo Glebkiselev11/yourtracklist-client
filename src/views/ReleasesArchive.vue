@@ -8,6 +8,7 @@
       <!-- Боковая сортировка -->
       <SortSideBar 
         @selected="getReleasesWithFilter"
+        @checkedTags="getReleasesWithTags"
       />
       
       <!-- Основное окно куда выводим релизы -->
@@ -42,6 +43,11 @@ export default {
       this.$router.push(`/releases-archive/${sorting}`)
       // И запрашиваем с бэка по этому фильтру релизы
       await this.$store.dispatch('getReleases', { sorting: this.$route.params.sorting})
+    },
+
+    // Через этот метод будем загружать только релизы выбранных жанров
+    async getReleasesWithTags(tags) {
+      console.log(tags)
     }
   }
 }
