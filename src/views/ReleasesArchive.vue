@@ -35,18 +35,12 @@ export default {
   computed: {
     ...mapGetters(['releases'])
   },
-  async mounted() {
-
-    // При открытии компонента, подгружаем релизы
-    await this.$store.dispatch('getReleases', {sorting: this.$route.params.sorting || 'new'})
-  },
   methods: {
-
-
     // Этот метод мы будем вызывать когда применили фильтр, он вызывает когда в сайд баре выбран какой либо фильтр
     async getReleasesWithFilter(sorting) {
       // Ставим в роутер нужный фильтр
       this.$router.push(`/releases-archive/${sorting}`)
+      // И запрашиваем с бэка по этому фильтру релизы
       await this.$store.dispatch('getReleases', { sorting: this.$route.params.sorting})
     }
   }

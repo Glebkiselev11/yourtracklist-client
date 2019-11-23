@@ -35,15 +35,34 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'Sort-side-bar',
   data: () => ({
-    sorting: 'new', // Тип сортировки, по умоланию стоит на новые релизы / миксы
+    sorting: undefined, // Тип сортировки берется из роутера, если там нет ничего, то ставится 'new'
     checkedTags: [], // Массив тегов, которые выбраны
   }),
+  created() {
+    // При открытие в первый раз сортировки, мы смотрим что у нас есть в роуторе
+    // Нужно чтобы селектор, где мы выбираем тип сортировки - синхронизировался с адресной строкой
+    switch(this.$route.params.sorting) {
+      case 'old' : 
+        this.sorting = 'old'
+        break
+      case 'random' :
+        this.sorting = 'random'
+        break
+      case 'artist' :
+        this.sorting = 'artist'
+        break
+      // Если там что то другое, иили вообще нет типа сортировки, то по умолчанию ставим как new
+      default:
+        this.sorting = 'new'
+        break
+    }
+  },
 
   computed: {
     ...mapGetters(['releaseTags'])
   },
   watch: {
-    // Пушит в адресную строку фильтер
+    // Отправляет в родителя выбранную сортировку
     sorting(sorting) {
       this.$emit('selected', sorting)
     }
