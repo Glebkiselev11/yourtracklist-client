@@ -6,6 +6,7 @@
     <!-- Верхняя шапка с заголовком и кнопкой -->
     <TopBar 
       title="Релизы"
+      @click="routerTo"
     />
 
     <!-- Обертка под релизы, который мы будем итерировать циклом -->
@@ -62,6 +63,11 @@ export default {
       } else {
         this.$router.push(`/release-cart/${authors[0]['permalink']}+${authors[1]['permalink']}+${authors[2]['permalink']}+${authors[3]['permalink']}/${release}`)
       }
+    },
+
+    // Переходит к релизам, пока только ко всем возможным релизам
+    routerTo() {
+      this.$router.push('/releases-archive')
     }
   },
 }
