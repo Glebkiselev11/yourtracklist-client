@@ -58,6 +58,7 @@ export default {
   a {
     text-decoration: none;
     color: black;
+    cursor: pointer;
   }
 
   button {

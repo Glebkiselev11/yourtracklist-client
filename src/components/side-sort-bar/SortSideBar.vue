@@ -3,7 +3,7 @@
   <div class="sort-side-bar-wrap">
     
     <!-- Выбираем тип сортировки -->
-    <select v-model="sorting">
+    <select v-model="sorting" >
       <option value="new">Сначала новые</option>
       <option value="old">Сначала старые</option>
       <option value="random">В случайном порядке</option>
@@ -19,7 +19,7 @@
         v-for="(tag, index) of releaseTags"
         :key="index"
       > 
-        <input type="checkbox" :id="tag.tag_name"  :value="tag.tag_name" v-model="checkedTags">
+        <input type="checkbox" :id="tag.tag_name"  :value="tag.tag_name" v-model="changeTags">
         <label :for="tag.tag_name">{{tag.tag_name}}</label>
         
       </div>
@@ -34,65 +34,43 @@
 import {mapGetters} from 'vuex'
 export default {
   name: 'Sort-side-bar',
-  data: () => ({
-    sorting: undefined, // Тип сортировки берется из роутера, если там нет ничего, то ставится 'new'
-    checkedTags: [], // Массив тегов, которые выбраны
-  }),
   
   async mounted() {
     // Здесь мы вызываем подгрузку тегов с бэкенда
     await this.$store.dispatch('getReleaseTags')
   },
-  created() {
-    // При открытие в первый раз сортировки, мы смотрим что у нас есть в роуторе
-    // Нужно чтобы селектор, где мы выбираем тип сортировки - синхронизировался с адресной строкой
-    switch(this.$route.query.sorting) {
-      case 'old' : 
-        this.sorting = 'old'
-        break
-      case 'random' :
-        this.sorting = 'random'
-        break
-      case 'artist' :
-        this.sorting = 'artist'
-        break
-      // Если там что то другое, иили вообще нет типа сортировки, то по умолчанию ставим как new
-      default:
-        this.sorting = 'new'
-        break
-    }
-
-    // Тут синхронизируем теги с адресной строкой, если там 1 тег, то он как строка
-    if(typeof this.$route.query.tag === 'string') {
-      this.checkedTags.push(this.$route.query.tag)
-
-      // А если их несколько то он массив (object)
-    } else if (typeof this.$route.query.tag === 'object') {
-      this.checkedTags = this.$route.query.tag
-    }
-    
-  },
 
   computed: {
     ...mapGetters(['releaseTags']),
-  },
-  watch: {
-    // ! Тут важный момент, они отвечают за то чтобы загрузить с беэкенда релизы.
-    // ! То есть только когда загрузиться этот компонент и выставяться нужные фильтры, идет команда в 
-    // ! Родительский компонент и он уже загружает релизы с бэкенда по выбранным фильтрам, это важно, так как это может сбить с толку
 
-
-    // ! Есть проблема с тем, когда ты открываешь первый раз, он делает одновременно 2
-
-    // Отправляет в родителя выбранную сортировку
-    sorting(sorting) {
-      this.$emit('selected', sorting)
+    // Двухнапрявленная привязка сортировки
+    sorting: {
+      set(sorting) {
+        // А так же сразу ставим выбранное значение в роутер
+        this.$router.push({ query: { ...this.$route.query, sorting }})
+        // И коммитим в стор выбранный метод фильтрации
+        this.$store.commit('setSorting', sorting)
+      },
+      get() {
+        return this.$store.state.releases.releases.sorting
+      }
     },
 
-    // Следит за выбранными тегами и отравляет их в родителя, оттуда мы делаем уже запрос на получение релизов по тегам
-    checkedTags(tags) {
-      this.$emit('checkedTags', tags)
+    // Двухнапрявленная привязка смены тегов
+    changeTags: {
+      set(tag) {
+        // А так же сразу ставим выбранное значение в роутер
+        this.$router.push({ query: { ...this.$route.query, tag }})
+        // И коммитим в стор выбранные теги
+        this.$store.commit('setSelectTags', tag)
+      },
+
+      get() {
+        // Забирает из стора теги, которые у нас там лежат, а вносим мы их туда из родителя, когда загружаем страницу
+        return this.$store.state.releases.releases.selectTags
+      }
     }
+
   },
 
 

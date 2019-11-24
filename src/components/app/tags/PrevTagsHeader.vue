@@ -22,7 +22,7 @@
     methods: {
       // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)
       routerTo(linkTo, tag) {
-        this.$router.push({ path: linkTo , query: { tag }})
+        this.$router.push({ path: linkTo , query: { ...this.$route.query, tag }})
       }
     },
   }

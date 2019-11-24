@@ -6,10 +6,7 @@
     <div class="container">
 
       <!-- Боковая сортировка -->
-      <SortSideBar 
-        @selected="getReleasesWithFilter"
-        @checkedTags="getReleasesWithTags"
-      />
+      <SortSideBar />
       
       
       <!-- Основное окно куда выводим релизы -->
@@ -31,7 +28,9 @@ import ArchiveWindow from '@/components/archive-window/ArchiveWindow.vue'
 export default {
   name: 'Releases-archive',
   data: () => ({
-    filters: undefined
+    filters: undefined,
+    sorting: undefined, // Тип сортировки, который у нас выбран, когда загружается страница в первый раз, то мы сюда его устанавливаем с квери параметров в адресной строке
+    checkedTags: [], // Выбранные теги, которые тоже устанавливаются первый раз из адресной строки, если они там есть
   }),
   components: {
     ArchiveWindow, // Компонент для отобржаения релизов
@@ -40,31 +39,52 @@ export default {
   computed: {
     ...mapGetters(['releases', 'count'])
   },
-  
-  
-  methods: {
-    // Этот метод мы будем вызывать когда применили фильтр, он вызывает когда в сайд баре выбран какой либо фильтр
-    // То есть получается когда прогрузился сайд бар, так сразу вызывается этот метод
-    async getReleasesWithFilter(sorting) {
+  async created() {
 
-      // Ставим в роутер нужный фильтр
-      this.$router.push({ query: { ...this.$route.query, sorting }})
-
-      // И запрашиваем с бэка по этому фильтру релизы
-      await this.$store.dispatch('getReleases', { sorting: this.$route.query.sorting, tags: this.$route.query.tag})
-    },
-
-    // Через этот метод будем загружать только релизы выбранных жанров
-    async getReleasesWithTags(tag) {
-
-      // Пушим в роутер нужные теги, при этом не перебиваем другие query параметры
-      this.$router.push({ query: { ...this.$route.query, tag }})
-
-      // Загружаем с тегами, если они есть
-      await this.$store.dispatch('getReleases', { sorting: this.$route.query.sorting, tags: this.$route.query.tag})
-
+    // При открытие в первый раз сортировки, мы смотрим что у нас есть в роуторе
+    // Нужно чтобы селектор, где мы выбираем тип сортировки - синхронизировался с адресной строкой
+    switch(this.$route.query.sorting) {
+      case 'old' : 
+        this.$store.commit('setSorting', 'old')
+        break
+      case 'random' :
+        this.$store.commit('setSorting', 'random')
+        break
+      case 'artist' :
+        this.$store.commit('setSorting', 'artist')
+        break
+      // Если там что то другое, иили вообще нет типа сортировки, то по умолчанию ставим как new
+      default:
+        this.$store.commit('setSorting', 'new')
+        break
     }
-  }
+
+    // Устанавлием в store теги релизов которые выбраны
+    this.$store.commit('setSelectTags', this.$route.query.tag)
+
+
+    // Подгружаем с бэкенда на основе фильтров нужные релизы
+    await this.$store.dispatch('getReleases')
+    
+  },
+  watch: {
+    // Следит за изменениями роутера
+    async '$route' (to) {
+
+      // Ставит в $store теги из urla (нужно для того, чтобы когда мы в ручную меняем url 
+      // либо жмем по тегам в карточках и мы дополняем эти теги в store)
+      this.$store.commit('setSelectTags', to.query.tag)
+
+      // И как только роутер меняется делает запрос на бэк с новыми фильтрами, которые у нас храняться в стейте
+      await this.$store.dispatch('getReleases')
+    }
+  },
+  // Как только мы закрываем этот раздел, мы подчищаем страницу от тегов сортировки
+  beforeDestroy() {
+    this.$store.commit('clearSorting')
+    this.$store.commit('clearSelectTags')
+  },
+
 }
 </script>
 

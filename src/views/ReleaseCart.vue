@@ -79,7 +79,7 @@
                 v-for="(tag, index) of releaseInfo.tags"
                 :key="index"
             
-              ><router-link :to="'/releases-archive/' + tag">{{tag}}</router-link></li>
+              ><a @click.prevent="routerTo('/releases-archive', tag)">{{tag}}</a></li>
             
             </ul>
           </div>
@@ -110,6 +110,12 @@ export default {
   computed: {
     // Тут мы его получаем
     ...mapGetters(['releaseInfo'])
+  },
+  methods: {
+    // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)
+    routerTo(linkTo, tag) {
+      this.$router.push({ path: linkTo , query: { ...this.$route.query, tag }})
+    }
   },
   beforeDestroy() {
     // ! После закрытия мы очищаем стор от загруженного релиза
