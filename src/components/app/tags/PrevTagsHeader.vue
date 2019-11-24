@@ -7,7 +7,7 @@
       :key="index"
     >
     <span v-if="index !== 0"> / </span>
-    <router-link :to="linkTo + 'tags/'+ tag">{{tag}}</router-link>
+    <a @click.prevent="routerTo(linkTo, tag)">{{tag}}</a>
   </span>
 
   </div>
@@ -18,7 +18,13 @@
 
   export default {
     name: 'Prev-tags-header',
-    props: ['tagsArray', 'linkTo']
+    props: ['tagsArray', 'linkTo'],
+    methods: {
+      // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)
+      routerTo(linkTo, tag) {
+        this.$router.push({ path: linkTo , query: { tag }})
+      }
+    },
   }
 </script>
 
@@ -31,6 +37,10 @@
     margin-right: 5px;
     font-size: 14px;
     font-weight: 300;
+  }
+
+  .release-tags a  {
+    cursor: pointer;
   }
 </style>
 
