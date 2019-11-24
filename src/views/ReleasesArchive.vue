@@ -48,19 +48,19 @@ export default {
 
       // Ставим в роутер нужный фильтр
       this.$router.push({ query: { ...this.$route.query, sorting }})
-
+      
       // И запрашиваем с бэка по этому фильтру релизы
-      await this.$store.dispatch('getReleases', { sorting: this.$route.query.sorting})
+      await this.$store.dispatch('getReleases', { sorting: this.$route.query.sorting, tags: this.$route.query.tag})
     },
 
-    // Через этот метод будем загружать только релизы выбранных жанров
+    //Через этот метод будем загружать только релизы выбранных жанров
     async getReleasesWithTags(tag) {
-      
+
       // Пушим в роутер нужные теги, при этом не перебиваем другие query параметры
       this.$router.push({ query: { ...this.$route.query, tag }})
 
-      // ! Завтра начнем отсюда, добавлять функционал тегов
-      console.log(this.$route.query)
+      // Загружаем с тегами, если они есть
+      await this.$store.dispatch('getReleases', { sorting: this.$route.query.sorting, tags: this.$route.query.tag})
 
     }
   }

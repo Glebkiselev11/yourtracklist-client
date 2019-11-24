@@ -61,12 +61,26 @@ export default {
         this.sorting = 'new'
         break
     }
+
+    // Тут синхронизируем теги с адресной строкой, если там 1 тег, то он как строка
+    if(typeof this.$route.query.tag === 'string') {
+      this.checkedTags.push(this.$route.query.tag)
+
+      // А если их несколько то он массив (object)
+    } else if (typeof this.$route.query.tag === 'object') {
+      this.checkedTags = this.$route.query.tag
+    }
+    
   },
 
   computed: {
-    ...mapGetters(['releaseTags'])
+    ...mapGetters(['releaseTags']),
   },
   watch: {
+    // ! Тут важный момент, они отвечают за то чтобы загрузить с беэкенда релизы.
+    // ! То есть только когда загрузиться этот компонент и выставяться нужные фильтры, идет команда в 
+    // ! Родительский компонент и он уже загружает релизы с бэкенда по выбранным фильтрам, это важно, так как это может сбить с толку
+
     // Отправляет в родителя выбранную сортировку
     sorting(sorting) {
       this.$emit('selected', sorting)

@@ -7,10 +7,10 @@ export default {
     async getReleases({commit}, params) {
 
       // Если нету сортировки, то по умолчанию запрашиваем как новые релизы
-      const {sorting} = params
+      const {sorting, tags} = params
 
       try {
-        const {data : {releases, count}} = await axios.post('/api/get-release', {sorting})
+        const {data : {releases, count}} = await axios.post('/api/get-release', {sorting, tags})
 
         // Вносим релизы
         commit('setReleases', releases)

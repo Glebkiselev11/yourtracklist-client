@@ -91,7 +91,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 200px;
-    max-width: 892px;
+    width: 892px;
   }
 
   /* Спан с количеством найденых релизов */
