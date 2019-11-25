@@ -7,16 +7,20 @@ export default {
     async getReleases({commit, state}) {
 
       // Вытаскиваем из стора метод сортировки релиза
-      const {sorting, selectTags: tags} = state
+      // Теги и количество отображаемых на одной странице записей
+      const {sorting, pageSize, selectTags: tags} = state
 
       try {
-        const {data : {releases, count}} = await axios.post('/api/get-release', {sorting, tags})
+        const {data : {releases, count, pageCount}} = await axios.post('/api/get-release', {sorting, tags, pageSize})
 
         // Вносим релизы
         commit('setReleases', releases)
 
         // И количество найденых релизов
         commit('setCountReleases', count)
+
+        // И количество страниц пагинации
+        commit('setPageCount', pageCount)
       } catch (error) {
         console.log(error)
       }
@@ -43,6 +47,10 @@ export default {
       }
     },
 
+    setPageCount(state, pageCount) {
+      state.pageCount = pageCount
+    },
+
     clearReleases(state) {
       state.releases = undefined
     },
@@ -60,11 +68,19 @@ export default {
     sorting: undefined, // Тип сортировки, которую используем
     selectTags: [], // Теги которые используем при получение релизов
     count: undefined, // Количество найденых релизов
+    pageSize: 9, // Количество релизов которое отображаем на 1 странице пагинации
+    pageCount: undefined, // Количество страниц пагинации
   },
   getters: {
     releases: state => state.releases,
     count: state => state.count,
     sorting: state => state.sorting,
     selectTags: state => state.selectTags,
+    // ! Надо подумать как можно было бы сделать пагинации
+    getPaginationSetting: (state) => {
+      return {
+        pageCount : state.pageCount
+      }
+    }
   }
 }

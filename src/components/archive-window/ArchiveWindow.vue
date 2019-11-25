@@ -41,7 +41,6 @@
         :container-class="'pagination'"
         :page-class="'page-item'"
         :active-class="'page-active'"
-        v-model="pageNum"
       />
     </div>
 </template>
