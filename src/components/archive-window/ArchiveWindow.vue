@@ -34,8 +34,9 @@
       <!-- Пагинация (для визуального представления был использован плагин vuejs-paginate, 
           а сама логика для работы с нашей таблицей лежит в @/mixins/pagination.mixin.js) -->
       <Paginate
-        :page-count="5"
-        :click-handler="pageChangeHandler"
+        v-if="pageCount && (count > pageSize)"
+        :page-count="pageCount"
+        v-model="pageNum"
         :prev-text="'Назад'"
         :next-text="'Вперед'"
         :container-class="'pagination'"
@@ -46,6 +47,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import PrevInfo from '@/components/app/PrevInfo.vue'
 import PrevTagsHeader from '@/components/app/tags/PrevTagsHeader.vue'
 import paginationMixin from '@/mixins/pagination.mixin.js'
@@ -55,6 +57,9 @@ export default {
   props: ['releases', 'linkTo', 'count'],
   components: {
     PrevInfo, PrevTagsHeader
+  },
+  computed: {
+    ...mapGetters(['pageSize',]),
   },
   mixins: [ paginationMixin ], // Тут мы инициализируем миксин который нужен для пагинации
   methods: {

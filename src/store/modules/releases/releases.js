@@ -4,20 +4,20 @@ import axios from 'axios'
 export default {
   actions: {
     // Получает пока 9 релизов с базы
-    async getReleases({commit, state}) {
+    async getReleases({commit, getters}) {
 
       // Вытаскиваем из стора метод сортировки релиза
       // Теги и количество отображаемых на одной странице записей
-      const {sorting, pageSize, selectTags: tags} = state
+      const {pageSize, sorting, pageNum ,selectTags: tags} = getters
 
       try {
-        const {data : {releases, count, pageCount}} = await axios.post('/api/get-release', {sorting, tags, pageSize})
+        const {data : {releases, count, pageCount}} = await axios.post('/api/get-release', {sorting, tags, pageSize, pageNum})
 
         // Вносим релизы
         commit('setReleases', releases)
 
         // И количество найденых релизов
-        commit('setCountReleases', count)
+        commit('setCount', count)
 
         // И количество страниц пагинации
         commit('setPageCount', pageCount)
@@ -31,9 +31,7 @@ export default {
       state.releases = releases
     },
 
-    setCountReleases(state, count) {
-      state.count = count
-    },
+    
 
     setSorting(state, sorting) {
       state.sorting = sorting
@@ -47,10 +45,7 @@ export default {
       }
     },
 
-    setPageCount(state, pageCount) {
-      state.pageCount = pageCount
-    },
-
+    
     clearReleases(state) {
       state.releases = undefined
     },
@@ -67,20 +62,11 @@ export default {
     releases: undefined, // релизы одной страницы пагинации, у нас там пока только 9 релизов на одной страница, возможно в будущем
     sorting: undefined, // Тип сортировки, которую используем
     selectTags: [], // Теги которые используем при получение релизов
-    count: undefined, // Количество найденых релизов
-    pageSize: 9, // Количество релизов которое отображаем на 1 странице пагинации
-    pageCount: undefined, // Количество страниц пагинации
+    
   },
   getters: {
     releases: state => state.releases,
-    count: state => state.count,
     sorting: state => state.sorting,
     selectTags: state => state.selectTags,
-    // ! Надо подумать как можно было бы сделать пагинации
-    getPaginationSetting: (state) => {
-      return {
-        pageCount : state.pageCount
-      }
-    }
   }
 }

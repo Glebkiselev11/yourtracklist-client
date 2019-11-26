@@ -76,7 +76,6 @@ export default {
   /* Пагинация */
   .pagination {
     display: flex;
-    width: 300px;
     justify-content: space-between;
     align-items: baseline;
   }
@@ -87,10 +86,11 @@ export default {
     align-items: center;
     width: 30px;
     height: 30px;
+    margin: 0 5px;
     border: 1px solid black;
   }
 
-  .page-active {
+  .page-active a {
     background: black;
   }
 
