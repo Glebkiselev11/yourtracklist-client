@@ -3,15 +3,20 @@
   <div class="wrap">
     <h1 class="archive-title">Архив релизов</h1>
 
+    
+
     <div class="container">
 
       <!-- Боковая сортировка -->
       <SortSideBar />
       
+      <!-- Прелоадер -->
+      <Loader v-if="loading"/>
       
       <!-- Основное окно куда выводим релизы -->
       <!-- linkTo туда передаем начальный кусок ссылки -->
       <ArchiveWindow 
+        v-else
         :releases="this.releases"
         :count="this.count"
         linkTo="/releases-archive"
@@ -28,6 +33,7 @@ import ArchiveWindow from '@/components/archive-window/ArchiveWindow.vue'
 export default {
   name: 'Releases-archive',
   data: () => ({
+    loading: true, // Визуальное отображение загрузки
     filters: undefined,
     sorting: undefined, // Тип сортировки, который у нас выбран, когда загружается страница в первый раз, то мы сюда его устанавливаем с квери параметров в адресной строке
     checkedTags: [], // Выбранные теги, которые тоже устанавливаются первый раз из адресной строки, если они там есть
@@ -66,6 +72,8 @@ export default {
     // Подгружаем с бэкенда на основе фильтров нужные релизы
     await this.$store.dispatch('getReleases')
     
+    // Как только загрузили все, мы выключаем лоадер
+    this.loading = false
   },
   watch: {
     // Следит за изменениями роутера
@@ -75,8 +83,14 @@ export default {
       // либо жмем по тегам в карточках и мы дополняем эти теги в store)
       this.$store.commit('setSelectTags', to.query.tag)
 
+      // До запроса включаем лоадер
+      this.loading = true
+
       // И как только роутер меняется делает запрос на бэк с новыми фильтрами, которые у нас храняться в стейте
       await this.$store.dispatch('getReleases')
+
+      // Как запрос прошел - выключаем
+      this.loading = false
     }
   },
   // Как только мы закрываем этот раздел, мы подчищаем страницу от тегов сортировки

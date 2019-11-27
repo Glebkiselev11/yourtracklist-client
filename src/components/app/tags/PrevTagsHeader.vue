@@ -22,6 +22,11 @@
     methods: {
       // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)
       routerTo(linkTo, tag) {
+        // И перед этим сбрасываем номер текущей страницы, чтобы не было лишних ошибок
+        this.$store.commit('setPageNum', 1)
+        this.$router.push({ query: { ...this.$route.query, page: 1 } })
+
+
         this.$router.push({ path: linkTo , query: { ...this.$route.query, tag }})
       }
     },

@@ -5,7 +5,7 @@ import {mapGetters} from 'vuex'
 export default {
   // Как только прогружается пагинация, мы в стор устанавливаем страницу из query параметров, если там ничего нету, то ставим 1
   created() {
-    this.$store.commit('setPageNum', this.$route.query.page || 1)
+    this.$store.commit('setPageNum', +this.$route.query.page || 1)
   },
   
   
@@ -16,7 +16,7 @@ export default {
     pageNum: {
       set(pageNum) {
         this.$store.state.pagination.pageNum = pageNum
-        this.$router.push({ query: { ...this.$route.query, page: pageNum }})
+        this.$router.push({ query: { ...this.$route.query, page: +pageNum }})
       },
 
       get() {

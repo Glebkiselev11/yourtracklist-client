@@ -3,7 +3,7 @@
   <div class="autor-wrap">
 
     <!-- Прелоадер -->
-    <p v-if="!authorInfo">Загрузка...</p>
+    <Loader v-if="loading" />
 
     <!-- Если данные загрузились об артисте, то отображаем их -->
     <div
@@ -20,11 +20,11 @@
           <h4 class="second-title">Теги</h4>
           
           <!-- Итерируем ссылки -->
-          <router-link  class="tag-item"
+          <a class="tag-item"
             v-for="(tag, index) in authorInfo.tags" 
             :key="index"
-            :to="'/releases-archive/tags/' + tag"
-          >{{tag}}</router-link>
+            @click.prevent="routerTo('/releases-archive', tag)"
+          >{{tag}}</a>
         </div>
 
         <!-- А сюда социальный ссылки артиста -->
@@ -64,6 +64,7 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'Author-page',
   data: () => ({
+    loading: true,
     fakeLastFourRel: []
   }),
   components: {
@@ -72,6 +73,8 @@ export default {
   async created() {
     await this.$store.dispatch('getAuthorById', this.$route.params.permalink)
     await this.$store.dispatch('getFourLatesReleasesForAuthorById', this.$route.params.permalink)
+
+    this.loading = false
   },
   computed: {
     ...mapGetters(['authorInfo', 'fourLastReleasesForAuthor'])
@@ -92,11 +95,20 @@ export default {
     this.$store.commit('clearAuthorInfo') // Инфа об авторе
     this.$store.commit('clearFourLastReleasesForAuthor') // Чистим из стора инфу о релизах
 
-    console.log(from)
     await this.$store.dispatch('getAuthorById', to.params.permalink)
     await this.$store.dispatch('getFourLatesReleasesForAuthorById', to.params.permalink)
     
     next()
+  },
+  methods: {
+    // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)
+    routerTo(linkTo, tag) {
+      // И перед этим сбрасываем номер текущей страницы, чтобы не было лишних ошибок
+      this.$store.commit('setPageNum', 1)
+      this.$router.push({ query: { ...this.$route.query, page: 1 } })
+       
+      this.$router.push({ path: linkTo , query: { ...this.$route.query, tag }})
+    }
   },
 
 

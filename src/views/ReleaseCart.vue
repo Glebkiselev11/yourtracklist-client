@@ -3,10 +3,10 @@
   <div class="wrap">
     
     <!-- Пока нет инфы, отображаем загрузку -->
-    <p v-if="!releaseInfo" >Загрузка...</p>
+    <Loader v-if="!releaseInfo" />
 
     <!-- Обертка под сам релиз (обложка и информация) -->
-    <div class="release-wrap" v-else>
+    <div v-else class="release-wrap">
       <!-- Обложка -->
       <img class="release-cover" :src="releaseInfo.cover" alt="cover">
 
