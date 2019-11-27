@@ -60,7 +60,7 @@ export default {
     changeTags: {
       set(tag) {
         // А так же сразу ставим выбранное значение в роутер
-        this.$router.push({ query: { ...this.$route.query, tag}})
+        this.$router.push({ query: { ...this.$route.query, tag }})
 
         // Сбрасываем номер страницы
         this.$store.commit('setPageNum', 1)

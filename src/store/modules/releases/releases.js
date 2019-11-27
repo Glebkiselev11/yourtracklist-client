@@ -8,10 +8,10 @@ export default {
 
       // Вытаскиваем из стора метод сортировки релиза
       // Теги и количество отображаемых на одной странице записей
-      const {pageSize, sorting, pageNum ,selectTags: tags} = getters
+      const {pageSize, sorting, pageNum , releasesForAuthor, selectTags: tags} = getters
 
       try {
-        const {data : {releases, count, pageCount}} = await axios.post('/api/get-release', {sorting, tags, pageSize, pageNum})
+        const {data : {releases, count, pageCount}} = await axios.post('/api/get-release', {sorting, tags, pageSize, pageNum, releasesForAuthor})
 
         // Вносим релизы
         commit('setReleases', releases)
@@ -45,7 +45,11 @@ export default {
       }
     },
 
-    
+    setReleasesForAuthor(state, author) {
+      state.releasesForAuthor = author
+    },
+
+
     clearReleases(state) {
       state.releases = undefined
     },
@@ -56,17 +60,22 @@ export default {
 
     clearSelectTags(state) {
       state.selectTags = []
+    },
+
+    clearReleasesForAuthor(state) {
+      state.releasesForAuthor = undefined
     }
   },
   state: {
     releases: undefined, // релизы одной страницы пагинации, у нас там пока только 9 релизов на одной страница, возможно в будущем
     sorting: undefined, // Тип сортировки, которую используем
     selectTags: [], // Теги которые используем при получение релизов
-    
+    releasesForAuthor: undefined, // Релизы конкретного атвора
   },
   getters: {
     releases: state => state.releases,
     sorting: state => state.sorting,
     selectTags: state => state.selectTags,
+    releasesForAuthor: state => state.releasesForAuthor
   }
 }

@@ -19,7 +19,8 @@
         >
         <!-- Передаем в компонент отвечающий за отображание тегов - массив с тегами -->
         <PrevTagsHeader
-          link-to="/releases-archive/" 
+          link-to="/releases-archive/"
+          
           :tags-array="release.tags"
         />
 
@@ -44,7 +45,7 @@ import PrevTagsHeader from '@/components/app/tags/PrevTagsHeader.vue'
 
 export default {
   name: 'ReleaseArchivePrev',
-  props: ['fourLatestReleases'],
+  props: ['fourLatestReleases', 'authorPermalink'],
   components: {
     TopBar, PrevInfo, PrevTagsHeader
   },
@@ -65,9 +66,16 @@ export default {
       }
     },
 
-    // Переходит к релизам, пока только ко всем возможным релизам
+    // Переходит к релизам
     routerTo() {
-      this.$router.push('/releases-archive')
+      // Если в компонент был переданана ссылка на автора, то переходим к релизам определенного автора
+      if (this.authorPermalink) {
+        this.$router.push({ path: '/releases-archive', query: { author: this.authorPermalink }})
+      } else {
+        // Иначе просто переходим к релизам
+        this.$router.push({ path: '/releases-archive'})
+      }
+      
     }
   },
 }

@@ -45,6 +45,7 @@
 
     <!-- Здесь показываем 4 релиза, пока используем тот же компонент что и на главной -->
     <ReleaseArchivePrev 
+      :author-permalink="authorInfo.permalink"
       :four-latest-releases="this.fourLastReleasesForAuthor"
     />
 
