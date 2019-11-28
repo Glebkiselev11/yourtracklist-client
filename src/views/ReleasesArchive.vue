@@ -2,10 +2,23 @@
   <!-- Страница релизов, где есть сайд бар с фильтрам и основное поле куда мы выводим релизы -->
   <div class="wrap">
 
-    <!-- Отображает локальное название артиста, если мы ищем релизы определенного автора и в квери параметрах оно есть -->
-    <h1 class="archive-title">Релизы 
-      <b v-if="this.$route.query.author">{{this.localNameAuthorForRelease}}</b>
-    </h1>
+    <!-- Отображаем если нет автора в квери параметрах и не загружены данные о авторе -->
+    <h1 v-if="!this.$route.query.author && !this.localNameAuthorForRelease" class="archive-title">Релизы</h1>
+    
+    <!-- Отображаем этот блок, если это релизы определенного автора -->
+    <div v-else class="archive-title-wrap">
+      <!-- Локальное название артиста -->
+      <h1 class="archive-title">Релизы <b>{{this.localNameAuthorForRelease}}</b></h1>
+
+      <!-- Кнопка которая переходит к видео записям артиста -->
+      <ArrowButton 
+        :title="'Видео ' + this.localNameAuthorForRelease"
+        :arrow-color="'#000'"
+        :forward="true"
+        :styles="'color: black; font-size: 25px; font-weight: 300;'"
+        @click="goToVideosAuthor"
+      />
+    </div>
     
     
     <div class="container">
@@ -47,6 +60,12 @@ export default {
   },
   computed: {
     ...mapGetters(['releases', 'count', 'localNameAuthorForRelease']),
+  },
+  methods: {
+    // Отправляет к видео записям автора
+    goToVideosAuthor() {
+      console.log('Нажали кнопку к видео записям автора, которых пока нет))')
+    }
   },
   async created() {
 
@@ -100,6 +119,8 @@ export default {
 
       // Устанавливаем в стор автора если он есть
       this.$store.commit('setReleasesForAuthor', this.$route.query.author)
+      // И очищаем старого автора из стора
+      this.$store.commit('clearLocalNameAuthorForRelease')
 
       // До запроса включаем лоадер
       this.loading = true
@@ -124,6 +145,11 @@ export default {
   .wrap {
     border-top: 1px solid black;
     padding-top: 10px;
+  }
+
+  .archive-title-wrap {
+    display: flex;
+    justify-content: space-between;
   }
 
   .container {

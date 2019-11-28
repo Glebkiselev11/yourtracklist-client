@@ -1,10 +1,11 @@
 <template>
   <!-- Компонент кнопки со стрелкой, которую используем для перехода куда-то (с анимированной стрелкой) -->
   <div class="wrap-button">
-    <button 
+    <button
+      v-if="title" 
       class="title"
       :style="this.styles"
-
+      @click="buttonClick"
     >{{title}}</button>
 
     <!-- Если нам пришло значение forward из родительского компонента в true, то мы показываем стрелку направленную вправо  -->
@@ -33,10 +34,24 @@
 export default {
   name: 'Arrow-button',
   props: ['title', 'styles', 'forward', 'arrowColor'],
+  methods: {
+    buttonClick() {
+      this.$emit('click')
+    }
+  },
 }
 </script>
 
 <style scoped>
+
+  .wrap-button {
+    position: relative;
+    display: flex;
+  }
+
+  .wrap-button button {
+    outline: none;
+  }
 
   .title {
     color: white;
@@ -48,7 +63,7 @@ export default {
     height: 28px;
     position: absolute;
     left: -80px;
-    top: 5px;
+    top: 10px;
     transition: all 400ms ease; 
   }
 
