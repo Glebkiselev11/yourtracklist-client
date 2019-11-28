@@ -2,11 +2,12 @@
   <!-- Страница релизов, где есть сайд бар с фильтрам и основное поле куда мы выводим релизы -->
   <div class="wrap">
 
-    <h1 class="archive-title">Архив релизов</h1>
+    <!-- Отображает локальное название артиста, если мы ищем релизы определенного автора и в квери параметрах оно есть -->
+    <h1 class="archive-title">Релизы 
+      <b v-if="this.$route.query.author">{{this.localNameAuthorForRelease}}</b>
+    </h1>
     
-    <!-- <h1 class="archive-title">Релизы {{}}</h1> -->
     
-
     <div class="container">
 
       <!-- Боковая сортировка -->
@@ -45,7 +46,7 @@ export default {
     SortSideBar, // Боковая панель с фильтрами и сортировками
   },
   computed: {
-    ...mapGetters(['releases', 'count'])
+    ...mapGetters(['releases', 'count', 'localNameAuthorForRelease']),
   },
   async created() {
 
@@ -80,6 +81,8 @@ export default {
 
     // Устанавливаем в стор автора если он есть
     this.$store.commit('setReleasesForAuthor', this.$route.query.author)
+    // Очищаем локальное имя автора, чтобы если мы загрузили нового, старое название не мелькнуло в заголовке
+    this.$store.commit('clearLocalNameAuthorForRelease')
 
     // Подгружаем с бэкенда на основе фильтров нужные релизы
     await this.$store.dispatch('getReleases')
