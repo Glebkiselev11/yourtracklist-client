@@ -1,25 +1,19 @@
-// Через этот модуль получаем видео записи которые относятся к определенному автору
+// В этом модуле храним 4 последних видео записи автора
 export default {
-  actions: {
-    // Последние 4 видео записи автора для предпоказа
-    getFourLatesVideoForAuthorById() {
 
+  mutations: {
+    setFourLastVideosForAuthor(state, videos) {
+      state.fourLastVideosForAuthor = videos
     },
 
-    // Основной метод получения видео записей, определенного автора по ID
-    getVideoForAuthorById() {
-
+    clearFourLastVideosForAuthor(state) {
+      state.fourLastVideosForAuthor = undefined
     }
   },
-  mutations: {
-    
-  },
   state: {
-    fourLastVideoForAuthor: undefined, // Последние четыре видео для автора
-    videoForAuthor: undefined, // Одна страница пагинации видео автора (9 релизов)
+    fourLastVideosForAuthor: undefined, // Последние четыре видео для автора
   },
   getters: {
-    fourLastVideoForAuthor: state => state.fourLastVideoForAuthor,
-    videoForAuthor: state => state.videoForAuthor
+    fourLastVideosForAuthor: state => state.fourLastVideosForAuthor,
   },
 }

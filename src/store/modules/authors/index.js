@@ -5,22 +5,24 @@ import authorVideo from './author-video'
 // Основной модуль, под Авторов
 export default {
   actions: {
-    // Получаем автора по ID
+    // ! Получаем автора по ID, а так же 4 последних его релиза и 4 последних его видео
+    // ! Остановились мы тут, нужно переделать базу данных
     async getAuthorById({commit}, permalink) {
       
+      const {data : {author, releases}} = await axios.post('/api/get-author-by-id', { permalink })
 
-      const {data} = await axios.post('/api/get-author-by-id', { permalink })
+      console.log(author)
 
-      // ! Вот это походу больше не нужно
-      for (let link in data.links) {
+      for (let link in author.links) {
 
         // Если поле ссылки пришло пустым, то мы удаляем его из массива
-        if (!data.links[link]) {
-          delete data.links[link]
+        if (!author.links[link]) {
+          delete author.links[link]
         }
       }
 
-      commit('setAuthorInfo', data)
+      commit('setAuthorInfo', author)
+      commit('setFourLastReleasesForAuthor', releases)
     },
 
     // Получаем всех авторов (а именно их имена и пермалинки)

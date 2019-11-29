@@ -119,7 +119,7 @@ export default {
 
       // Устанавливаем в стор автора если он есть
       this.$store.commit('setReleasesForAuthor', this.$route.query.author)
-      // И очищаем старого автора из стора
+      // И очищаем старого автора из стора (его локальное имя)
       this.$store.commit('clearLocalNameAuthorForRelease')
 
       // До запроса включаем лоадер

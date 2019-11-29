@@ -49,8 +49,10 @@
       :four-latest-releases="this.fourLastReleasesForAuthor"
     />
 
+    <!-- А тут 4 последних видео автора, этот компонент используется пока только на странице автора. (на главной странице у нас другой компонент) -->
     <VideoPrevAuthor 
-      
+      :author-permalink="authorInfo.permalink"
+      :four-latest-videos="this.fourLastVideosForAuthor"
     />
 
     </div>
@@ -73,12 +75,11 @@ export default {
   },
   async created() {
     await this.$store.dispatch('getAuthorById', this.$route.params.permalink)
-    await this.$store.dispatch('getFourLatesReleasesForAuthorById', this.$route.params.permalink)
 
     this.loading = false
   },
   computed: {
-    ...mapGetters(['authorInfo', 'fourLastReleasesForAuthor'])
+    ...mapGetters(['authorInfo', 'fourLastReleasesForAuthor', 'fourLastVideosForAuthor'])
   },
   beforeDestroy() {
     // ! После закрытия страницы автора, мы очищаем инфу о нем из стейта
@@ -97,7 +98,6 @@ export default {
     this.$store.commit('clearFourLastReleasesForAuthor') // Чистим из стора инфу о релизах
 
     await this.$store.dispatch('getAuthorById', to.params.permalink)
-    await this.$store.dispatch('getFourLatesReleasesForAuthorById', to.params.permalink)
     
     next()
   },

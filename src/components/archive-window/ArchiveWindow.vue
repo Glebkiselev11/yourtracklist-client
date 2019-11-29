@@ -4,7 +4,7 @@
     <div class="window-wrap">
      
       <!-- Количество найденых релизов -->
-      <span class="number-of-releases">Найдено {{count}} релизов</span>
+      <span class="number-of-releases">Найдено: {{count}}</span>
 
       <!-- Сюда итерируем сами релизы / миксы -->
       <div class="archive-wrap">
