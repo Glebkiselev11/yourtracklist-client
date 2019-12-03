@@ -59,8 +59,8 @@
       <!-- Теги которые мы получаем с базы данных -->
       <div class="tags-wrap">
         <h4>Теги:</h4>
-        <label v-for="(tag, index) in releaseTags" :key="index" :for="tag.tag_name">
-          <input type="checkbox" v-model="tags" :id="tag.tag_name" :value="tag.tag_name">{{tag.tag_name}}
+        <label v-for="(tag, index) in releaseTags" :key="index" :for="tag.name">
+          <input type="checkbox" v-model="tags" :id="tag.name" :value="tag.name">{{tag.name}}
         </label>
         
       </div>
