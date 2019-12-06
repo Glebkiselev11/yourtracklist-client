@@ -24,7 +24,6 @@
           :tags-array="release.tags"
         />
 
-        <!-- Здесь надо будет пофиксить переход к карточки релиза, потому что пока мы переходим по 1 исполнителю, а нужно по всем через + (niur+88b Например) -->
         <img class="release-image" :src="release.cover" alt="cover" @click="openRelease(release.authors, release.permalink)">
         <PrevInfo 
           :date="release.date"

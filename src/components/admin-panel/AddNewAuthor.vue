@@ -29,8 +29,8 @@
           v-for="(soc, index) in socialsNameList" 
           :key="index"
         >
-          <label :for="index">{{soc.name}}</label>
-          <input type="text" :id="index" v-model="socialsNameListObj[soc.name]">
+          <label :for="index + 'author'">{{soc.name}}</label>
+          <input type="text" :id="index + 'author'" v-model="socialsNameListObj[soc.name]">
         </div>
 
       </div>
@@ -38,8 +38,8 @@
       <!-- Теги которые мы получаем с базы данных -->
       <div class="tags-wrap">
         <h4>Теги:</h4>
-        <label v-for="(tag, index) in releaseTags" :key="index" :for="tag.name">
-          <input type="checkbox" v-model="tags" :id="tag.name" :value="tag.name">{{tag.name}}
+        <label v-for="(tag, index) in releaseTags" :key="index" :for="tag.name + 'author'">
+          <input type="checkbox" v-model="tags" :id="tag.name + 'author'" :value="tag.name">{{tag.name}}
         </label>
         
       </div>
