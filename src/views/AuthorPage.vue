@@ -33,7 +33,7 @@
 
           <div class="author-social-links">
             <a 
-              v-for="(link, linkName) of authorInfo.links" 
+              v-for="(link, linkName) of authorInfo.socials_links" 
               :key="linkName" 
               :href="link"
               target="_blank"
