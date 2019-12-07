@@ -8,6 +8,7 @@ export default {
 
       try {
         const {data} = await await axios.post('/api/get-release-cart', {formData})
+        console.log(data)
         commit('setReleaseInfo', data)
       } catch (error) {
         console.log(error)

@@ -63,7 +63,7 @@
             <h3 class="link-and-tags-title">Послушать релиз</h3>
             <ul>
               <li class="link-and-tags-item"
-                v-for="(link, name) of releaseInfo.links" 
+                v-for="(link, name) of releaseInfo.socials_links" 
                 :key="name"
               ><a target="_blank" :href="link">{{name}}</a></li>
             </ul>
