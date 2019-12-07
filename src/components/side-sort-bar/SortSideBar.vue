@@ -19,8 +19,8 @@
         v-for="(tag, index) of releaseTags"
         :key="index"
       > 
-        <input type="checkbox" :id="tag.tag_name"  :value="tag.tag_name" v-model="changeTags">
-        <label :for="tag.tag_name">{{tag.tag_name}}</label>
+        <input type="checkbox" :id="tag.name"  :value="tag.name" v-model="changeTags">
+        <label :for="tag.name">{{tag.name}}</label>
         
       </div>
       
@@ -59,12 +59,9 @@ export default {
     // Двухнапрявленная привязка смены тегов
     changeTags: {
       set(tag) {
-        // А так же сразу ставим выбранное значение в роутер
-        this.$router.push({ query: { ...this.$route.query, tag }})
-
-        // Сбрасываем номер страницы
+        // А так же сразу ставим выбранное значение в роутер и сбрасываем номер страницы
+        this.$router.push({ query: { ...this.$route.query, tag, page: 1 }})
         this.$store.commit('setPageNum', 1)
-        this.$router.push({ query: { ...this.$route.query, page: 1 } })
 
         // И коммитим в стор выбранные теги
         this.$store.commit('setSelectTags', tag)
