@@ -4,7 +4,7 @@
     <div class="window-wrap">
      
       <!-- Количество найденых релизов -->
-      <span class="number-of-releases">Найдено: {{count}}</span>
+      <span class="number-of-releases" v-if="count > 0">Найден{{count == 1 ? '': 'o'}} {{count}} {{countText}}</span>
 
       <!-- Сюда итерируем сами релизы / миксы -->
       <div class="archive-wrap">
@@ -60,6 +60,17 @@ export default {
   },
   computed: {
     ...mapGetters(['pageSize',]),
+
+    // Вычисляет текст записи исходя из количества релизов
+    countText() {
+      if (this.count == 1) {
+        return 'релиз'
+      } else if (this.count <= 4) {
+        return 'релиза'
+      } else {
+        return 'релизов'
+      }
+    }
   },
   mixins: [ paginationMixin ], // Тут мы инициализируем миксин который нужен для пагинации
   methods: {
