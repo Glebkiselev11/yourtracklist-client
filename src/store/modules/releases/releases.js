@@ -11,7 +11,7 @@ export default {
       const {pageSize, sorting, pageNum , releasesForAuthor, selectTags: tags} = getters
 
       try {
-        const {data : {releases, count, pageCount}} = await axios.post('/api/get-release', {sorting, tags, pageSize, pageNum, releasesForAuthor})
+        const {data : {releases, count, pageCount, tags : releasesTags}} = await axios.post('/api/get-release', {sorting, tags, pageSize, pageNum, releasesForAuthor})
 
         // Вносим релизы
         commit('setReleases', releases)
@@ -22,6 +22,8 @@ export default {
         // И количество страниц пагинации
         commit('setPageCount', pageCount)
 
+        // Устанавливаем возможные теги для релизов
+        commit('setReleasesTags', releasesTags)
 
         // И если мы получали релизы для определнного автора, то ставим в стор его локальное имя
         if (releasesForAuthor) {
@@ -40,6 +42,10 @@ export default {
 
     setSorting(state, sorting) {
       state.sorting = sorting
+    },
+
+    setReleasesTags(state, tags) {
+      state.releasesTags = tags
     },
 
     setSelectTags(state, tags) {
@@ -94,10 +100,12 @@ export default {
     releases: undefined, // релизы одной страницы пагинации, у нас там пока только 9 релизов на одной страница, возможно в будущем
     sorting: undefined, // Тип сортировки, которую используем
     selectTags: [], // Теги которые используем при получение релизов
+    releasesTags: undefined, // Теги которые доступны для выбора в релизах в определенном фильтре или для определенного автора( то бишь не показываем лишнее)
     releasesForAuthor: undefined, // Релизы конкретного атвора
     localNameAuthorForRelease: undefined, // Локальное название автора, для которого мы ищем релизы
   },
   getters: {
+    releasesTags: state => state.releasesTags,
     releases: state => state.releases,
     sorting: state => state.sorting,
     selectTags: state => state.selectTags,

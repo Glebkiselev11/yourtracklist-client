@@ -16,7 +16,7 @@
 
       <!-- Итерируем с базы данных теги -->
       <div class="checkbox-tag-item" 
-        v-for="(tag, index) of releaseTags"
+        v-for="(tag, index) of releasesTags"
         :key="index"
       > 
         <input type="checkbox" :id="tag.name"  :value="tag.name" v-model="changeTags">
@@ -41,7 +41,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['releaseTags']),
+    ...mapGetters(['releasesTags']),
 
     // Двухнапрявленная привязка сортировки
     sorting: {
