@@ -5,46 +5,22 @@
     <div class="">
 
       <div class="input-item">
-        <label for="url">Ссылка на видео</label>
-        <input type="text" id="url" v-model="url" required>
+        <label for="url">Ссылка на youtube видео</label>
+        <input type="text" id="url" v-model="urlVideo" required>
       </div>
 
       <div class="input-item">
         <label for="date">Дата выхода видео</label>
-        <input type="date" id="date" v-model="date" required>
+        <input type="date" id="date" v-model="releaseDateOfVideo" required readonly>
       </div>
       
       <div class="input-item">
         <label for="name">Название видео</label>
-        <input type="text" id="name" v-model="name" required>
+        <input type="text" id="name" v-model="videoName" required>
       </div>
 
-      <div class="input-item">
-        <label for="cover">Ссылка на обложку</label>
-        <input type="text" id="cover" v-model="cover" required>
-      </div>
 
-      <div class="input-item">
-        <label for="duration">Длительность видео</label>
-        <input type="time" id="duration" v-model="duration" step="1">
-      </div>
 
-      <div class="input-item">
-        <span>Название платформы</span>
-        
-        <label for="youtube">
-          <input type="radio" id="youtube" v-model="platform" value="youtube">YouTube
-        </label>
-        
-        <label for="vk">
-          <input type="radio" id="vk" v-model="platform" value="VK">VK
-        </label>
-
-        <label for="vimeo">
-          <input type="radio" id="vimeo" v-model="platform" value="vimeo">Vimeo
-        </label>
-
-      </div>
 
     </div>
     
@@ -66,19 +42,42 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'Add-new-vide',
   data: () => ({
-    date: '',
     authors: [],
-    cover: '',
     name: '',
-    url: '',
     duration: '',
-    platform: 'youtube'
   }),
   components: {
     AuthorSelectList
   },
   computed: {
-    ...mapGetters(['statusForVideo'])
+    ...mapGetters(['statusForVideo', 'releaseDateOfVideo']),
+
+    // Динамически обрабатываем url и на его основе подгружаем данные с ютуба
+    urlVideo: {
+      async set(url) {
+        this.$store.commit('setUrlVideo', url)
+
+        // Если есть какое то значение, то мы запрашваем с ютуба по этому урлу информацию о релизе
+        if (url) {
+          await this.$store.dispatch('getInfoVideoForUpload')
+        }
+      },
+      get() {
+        return this.$store.getters.urlVideo
+      }
+    },
+
+    // Двухстороння привязка нужна, чтобы мы получили видео с ютуба и можно было отредактировать название
+    // ! Остановились Здесь
+    videoName: {
+      set(name) {
+        this.$store.commit('setVideoName', name)
+      },
+
+      get() {
+        return this.$store.getters.videoName
+      }
+    }
   },
   methods: {
     // Обрабатываем выбранных авторов из дочернего комопнента (AuthorSelectList)
@@ -90,23 +89,17 @@ export default {
     async addNewVideo() {
       await this.$store.dispatch('addNewVideo', {
         name: this.name,
-        cover: this.cover,
         duration: this.duration,
         authors: this.authors,
-        date: this.date,
         url: this.url,
-        platform: this.platform
       })
 
       // После добавления нового автора очищаем инпуты, если нету ошибки
       if (this.statusForVideo.status === 'ok') {
         this.name = ''
-        this.date = ''
-        this.cover = ''
         this.duration = ''
         this.authors = []
         this.url = ''
-        this.platform = ''
 
         // И спустя 10 секунд он удаляет из стора статус
         setTimeout(() => {
@@ -122,9 +115,8 @@ export default {
 
   .form-wrap {
     width: 1000px;
-    max-height: 670px;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin: 50px 0px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
