@@ -24,7 +24,9 @@
     <div class="container">
 
       <!-- Боковая сортировка -->
-      <SortSideBar />
+      <SortSideBar 
+        
+      />
       
       <!-- Прелоадер -->
       <Loader v-if="loading"/>
@@ -119,8 +121,13 @@ export default {
 
       // Устанавливаем в стор автора если он есть
       this.$store.commit('setReleasesForAuthor', this.$route.query.author)
-      // И очищаем старого автора из стора (его локальное имя)
-      this.$store.commit('clearLocalNameAuthorForRelease')
+
+      // И очищаем старого автора из стора (его локальное имя) если в routore нету автора
+      // Это нужно, чтобы автор на время не пропадал, если мы шелкаем фильтры 
+      if (!this.$route.query.author) {
+        this.$store.commit('clearLocalNameAuthorForRelease')
+      }
+      
 
       // До запроса включаем лоадер
       this.loading = true
