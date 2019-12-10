@@ -83,7 +83,6 @@ export default {
     },
 
     // Двухстороння привязка нужна, чтобы мы получили видео с ютуба и можно было отредактировать название
-    // ! Остановились Здесь
     videoName: {
       set(name) {
         this.$store.commit('setVideoName', name)

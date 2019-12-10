@@ -22,7 +22,7 @@
             target="_blank"
             class="video-cover" 
             :class=" index < 1 ? 'big-video' : 'small-video'"
-            :style="{ 'backgroundImage' : 'url(' + video.cover + ')' }"
+            :style="{ 'backgroundImage' : 'url(' + `https://img.youtube.com/vi/${video.permalink}/hqdefault.jpg` + ')' }"
           > 
             <!-- Значок плея (если первое видео, то 100% размер, если второе и третье то меньше) -->
             <VideoPlayButton 
@@ -30,10 +30,9 @@
             />
 
 
-            <!-- Компонент который отображает длительность видео и его платформу -->
+            <!-- Компонент который отображает длительность видео -->
             <PrevVideoInfo 
               :duration="video.duration"
-              :platform="video.platform"
             />
           </a>
 

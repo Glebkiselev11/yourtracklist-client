@@ -2,16 +2,13 @@
   <!-- Компонент информации о видео которая отображается прямо внутри обложки (платформа и длительность видео)-->
   <div class="prev-video-wrap">
     <!-- Если видео большое и там есть часы, то показываем с часами -->
-    <span v-if="duration.hours">{{platform}} {{duration.hours + ':' + duration.minutes + ':' + duration.seconds}}</span>
-
-    <!-- А если нету часов (что по сути чаще всего) то показываем только минуты и секунды -->
-    <span v-else>{{platform}} {{duration.minutes + ':' + duration.seconds}}</span>
+    <span>{{duration}}</span>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['platform', 'duration'],
+  props: ['duration'],
   name: 'prev-video-info'
 }
 </script>

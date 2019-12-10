@@ -6,6 +6,7 @@ export default {
     async getThreeLatesVideos({commit}) {
       try {
         const {data} = await axios.post('/api/get-tree-lates-videos')
+        console.log(data)
         commit('setThreeLatesVideos', data)
       } catch(error) {
         console.log(error)
