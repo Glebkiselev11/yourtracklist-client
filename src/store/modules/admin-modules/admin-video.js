@@ -6,7 +6,12 @@ export default {
   actions: {
 
     // Добавляет новое видео в базу данных
-    async addNewVideo({commit}, formData) {
+    async addNewVideo({commit, getters}, formData) {
+
+      formData.duration = getters.videoDuration
+      formData.permalink = getters.videoId
+      formData.date = getters.releaseDateOfVideo
+      formData.name = getters.videoName
 
       try {
         const {data} = await axios.post('/api/add-video', {formData})
@@ -36,7 +41,7 @@ export default {
 
         // Тут получаем продолжительность видео
         const {data : {items : [info2]}} = await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=AIzaSyAE-fHuHMXHtztu9xlYb9CWp6e5YyTEZiA&fields=items(contentDetails(duration))&part=contentDetails`)
-        commit('setDuration', info2.contentDetails.duration)
+        commit('setVideoDuration', info2.contentDetails.duration)
 
       } catch (error) {
         console.log(error)
@@ -51,8 +56,8 @@ export default {
       state.statusForVideo = statusMessage
     },
 
-    setDuration(state, duration) {
-      state.duration = duration
+    setVideoDuration(state, duration) {
+      state.videoDuration = duration
     },
 
     setReleaseDateOfVideo(state, date) {
@@ -73,19 +78,29 @@ export default {
 
     clearVideoName(state) {
       state.videoName = ''
-    }
+    },
+
+    clearReleaseDateOfVideo(state) {
+      state.releaseDateOfVideo = ''
+    },
+
+    clearUrlVideo(state) {
+      state.urlVideo = ''
+    },
+    
   },
 
   state: {
     releaseDateOfVideo: '', // Дата выхода видео
     videoName: '', // Название видео, которое мы подгружаем с ютуба
-    duration: '', // Длительность видео
+    videoDuration: '', // Длительность видео
     urlVideo: '', // Ссылка на видео, введя ее в инпут, мы по api получаем данные по видосу
     statusForVideo: undefined, // Здесь храним статус ответа (загрузиллось ли оно в базу или нет)
   },
 
   getters: {
     urlVideo: s => s.urlVideo,
+    videoDuration: s => s.videoDuration,
     statusForVideo: s => s.statusForVideo,
     videoName: s => s.videoName,
     releaseDateOfVideo: s => s.releaseDateOfVideo,

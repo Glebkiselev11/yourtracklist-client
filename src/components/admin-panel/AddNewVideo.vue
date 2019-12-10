@@ -2,37 +2,53 @@
   <form class="form-wrap" @submit.prevent="addNewVideo">
     <h3>Добавить видео</h3>
 
-    <div class="">
-
-      <div class="input-item">
-        <label for="url">Ссылка на youtube видео</label>
-        <input type="text" id="url" v-model="urlVideo" required>
-      </div>
-
-      <div class="input-item">
-        <label for="date">Дата выхода видео</label>
-        <input type="date" id="date" v-model="releaseDateOfVideo" required readonly>
-      </div>
+    <div class="input-wrap">
       
-      <div class="input-item">
-        <label for="name">Название видео</label>
-        <input type="text" id="name" v-model="videoName" required>
+      <div class="">
+        <div class="input-item">
+          <label for="url">Ссылка на youtube видео</label>
+          <input type="text" id="url" v-model="urlVideo" required>
+        </div>
+
+        <div class="input-item">
+          <label for="date">Дата выхода видео</label>
+          <input type="date" id="date" v-model="releaseDateOfVideo" required readonly>
+        </div>
+        
+        <div class="input-item">
+          <label for="name">Название видео</label>
+          <input type="text" id="name" v-model="videoName" required>
+        </div>
+
+        <!-- Компоненты куда мы подгружаем всех возможных авторов с базы данных -->
+        <AuthorSelectList
+          @selected="selectedAuthors"
+        />
+
+
       </div>
 
-
-
+      <!-- Теги которые мы получаем с базы данных -->
+      <div class="tags-wrap">
+        <h4>Теги:</h4>
+        <label v-for="(tag, index) in releaseTags" :key="index" :for="tag.name + 'rel'">
+          <input type="checkbox" v-model="tags" :id="tag.name + 'rel'" :value="tag.name">{{tag.name}}
+        </label>
+        
+      </div>
 
     </div>
     
-    <!-- Компоненты куда мы подгружаем всех возможных авторов с базы данных -->
-    <AuthorSelectList
-      @selected="selectedAuthors"
-    />
+    
+      
 
     <!-- Отображаем здесь статус о том добавился ли видос или нет -->
     <p v-if="statusForVideo" :class="statusForVideo.status === 'ok' ? 'status-ok' : 'status-error' ">{{statusForVideo.message}}</p>
 
     <button type="submit">Добавить</button>
+
+
+    
   </form>
 </template>
 
@@ -43,14 +59,13 @@ export default {
   name: 'Add-new-vide',
   data: () => ({
     authors: [],
-    name: '',
-    duration: '',
+    tags: []
   }),
   components: {
     AuthorSelectList
   },
   computed: {
-    ...mapGetters(['statusForVideo', 'releaseDateOfVideo']),
+    ...mapGetters(['statusForVideo', 'releaseDateOfVideo', 'releaseTags']),
 
     // Динамически обрабатываем url и на его основе подгружаем данные с ютуба
     urlVideo: {
@@ -87,24 +102,35 @@ export default {
 
     // Добавляем новое видео в базу
     async addNewVideo() {
+
+      // Если никакой автор не выбран, то выкидываем ошибку
+      if (!this.authors.length) {
+        this.$store.commit('setStatusForVideo', {message : 'Обязательно укажите автора видео', status : 'error'})
+        return
+      }
+
       await this.$store.dispatch('addNewVideo', {
         name: this.name,
-        duration: this.duration,
         authors: this.authors,
-        url: this.url,
+        tags: this.tags
       })
 
       // После добавления нового автора очищаем инпуты, если нету ошибки
       if (this.statusForVideo.status === 'ok') {
-        this.name = ''
-        this.duration = ''
+
         this.authors = []
         this.url = ''
+        this.tags = []
 
-        // И спустя 10 секунд он удаляет из стора статус
+        this.$store.commit('clearDuration')
+        this.$store.commit('clearVideoName')
+        this.$store.commit('clearReleaseDateOfVideo')
+        this.$store.commit('clearUrlVideo')
+
+        // И спустя 5 секунд он удаляет из стора статус
         setTimeout(() => {
           this.$store.commit('setStatusForVideo', undefined)
-        }, 10000)
+        }, 5000)
       }
     }
   },
@@ -114,12 +140,13 @@ export default {
 <style scoped>
 
   .form-wrap {
-    width: 1000px;
-    margin: 50px 0px;
-    height: 400px;
+    width: 350px;
+    max-height: 670px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
+    flex-direction: column;
   }
 
   .input-wrap {
