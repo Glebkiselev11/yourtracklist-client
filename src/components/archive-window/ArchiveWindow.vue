@@ -10,24 +10,11 @@
       <div class="archive-wrap">
 
         <!-- Итерируемый итем -->
-        <div class="release-item" 
-          v-for="(release, index) in releases"
+        <ReleaseItem 
+          v-for="(release, index) of releases"
           :key="index"
-          >
-          <!-- Передаем в компонент отвечающий за отображание тегов - массив с тегами -->
-          <PrevTagsHeader
-            :link-to="linkTo" 
-            :tags-array="release.tags"
-          />
-
-          <img class="release-image" :src="release.cover" alt="cover" @click="openRelease(release.authors, release.permalink)">
-          <PrevInfo 
-            :date="release.date"
-            :name="release.name"
-            :permalink="release.permalink"
-            :authors="release.authors"
-          />
-        </div>
+          :release="release"
+        />
       </div>
 
 
@@ -48,15 +35,14 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import PrevInfo from '@/components/app/PrevInfo.vue'
-import PrevTagsHeader from '@/components/app/tags/PrevTagsHeader.vue'
+import ReleaseItem from '@/components/ReleasePrevCartItem.vue'
 import paginationMixin from '@/mixins/pagination.mixin.js'
 
 export default {
   name: 'Archive-window',
   props: ['releases', 'linkTo', 'count'],
   components: {
-    PrevInfo, PrevTagsHeader
+    ReleaseItem
   },
   computed: {
     ...mapGetters(['pageSize',]),
@@ -135,19 +121,8 @@ export default {
   /* Карточка релиза */
   .release-item {
     margin-bottom: 60px;
-    width: 280px;
-    height: 425px;
-    border-top: 1px solid black;
+
   }
 
-  
-
-
-  .release-image {
-    cursor: pointer;
-    width: 280px;
-    height: 280px;
-    margin-bottom: 16px;
-  }
 </style>
 

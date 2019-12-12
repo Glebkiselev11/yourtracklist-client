@@ -13,25 +13,12 @@
     <div class="releases-wrap">
       
       <!-- Итерируем карточку релиза -->
-      <div class="release-item" 
-        v-for="(release, index) in fourLatestReleases"
+      <ReleaseItem 
+        v-for="(release, index) of fourLatestReleases"
         :key="index"
-        >
-        <!-- Передаем в компонент отвечающий за отображание тегов - массив с тегами -->
-        <PrevTagsHeader
-          link-to="/releases-archive/"
-          
-          :tags-array="release.tags"
-        />
-
-        <img class="release-image" :src="release.cover" alt="cover" @click="openRelease(release.authors, release.permalink)">
-        <PrevInfo 
-          :date="release.date"
-          :name="release.name"
-          :permalink="release.permalink"
-          :authors="release.authors"
-        />
-      </div>
+        :release="release"
+      />
+      
 
     </div>
   </div>
@@ -39,31 +26,16 @@
 
 <script>
 import TopBar from '@/components/app/TopBar.vue'
-import PrevInfo from '@/components/app/PrevInfo.vue'
-import PrevTagsHeader from '@/components/app/tags/PrevTagsHeader.vue'
+import ReleaseItem from '@/components/ReleasePrevCartItem.vue'
 
 export default {
   name: 'ReleaseArchivePrev',
   props: ['fourLatestReleases', 'authorPermalink'],
   components: {
-    TopBar, PrevInfo, PrevTagsHeader
+    TopBar, ReleaseItem
   },
   
   methods: {
-    // Открывает релиз (по клику на обложку)
-    openRelease(authors, release) {
-
-      // Возможно это костыль, но по сути у нас не бывает больше 4 авторов в одном релизе
-      if (authors.length === 1) {
-        this.$router.push(`/release-cart/${authors[0]['permalink']}/${release}`)
-      } else if (authors.length === 2) {
-        this.$router.push(`/release-cart/${authors[0]['permalink']}+${authors[1]['permalink']}/${release}`)
-      } else if (authors.length === 3) {
-        this.$router.push(`/release-cart/${authors[0]['permalink']}+${authors[1]['permalink']}+${authors[2]['permalink']}/${release}`)
-      } else {
-        this.$router.push(`/release-cart/${authors[0]['permalink']}+${authors[1]['permalink']}+${authors[2]['permalink']}+${authors[3]['permalink']}/${release}`)
-      }
-    },
 
     // Переходит к релизам
     routerTo() {
@@ -96,22 +68,6 @@ export default {
 
   .release-item:not(:nth-child(4))  {
     margin-right: 26px;
-  }
-
-
-  /* Карточка релиза */
-  .release-item {
-    width: 280px;
-    height: 425px;
-    border-top: 1px solid black;
-  }
-
-
-  .release-image {
-    cursor: pointer;
-    width: 280px;
-    height: 280px;
-    margin-bottom: 16px;
   }
 
 </style>
