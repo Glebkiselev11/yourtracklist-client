@@ -82,7 +82,7 @@ export default {
 
 <style scoped>
   .wrap {
-    margin-top: 150px;
+    margin-top: 80px;
     width: 100%;
     min-height: 525px;
   }

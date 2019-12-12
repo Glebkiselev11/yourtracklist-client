@@ -44,15 +44,17 @@
       
 
     <!-- Здесь показываем 4 релиза, пока используем тот же компонент что и на главной -->
-    <ReleaseArchivePrev 
+    <ReleaseArchivePrev
+      v-show="this.fourLastReleasesForAuthor.length" 
       :author-permalink="authorInfo.permalink"
       :four-latest-releases="this.fourLastReleasesForAuthor"
     />
 
     <!-- А тут 4 последних видео автора, этот компонент используется пока только на странице автора. (на главной странице у нас другой компонент) -->
     <VideoPrevAuthor 
+      v-show="this.fourLastVideosForAuthor.length" 
       :author-permalink="authorInfo.permalink"
-      :four-latest-videos="this.fourLastVideosForAuthor"
+      :fourLatestVideo="this.fourLastVideosForAuthor"
     />
 
     </div>

@@ -18,7 +18,7 @@
         <!-- Обложка -->
         <div class="cover-wrap">
           <a 
-            :href="video.url" 
+            :href="`https://www.youtube.com/watch?v=${video.permalink}`" 
             target="_blank"
             class="video-cover" 
             :class=" index < 1 ? 'big-video' : 'small-video'"
@@ -43,7 +43,7 @@
           :date="video.date"
           :name="video.name"
           :authors="video.authors"
-          :url="video.url"
+          :url="`https://www.youtube.com/watch?v=${video.permalink}`" 
         />
       </div>
       

@@ -6,8 +6,8 @@
       
       <div class="">
         <div class="input-item">
-          <label for="url">Ссылка на youtube видео</label>
-          <input type="text" id="url" v-model="urlVideo" required>
+          <label for="urlvideo">Ссылка на youtube видео</label>
+          <input type="text" id="urlvideo" v-model="urlVideo" required>
         </div>
 
         <div class="input-item">
@@ -16,8 +16,8 @@
         </div>
         
         <div class="input-item">
-          <label for="name">Название видео</label>
-          <input type="text" id="name" v-model="videoName" required>
+          <label for="namevideo">Название видео</label>
+          <input type="text" id="namevideo" v-model="videoName" required>
         </div>
 
         <!-- Компоненты куда мы подгружаем всех возможных авторов с базы данных -->
@@ -31,8 +31,8 @@
       <!-- Теги которые мы получаем с базы данных -->
       <div class="tags-wrap">
         <h4>Теги:</h4>
-        <label v-for="(tag, index) in releaseTags" :key="index" :for="tag.name + 'rel'">
-          <input type="checkbox" v-model="tags" :id="tag.name + 'rel'" :value="tag.name">{{tag.name}}
+        <label v-for="(tag, index) in releaseTags" :key="index" :for="tag.name + 'video'">
+          <input type="checkbox" v-model="tags" :id="tag.name + 'video'" :value="tag.name">{{tag.name}}
         </label>
         
       </div>

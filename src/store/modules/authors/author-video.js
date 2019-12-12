@@ -1,6 +1,5 @@
 // В этом модуле храним 4 последних видео записи автора
 export default {
-
   mutations: {
     setFourLastVideosForAuthor(state, videos) {
       state.fourLastVideosForAuthor = videos

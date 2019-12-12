@@ -5,24 +5,13 @@ import authorVideo from './author-video'
 // Основной модуль, под Авторов
 export default {
   actions: {
-    // ! Получаем автора по ID, а так же 4 последних его релиза и 4 последних его видео
-    // ! Остановились мы тут, нужно переделать базу данных
+    // Получаем автора по ID, а так же 4 последних его релиза и 4 последних его видео
     async getAuthorById({commit}, permalink) {
-      
-      const {data : {author, releases}} = await axios.post('/api/get-author-by-id', { permalink })
-
-      console.log(author)
-
-      for (let link in author.links) {
-
-        // Если поле ссылки пришло пустым, то мы удаляем его из массива
-        if (!author.links[link]) {
-          delete author.links[link]
-        }
-      }
+      const {data : {author, releases, videos}} = await axios.post('/api/get-author-by-id', { permalink })
 
       commit('setAuthorInfo', author)
       commit('setFourLastReleasesForAuthor', releases)
+      commit('setFourLastVideosForAuthor', videos)
     },
 
     // Получаем всех авторов (а именно их имена и пермалинки)
