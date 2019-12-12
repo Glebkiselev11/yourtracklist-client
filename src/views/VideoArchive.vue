@@ -20,7 +20,7 @@ export default {
     VideoArchiveWindow
   },
   computed: {
-    ...mapGetters(['video'])
+    ...mapGetters(['videos'])
   },
 }
 </script>

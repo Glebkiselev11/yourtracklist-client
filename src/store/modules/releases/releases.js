@@ -8,10 +8,10 @@ export default {
 
       // Вытаскиваем из стора метод сортировки релиза
       // Теги и количество отображаемых на одной странице записей
-      const {pageSize, sorting, pageNum , releasesForAuthor, selectTags: tags} = getters
+      const {pageSize, sortingReleases, pageNum , releasesForAuthor, selectTagsForReleases: tags} = getters
 
       try {
-        const {data : {releases, count, pageCount, tags : releasesTags}} = await axios.post('/api/get-release', {sorting, tags, pageSize, pageNum, releasesForAuthor})
+        const {data : {releases, count, pageCount, tags : releasesTags}} = await axios.post('/api/get-release', {sortingReleases, tags, pageSize, pageNum, releasesForAuthor})
 
         // Вносим релизы
         commit('setReleases', releases)
@@ -40,19 +40,19 @@ export default {
       state.releases = releases
     },
 
-    setSorting(state, sorting) {
-      state.sorting = sorting
+    setSortingReleases(state, sorting) {
+      state.sortingReleases = sorting
     },
 
     setReleasesTags(state, tags) {
       state.releasesTags = tags
     },
 
-    setSelectTags(state, tags) {
+    setSelectTagsForReleases(state, tags) {
       if (typeof tags === 'string') {
-        state.selectTags.push(tags)
+        state.selectTagsForReleases.push(tags)
       } else if (typeof tags === 'object'){
-        state.selectTags = tags
+        state.selectTagsForReleases = tags
       }
     },
 
@@ -84,12 +84,12 @@ export default {
       state.releases = undefined
     },
 
-    clearSorting(state) {
-      state.sorting = undefined
+    clearSortingReleases(state) {
+      state.sortingReleases = undefined
     },
 
-    clearSelectTags(state) {
-      state.selectTags = []
+    clearSelectTagsForReleases(state) {
+      state.selectTagsForReleases = []
     },
 
     clearReleasesForAuthor(state) {
@@ -98,8 +98,8 @@ export default {
   },
   state: {
     releases: undefined, // релизы одной страницы пагинации, у нас там пока только 9 релизов на одной страница, возможно в будущем
-    sorting: undefined, // Тип сортировки, которую используем
-    selectTags: [], // Теги которые используем при получение релизов
+    sortingReleases: undefined, // Тип сортировки, которую используем
+    selectTagsForReleases: [], // Теги которые используем при получение релизов
     releasesTags: undefined, // Теги которые доступны для выбора в релизах в определенном фильтре или для определенного автора( то бишь не показываем лишнее)
     releasesForAuthor: undefined, // Релизы конкретного атвора
     localNameAuthorForRelease: undefined, // Локальное название автора, для которого мы ищем релизы
@@ -107,8 +107,8 @@ export default {
   getters: {
     releasesTags: state => state.releasesTags,
     releases: state => state.releases,
-    sorting: state => state.sorting,
-    selectTags: state => state.selectTags,
+    sortingReleases: state => state.sortingReleases,
+    selectTagsForReleases: state => state.selectTagsForReleases,
     releasesForAuthor: state => state.releasesForAuthor,
     localNameAuthorForRelease: state => state.localNameAuthorForRelease
   }

@@ -8,7 +8,7 @@
     <!-- Здесь выводим видео -->
     <div class="video-wrap">
       
-      <!-- Итерируем и отрисовываем 3 видео -->
+      <!-- Итерируем и отрисовываем 4 видео -->
       <div 
         class="video-item" 
         v-for="(video, index) in fourLatestVideo"
@@ -22,7 +22,7 @@
             class="video-cover" 
             :style="{ 'backgroundImage' : 'url(' + `https://img.youtube.com/vi/${video.permalink}/hqdefault.jpg` + ')' }"
           > 
-            <!-- Значок плея (если первое видео, то 100% размер, если второе и третье то меньше) -->
+            <!-- Значок плея -->
             <VideoPlayButton 
               :size="50"
             />

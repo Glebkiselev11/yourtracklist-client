@@ -49,10 +49,10 @@ export default {
         // А так же сразу ставим выбранное значение в роутер
         this.$router.push({ query: { ...this.$route.query, sorting }})
         // И коммитим в стор выбранный метод фильтрации
-        this.$store.commit('setSorting', sorting)
+        this.$store.commit('setSortingReleases', sorting)
       },
       get() {
-        return this.$store.state.releases.releases.sorting
+        return this.$store.state.releases.releases.sortingReleases
       }
     },
 
@@ -64,12 +64,12 @@ export default {
         this.$store.commit('setPageNum', 1)
 
         // И коммитим в стор выбранные теги
-        this.$store.commit('setSelectTags', tag)
+        this.$store.commit('setSelectTagsForReleases', tag)
       },
 
       get() {
         // Забирает из стора теги, которые у нас там лежат, а вносим мы их туда из родителя, когда загружаем страницу
-        return this.$store.state.releases.releases.selectTags
+        return this.$store.state.releases.releases.selectTagsForReleases
       }
     }
 

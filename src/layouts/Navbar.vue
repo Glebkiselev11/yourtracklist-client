@@ -9,7 +9,7 @@
         <router-link to="/releases-archive">Релизы</router-link> 
       </li>
       <li class="navbar-link-item"> 
-        <router-link to="#">Видео</router-link> 
+        <router-link to="/video-archive">Видео</router-link> 
       </li>
       <li class="navbar-link-item"> 
         <router-link to="#">Миксы</router-link> 

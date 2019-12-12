@@ -75,17 +75,17 @@ export default {
     // Нужно чтобы селектор, где мы выбираем тип сортировки - синхронизировался с адресной строкой
     switch(this.$route.query.sorting) {
       case 'old' : 
-        this.$store.commit('setSorting', 'old')
+        this.$store.commit('setSortingReleases', 'old')
         break
       case 'random' :
-        this.$store.commit('setSorting', 'random')
+        this.$store.commit('setSortingReleases', 'random')
         break
       case 'artist' :
-        this.$store.commit('setSorting', 'artist')
+        this.$store.commit('setSortingReleases', 'artist')
         break
       // Если там что то другое, иили вообще нет типа сортировки, то по умолчанию ставим как new
       default:
-        this.$store.commit('setSorting', 'new')
+        this.$store.commit('setSortingReleases', 'new')
         break
     }
 
@@ -95,7 +95,7 @@ export default {
     }
 
     // Устанавлием в store теги релизов которые выбраны
-    this.$store.commit('setSelectTags', this.$route.query.tag)
+    this.$store.commit('setSelectTagsForReleases', this.$route.query.tag)
 
     // Устанавливаем в стор номер текущей страницы из роутера
     this.$store.commit('setPageNum', +this.$route.query.page || 1)
@@ -117,7 +117,7 @@ export default {
 
       // Ставит в $store теги из urla (нужно для того, чтобы когда мы в ручную меняем url 
       // либо жмем по тегам в карточках и мы дополняем эти теги в store)
-      this.$store.commit('setSelectTags', to.query.tag)
+      this.$store.commit('setSelectTagsForReleases', to.query.tag)
 
       // Устанавливаем в стор автора если он есть
       this.$store.commit('setReleasesForAuthor', this.$route.query.author)
@@ -141,8 +141,8 @@ export default {
   },
   // Как только мы закрываем этот раздел, мы подчищаем страницу от тегов сортировки
   beforeDestroy() {
-    this.$store.commit('clearSorting')
-    this.$store.commit('clearSelectTags')
+    this.$store.commit('clearSortingReleases')
+    this.$store.commit('clearSelectTagsForReleases')
   },
 
 }

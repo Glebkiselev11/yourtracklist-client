@@ -1,75 +1,66 @@
 <template>
   <!-- Компонент куда мы выводим видео записи в архиве, либо видео записи артиста -->
   <div class="window-wrap">
+     
+      <!-- Количество найденых релизов -->
+      <span class="number-of-releases" v-if="count > 0">Найден{{count == 1 ? '': 'o'}} {{count}} {{countText}}</span>
 
-    <!-- Верхня шапка видео, где у нас сортировка для видео и количество всего видео -->
-    <div class="top-bar">
-      <!-- Выбираем тип сортировки -->
-      <select v-model="sorting">
-        <option value="new">Сначала новые</option>
-        <option value="old">Сначала старые</option>
-        <option value="random">В случайном порядке</option>
-        <option value="artist">По исполнителю</option>
-      </select>
+      <!-- Сюда итерируем сами релизы / миксы -->
+      <div class="archive-wrap">
 
-      <span class="number-of-video">Всего 200 видео</span>
-    </div>
-
-    <!-- Обертка под видео записи -->
-    <div class="video-wrap">
-
-      <!-- Итерируем видео записи через цикл -->
-      <div class="video-item"
-        v-for="(video, index) of videoArray"
-        :key="index"
-      >
-
-        <!-- Обложка -->
-        <div class="cover-wrap">
-          <a 
-            :href="video.url" 
-            target="_blank"
-            class="video-cover" 
-            :class=" index < 1 ? 'big-video' : 'small-video'"
-            :style="{ 'backgroundImage' : 'url(' + video.cover + ')' }"
-          > 
-            <!-- Значок плея (если первое видео, то 100% размер, если второе и третье то меньше) -->
-            <VideoPlayButton 
-              :size="50"
-            />
+        <div 
+          class="video-item" 
+          v-for="(video, index) in videos"
+          :key="index"
+        >
+          <!-- Обложка -->
+          <div class="cover-wrap">
+            <a 
+              :href="`https://www.youtube.com/watch?v=${video.permalink}`" 
+              target="_blank"
+              class="video-cover" 
+              :style="{ 'backgroundImage' : 'url(' + `https://img.youtube.com/vi/${video.permalink}/hqdefault.jpg` + ')' }"
+            > 
+              <!-- Значок плея -->
+              <VideoPlayButton 
+                :size="50"
+              />
 
 
-            <!-- Компонент который отображает длительность видео и его платформу -->
-            <PrevVideoInfo 
-              :duration="video.duration"
-              :platform="video.platform"
-            />
-          </a>
+              <!-- Компонент который отображает длительность видео -->
+              <PrevVideoInfo 
+                :duration="video.duration"
+              />
+            </a>
 
           
+          </div>
+          
+          <PrevInfo 
+            :date="video.date"
+            :name="video.name"
+            :authors="video.authors"
+            :url="`https://www.youtube.com/watch?v=${video.permalink}`" 
+          />
         </div>
-        
-        <PrevInfo 
-          :date="video.date"
-          :nameInfo="video.nameInfo"
-          :releaseAuthors="video.authors"
-        />
+
 
       </div>
+
+
+      <!-- Пагинация (для визуального представления был использован плагин vuejs-paginate, 
+          а сама логика для работы с нашей таблицей лежит в @/mixins/pagination.mixin.js) -->
+      <Paginate
+        v-if="pageCount && (count > pageSize)"
+        :page-count="pageCount"
+        v-model="pageNum"
+        :prev-text="'Назад'"
+        :next-text="'Вперед'"
+        :container-class="'pagination'"
+        :page-class="'page-item'"
+        :active-class="'page-active'"
+      />
     </div>
-
-    <Paginate
-      :page-count="5"
-      :click-handler="pageChangeHandler"
-      :prev-text="'Назад'"
-      :next-text="'Вперед'"
-      :container-class="'pagination'"
-      :page-class="'page-item'"
-      :active-class="'page-active'"
-      v-model="pageNum"
-    />
-
-  </div>
 </template>
 
 <script>
@@ -80,14 +71,11 @@ import PrevInfo from '@/components/app/PrevInfo.vue'
 import paginationMixin from '@/mixins/pagination.mixin.js'
 export default {
   name: 'Video-archive-window',
-  props: ['videoArray'],
+  props: ['videos'],
   components: {
     PrevVideoInfo, VideoPlayButton, PrevInfo
   },
   mixins: [ paginationMixin ], // Тут мы инициализируем миксин который нужен для пагинации
-  data: () => ({
-    sorting: 'new'
-  }),
 }
 </script>
 
