@@ -63,8 +63,8 @@
 </template>
 
 <script>
-import VideoPrevAuthor from '@/components/VideoPrevAuthor.vue'
-import ReleaseArchivePrev from '@/components/ReleaseArchivePrev.vue'
+import VideoPrevAuthor from '@/components/app/video/VideoPrevAuthor.vue'
+import ReleaseArchivePrev from '@/components/app/music/ReleaseArchivePrev.vue'
 import {mapGetters} from 'vuex'
 export default {
   name: 'Author-page',

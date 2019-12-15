@@ -35,7 +35,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import ReleaseItem from '@/components/ReleasePrevCartItem.vue'
+import ReleaseItem from '@/components/app/music/ReleasePrevCartItem.vue'
 import paginationMixin from '@/mixins/pagination.mixin.js'
 
 export default {

@@ -24,7 +24,7 @@
 
 <script>
 import Hero from '@/components/home/Hero.vue'
-import ReleaseArchivePrev from '@/components/ReleaseArchivePrev.vue'
+import ReleaseArchivePrev from '@/components/app/music/ReleaseArchivePrev.vue'
 import ViedeoHome from '@/components/home/VideoHome.vue'
 import MixesHome from '@/components/home/MixesHome.vue'
 // import LabelHome from '@/components/home/LabelHome.vue'

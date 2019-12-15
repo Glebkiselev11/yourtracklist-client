@@ -26,7 +26,7 @@
 
 <script>
 import TopBar from '@/components/app/TopBar.vue'
-import ReleaseItem from '@/components/ReleasePrevCartItem.vue'
+import ReleaseItem from '@/components/app/music/ReleasePrevCartItem.vue'
 
 export default {
   name: 'ReleaseArchivePrev',
