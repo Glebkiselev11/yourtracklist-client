@@ -87,7 +87,7 @@ export default {
     // ! После закрытия страницы автора, мы очищаем инфу о нем из стейта
     this.$store.commit('clearAuthorInfo') // Инфа об авторе
     this.$store.commit('clearFourLastReleasesForAuthor') // Чистим из стора инфу о релизах
-    // ! После тут еще добаваться методы на очистку видосов
+    this.$store.commit('clearFourLastVideosForAuthor') // Чистим инфу из стора о видео
   },
 
   // Вызывается когда маршрут, что рендерит этот компонент изменился
@@ -95,12 +95,18 @@ export default {
     
     // Вот эти все манипуляции в этом хуке нужны для того чтобы, если ты находясь на странице автора, выбрал из релизов другого
     // совместного автора и корректно к нему перешел, там был некий баг, но благодаря этой штуке все окич
+    this.loading = true
 
     this.$store.commit('clearAuthorInfo') // Инфа об авторе
     this.$store.commit('clearFourLastReleasesForAuthor') // Чистим из стора инфу о релизах
+    this.$store.commit('clearFourLastVideosForAuthor') // Чистим инфу о видосах
 
+    // Подгружаем нового автора
     await this.$store.dispatch('getAuthorById', to.params.permalink)
-    
+
+    // Отключаем лоадинг
+    this.loading = false
+    // И пускаем на страницу
     next()
   },
   methods: {

@@ -7,62 +7,27 @@
 
     <!-- Здесь выводим видео -->
     <div class="video-wrap">
-      
-      <!-- Итерируем и отрисовываем 4 видео -->
-      <div 
-        class="video-item" 
+
+      <VideoItem 
         v-for="(video, index) in fourLatestVideo"
         :key="index"
-      >
-        <!-- Обложка -->
-        <div class="cover-wrap">
-          <a 
-            :href="`https://www.youtube.com/watch?v=${video.permalink}`" 
-            target="_blank"
-            class="video-cover" 
-            :style="{ 'backgroundImage' : 'url(' + `https://img.youtube.com/vi/${video.permalink}/hqdefault.jpg` + ')' }"
-          > 
-            <!-- Значок плея -->
-            <VideoPlayButton 
-              :size="50"
-            />
-
-
-            <!-- Компонент который отображает длительность видео -->
-            <PrevVideoInfo 
-              :duration="video.duration"
-            />
-          </a>
-
-          
-        </div>
-        
-        <PrevInfo 
-          :date="video.date"
-          :name="video.name"
-          :authors="video.authors"
-          :url="`https://www.youtube.com/watch?v=${video.permalink}`" 
-        />
-      </div>
-      
+        :video="video"
+      />
       
     </div>
   </div>
 </template>
 
 <script>
-import PrevVideoInfo from '@/components/app/video/PrevVideoInfo.vue'
-import PrevInfo from '@/components/app/PrevInfo.vue'
 import TopBar from '@/components/app/TopBar.vue'
-import VideoPlayButton from '@/components/app/video/VideoPlayButton.vue'
+import VideoItem from '@/components/app/video/VideoPrevCartItem.vue'
+
 export default {
   name: 'Video-prev-author',
   props: ['fourLatestVideo'],
-  mounted() {
-    console.log(this.fourLatestVideo)
-  },
+
   components: {
-    TopBar, PrevInfo, VideoPlayButton, PrevVideoInfo
+    TopBar, VideoItem
   }
 }
 </script>
@@ -84,21 +49,5 @@ export default {
     margin-right: 26px;
   }
 
-  .cover-wrap {
-    overflow: hidden;
-    margin-bottom: 10px;
-  }
-  .video-cover {
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: 280px;
-    height: 200px;
-  }
-  
 
 </style>

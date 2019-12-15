@@ -1,0 +1,67 @@
+<template>
+  <!-- Компонент итема видео, который мы используем на странице автора, в архиве видео. -->
+  <div class="video-item">
+    <!-- Обложка -->
+    <div class="cover-wrap">
+      <a 
+        :href="`https://www.youtube.com/watch?v=${video.permalink}`" 
+        target="_blank"
+        class="video-cover" 
+        :style="{ 'backgroundImage' : 'url(' + `https://img.youtube.com/vi/${video.permalink}/hqdefault.jpg` + ')' }"
+      > 
+        <!-- Значок плея -->
+        <VideoPlayButton 
+          :size="50"
+        />
+
+
+        <!-- Компонент который отображает длительность видео -->
+        <PrevVideoInfo 
+          :duration="video.duration"
+        />
+      </a>
+
+      
+    </div>
+    
+    <PrevInfo 
+      :date="video.date"
+      :name="video.name"
+      :authors="video.authors"
+      :url="`https://www.youtube.com/watch?v=${video.permalink}`" 
+    />
+  </div>
+</template>
+
+<script>
+import PrevVideoInfo from '@/components/app/video/PrevVideoInfo.vue'
+import PrevInfo from '@/components/app/PrevInfo.vue'
+import VideoPlayButton from '@/components/app/video/VideoPlayButton.vue'
+export default {
+  name: 'video-prev-cart-item',
+  props: ['video'],
+  components: {
+    PrevVideoInfo, PrevInfo, VideoPlayButton
+  }
+}
+</script>
+
+
+<style scoped>
+
+  .cover-wrap {
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .video-cover {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 280px;
+    height: 200px;
+  }
+</style>

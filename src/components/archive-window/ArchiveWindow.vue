@@ -59,23 +59,6 @@ export default {
     }
   },
   mixins: [ paginationMixin ], // Тут мы инициализируем миксин который нужен для пагинации
-  methods: {
-    // Открывает релиз (по клику на обложку)
-    openRelease(authors, release) {
-
-      // Возможно это костыль, но по сути у нас не бывает больше 4 авторов в одном релизе
-      if (authors.length === 1) {
-        this.$router.push(`/release-cart/${authors[0]['permalink']}/${release}`)
-      } else if (authors.length === 2) {
-        this.$router.push(`/release-cart/${authors[0]['permalink']}+${authors[1]['permalink']}/${release}`)
-      } else if (authors.length === 3) {
-        this.$router.push(`/release-cart/${authors[0]['permalink']}+${authors[1]['permalink']}+${authors[2]['permalink']}/${release}`)
-      } else {
-        this.$router.push(`/release-cart/${authors[0]['permalink']}+${authors[1]['permalink']}+${authors[2]['permalink']}+${authors[3]['permalink']}/${release}`)
-      }
-    }
-  },
-  
   beforeDestroy() {
     // Когда закрываем этот компонент то чистим стор от тех релизов которые были загружены до этого
     this.$store.commit('clearReleases')
