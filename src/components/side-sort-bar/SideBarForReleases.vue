@@ -26,10 +26,6 @@ import CheckTags from '@/components/side-sort-bar/CheckTags.vue'
 export default {
   name: 'Sort-side-bar',
   components: {SelectSort, CheckTags},
-  async mounted() {
-    // Здесь мы вызываем подгрузку тегов с бэкенда
-    await this.$store.dispatch('getReleaseTags')
-  },
   methods: {
     // Прослушиваем с дочернего компонента способ сортировки
     setSorting(sorting) {

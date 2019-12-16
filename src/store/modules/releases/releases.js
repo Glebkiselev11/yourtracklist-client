@@ -23,7 +23,6 @@ export default {
         commit('setPageCount', pageCount)
 
         // Устанавливаем возможные теги для релизов
-        console.log(releasesTags)
         commit('setReleasesTags', releasesTags)
 
         // И если мы получали релизы для определнного автора, то ставим в стор его локальное имя
