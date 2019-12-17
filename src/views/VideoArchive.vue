@@ -15,12 +15,7 @@
       <!-- <Loader v-if="loading"/> -->
       
       <!-- Основное окно куда выводим релизы -->
-      <!-- linkTo туда передаем начальный кусок ссылки -->
-      <!-- <ArchiveWindow 
-        :releases="this.releases"
-        :count="this.count"
-        linkTo="/releases-archive"
-      /> -->
+      
 
     </div>
 
@@ -30,12 +25,10 @@
 <script> 
 import {mapGetters} from 'vuex'
 import SideBarForVideo from '@/components/side-sort-bar/SideBarForVideo.vue'
-// import ArchiveWindow from '@/components/archive-window/ArchiveWindow.vue'
 export default {
   name: 'Video-archive',
   components: {
     SideBarForVideo, 
-    // ArchiveWindow
   },
   computed: {
     ...mapGetters(['videos'])

@@ -25,7 +25,9 @@
 
       <!-- Боковая сортировка -->
       <SideBarForReleases 
-        
+        :releases-tags="this.releasesTags"
+        :sorting-releases="this.sortingReleases"
+        :select-tags-for-releases="this.selectTagsForReleases"
       />
       
       <!-- Прелоадер -->
@@ -87,7 +89,15 @@ export default {
     ReleaseItem, // Итем релиза
   },
   computed: {
-    ...mapGetters(['releases', 'count', 'localNameAuthorForRelease', 'pageSize']),
+    ...mapGetters([
+      'releases', // Карточки релизов
+      'count', // Количество найденых релизов по нашим фильтрам (всего сколько найдено во всей базе)
+      'localNameAuthorForRelease', // Локальное название автора, для которого мы ищем релизы
+      'pageSize', // Размер одной страницы (для пагинации)
+      'releasesTags', // Доступные теги релизов
+      'sortingReleases', // Тип сортировки релизов
+      'selectTagsForReleases', // Выбранные теги для поиска релизов (где стоят галки)
+    ]),
 
     // Вычисляет текст записи исходя из количества релизов
     countText() {

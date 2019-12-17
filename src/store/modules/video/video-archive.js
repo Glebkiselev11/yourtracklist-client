@@ -24,7 +24,7 @@ export default {
 
   },
   state: {
-    selectTagsForVideo: [],
+    selectTagsForVideo: [], // Теги которые используем при получение видео
     sortingVideo: undefined, // Тип сортировки видео
     video: undefined, // видео одной страницы пагинации
   },

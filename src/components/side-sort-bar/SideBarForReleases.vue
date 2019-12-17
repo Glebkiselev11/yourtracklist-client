@@ -20,12 +20,17 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+// import {mapGetters} from 'vuex'
 import SelectSort from '@/components/side-sort-bar/SelectSort.vue'
 import CheckTags from '@/components/side-sort-bar/CheckTags.vue'
 export default {
   name: 'Sort-side-bar',
   components: {SelectSort, CheckTags},
+  props: [
+    'releasesTags', // Доступные теги релизов
+    'sortingReleases', // Тип сортировки релизов
+    'selectTagsForReleases', // Выбранные теги для поиска релизов (где стоят галки)
+  ],
   methods: {
     // Прослушиваем с дочернего компонента способ сортировки
     setSorting(sorting) {
@@ -45,11 +50,5 @@ export default {
       this.$store.commit('setSelectTagsForReleases', tag)
     }
   },
-
-  computed: {
-    ...mapGetters(['releasesTags', 'sortingReleases', 'selectTagsForReleases']),
-  },
-
-
 }
 </script>
