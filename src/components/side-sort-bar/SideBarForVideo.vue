@@ -11,7 +11,7 @@
     <!-- Выбираем Теги -->
     <CheckTags 
       :tags="releasesTags"
-      :select-tags="selectTagsForReleases"
+      :select-tags="selectTagsForVideo"
       @tags="setTags"
     />
     
@@ -26,13 +26,17 @@ import CheckTags from '@/components/side-sort-bar/CheckTags.vue'
 export default {
   name: 'Sort-side-bar',
   components: {SelectSort, CheckTags},
+  props: [
+    'sortingVideo', // Тип сортировки видео
+    'selectTagsForVideo', // Выбранные теги для поиска видео (где стоят галки)
+  ],
   methods: {
     // Прослушиваем с дочернего компонента способ сортировки
     setSorting(sorting) {
       // А так же сразу ставим выбранное значение в роутер
       this.$router.push({ query: { ...this.$route.query, sorting }})
       // И коммитим в стор выбранный метод фильтрации
-      this.$store.commit('setSortingReleases', sorting)
+      this.$store.commit('setSortingVideo', sorting)
     },
 
     // Прослушиваем с дочернего компонента теги
@@ -42,12 +46,13 @@ export default {
       this.$store.commit('setPageNum', 1)
 
       // И коммитим в стор выбранные теги
-      this.$store.commit('setSelectTagsForReleases', tag)
+      this.$store.commit('setSelectTagsForVideo', tag)
     }
   },
 
   computed: {
-    ...mapGetters(['releasesTags', 'sortingVideo', 'selectTagsForReleases']),
+    // ! Переносим их в род-компонент, как толко сделаем функционал под получение  видео, а не релизов
+    ...mapGetters(['releasesTags']),
   },
 
 

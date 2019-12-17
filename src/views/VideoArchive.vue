@@ -8,7 +8,8 @@
 
       <!-- Боковая панель с сортировкой -->
       <SideBarForVideo 
-        
+        :sorting-video="this.sortingVideo"
+        :select-tags-for-video="this.selectTagsForVideo"
       />
       
       <!-- Прелоадер -->
@@ -31,7 +32,14 @@ export default {
     SideBarForVideo, 
   },
   computed: {
-    ...mapGetters(['videos'])
+    ...mapGetters([
+      'videos', // Карточки превьюх видео
+      'count', // Количество найденых видео по нашим фильтрам (всего сколько найдено во всей базе)
+      'pageSize', // Размер одной страницы (для пагинации)
+      'releasesTags', // ! еще не готово (videosTags)Доступные теги релизов
+      'sortingVideo', // Тип сортировки видео
+      'selectTagsForVideo', // Выбранные теги для поиска видео (где стоят галки)
+    ])
   },
   async created() {
     // При открытие в раз , мы смотрим что у нас есть в роуторе
@@ -58,21 +66,50 @@ export default {
     }
 
     // Устанавлием в store теги релизов которые выбраны
-    this.$store.commit('setSelectTagsForReleases', this.$route.query.tag)
+    this.$store.commit('setSelectTagsForVideo', this.$route.query.tag)
 
     // Устанавливаем в стор номер текущей страницы из роутера
     this.$store.commit('setPageNum', +this.$route.query.page || 1)
 
-    // Устанавливаем в стор автора если он есть
-    this.$store.commit('setReleasesForAuthor', this.$route.query.author)
     // Очищаем локальное имя автора, чтобы если мы загрузили нового, старое название не мелькнуло в заголовке
-    this.$store.commit('clearLocalNameAuthorForRelease')
+    this.$store.commit('clearLocalNameAuthor')
 
-    // Подгружаем с бэкенда на основе фильтров нужные релизы
-    await this.$store.dispatch('getReleases')
+    // Подгружаем с бэкенда на основе фильтров нужные видео
+    await this.$store.dispatch('getVideo')
     
     // Как только загрузили все, мы выключаем лоадер
     this.loading = false
+  },
+
+  watch: {
+    // Следит за изменениями роутера
+    async '$route' (to) {
+      
+      // ! Остановились здесь
+
+      // Ставит в $store теги из urla (нужно для того, чтобы когда мы в ручную меняем url 
+      // либо жмем по тегам в карточках и мы дополняем эти теги в store)
+      this.$store.commit('setSelectTagsForVideo', to.query.tag)
+
+      // ! TODO: Устанавливаем в стор автора если он есть
+      // this.$store.commit('setReleasesForAuthor', this.$route.query.author)
+
+      // И очищаем старого автора из стора (его локальное имя) если в routore нету автора
+      // Это нужно, чтобы автор на время не пропадал, если мы шелкаем фильтры 
+      if (!this.$route.query.author) {
+        this.$store.commit('clearLocalNameAuthor')
+      }
+      
+
+      // До запроса включаем лоадер
+      this.loading = true
+
+      // И как только роутер меняется делает запрос на бэк с новыми фильтрами, которые у нас храняться в стейте
+      await this.$store.dispatch('getVideo')
+
+      // Как запрос прошел - выключаем
+      this.loading = false
+    }
   },
 }
 </script>

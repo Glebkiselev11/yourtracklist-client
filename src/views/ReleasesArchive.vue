@@ -3,16 +3,16 @@
   <div class="wrap">
 
     <!-- Отображаем если нет автора в квери параметрах и не загружены данные о авторе -->
-    <h1 v-if="!this.$route.query.author && !this.localNameAuthorForRelease" class="archive-title">Релизы</h1>
+    <h1 v-if="!this.$route.query.author && !this.localNameAuthor" class="archive-title">Релизы</h1>
     
     <!-- Отображаем этот блок, если это релизы определенного автора -->
     <div v-else class="archive-title-wrap">
       <!-- Локальное название артиста -->
-      <h1 class="archive-title">Релизы <b>{{this.localNameAuthorForRelease}}</b></h1>
+      <h1 class="archive-title">Релизы <b>{{this.localNameAuthor}}</b></h1>
 
       <!-- Кнопка которая переходит к видео записям артиста -->
       <ArrowButton 
-        :title="'Видео ' + this.localNameAuthorForRelease"
+        :title="'Видео ' + this.localNameAuthor"
         :arrow-color="'#000'"
         :forward="true"
         :styles="'color: black; font-size: 25px; font-weight: 300;'"
@@ -92,7 +92,7 @@ export default {
     ...mapGetters([
       'releases', // Карточки релизов
       'count', // Количество найденых релизов по нашим фильтрам (всего сколько найдено во всей базе)
-      'localNameAuthorForRelease', // Локальное название автора, для которого мы ищем релизы
+      'localNameAuthor', // Локальное название автора, для которого мы ищем релизы
       'pageSize', // Размер одной страницы (для пагинации)
       'releasesTags', // Доступные теги релизов
       'sortingReleases', // Тип сортировки релизов
@@ -147,10 +147,8 @@ export default {
     // Устанавливаем в стор номер текущей страницы из роутера
     this.$store.commit('setPageNum', +this.$route.query.page || 1)
 
-    // Устанавливаем в стор автора если он есть
-    this.$store.commit('setReleasesForAuthor', this.$route.query.author)
     // Очищаем локальное имя автора, чтобы если мы загрузили нового, старое название не мелькнуло в заголовке
-    this.$store.commit('clearLocalNameAuthorForRelease')
+    this.$store.commit('clearLocalNameAuthor')
 
     // Подгружаем с бэкенда на основе фильтров нужные релизы
     await this.$store.dispatch('getReleases')
@@ -172,7 +170,7 @@ export default {
       // И очищаем старого автора из стора (его локальное имя) если в routore нету автора
       // Это нужно, чтобы автор на время не пропадал, если мы шелкаем фильтры 
       if (!this.$route.query.author) {
-        this.$store.commit('clearLocalNameAuthorForRelease')
+        this.$store.commit('clearLocalNameAuthor')
       }
       
 

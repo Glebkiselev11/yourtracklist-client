@@ -1,6 +1,26 @@
-// Получаем видео записи с бэкенда
+import axios from 'axios'
+
+// Модуль через который мы получаем список видео, для архива
 export default {
   actions: {
+    // Получает 9 видео с базы
+    async getVideo({commit, getters}) {
+
+      console.log(commit)
+      // Вытаскиваем из стора метод сортировки видео
+      // Теги и количество отображаемых на одной странице записей
+      const {pageSize, sortingVideo, pageNum , selectTagsForVideo: tags} = getters
+
+      try {
+        const data = await axios.post('/api/get-video', {sortingVideo, tags, pageSize, pageNum})
+        console.log(data)
+
+      } catch (error) {
+        
+        console.log(error)
+      }
+
+    }
   },
   mutations: {
     setSortingVideo(state, sorting) {
@@ -30,6 +50,7 @@ export default {
   },
   getters: {
     sortingVideo: s => s.sortingVideo,
-    video: s => s.video
+    video: s => s.video,
+    selectTagsForVideo: s => s.selectTagsForVideo
   },
 }

@@ -3,7 +3,7 @@ import axios from 'axios'
 // Модуль через который мы получаем список релизов, для архива
 export default {
   actions: {
-    // Получает пока 9 релизов с базы
+    // Получает 9 релизов с базы
     async getReleases({commit, getters}) {
 
       // Вытаскиваем из стора метод сортировки релиза
@@ -27,7 +27,7 @@ export default {
 
         // И если мы получали релизы для определнного автора, то ставим в стор его локальное имя
         if (releasesForAuthor) {
-          commit('setLocalNameAuthorForRelease', { releases,  releasesForAuthor})
+          commit('setLocalNameAuthor', { releases,  releasesForAuthor})
         }
         
       } catch (error) {
@@ -60,25 +60,9 @@ export default {
       state.releasesForAuthor = author
     },
 
-    // Вычисляет локальное имя для автора
-    // releases - релизы которые мы получили с бэкенда, для конкретного автора
-    // releasesForAuthor - permalink конкретного автора, в этом методе мы должны будем вытащить локальное имя для автора,
-    // чтобы установить его в заголовок страницы
-    setLocalNameAuthorForRelease(state, { releases,  releasesForAuthor}) {
-      const authors = releases[0].authors
-      // Проходимся циклом, потому что у релиза может быть несколько авторов, собственно для этого этот метод и был нужен
-      for (let i = 0; i < authors.length; i++) {
-        // Находим нужного артиста, для которого мы искали релизы
-        if (authors[i]['permalink'] === releasesForAuthor) {
-          // И устанавливаем в стейт его локальное имя (оригинальное, может быть на любом языке)
-          state.localNameAuthorForRelease = authors[i]['name']
-        }
-      }
-    },
+    
 
-    clearLocalNameAuthorForRelease(state) {
-      state.localNameAuthorForRelease = undefined
-    },
+    
 
     clearReleases(state) {
       state.releases = undefined
@@ -102,7 +86,7 @@ export default {
     selectTagsForReleases: [], // Теги которые используем при получение релизов
     releasesTags: undefined, // Теги которые доступны для выбора в релизах в определенном фильтре или для определенного автора( то бишь не показываем лишнее)
     releasesForAuthor: undefined, // Релизы конкретного атвора
-    localNameAuthorForRelease: undefined, // Локальное название автора, для которого мы ищем релизы
+    
   },
   getters: {
     releasesTags: state => state.releasesTags,
@@ -110,6 +94,6 @@ export default {
     sortingReleases: state => state.sortingReleases,
     selectTagsForReleases: state => state.selectTagsForReleases,
     releasesForAuthor: state => state.releasesForAuthor,
-    localNameAuthorForRelease: state => state.localNameAuthorForRelease
+    
   }
 }
