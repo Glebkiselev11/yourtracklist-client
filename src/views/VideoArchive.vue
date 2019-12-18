@@ -112,6 +112,12 @@ export default {
       this.loading = false
     }
   },
+  // Как только мы закрываем этот раздел, мы подчищаем страницу от тегов сортировки
+  beforeDestroy() {
+    this.$store.commit('clearSortingVideo')
+    this.$store.commit('clearSelectTagsForVideo')
+    this.$store.commit('clearVideos')
+  },
 }
 </script>
 

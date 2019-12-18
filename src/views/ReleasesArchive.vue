@@ -79,7 +79,6 @@ export default {
   name: 'Releases-archive',
   data: () => ({
     loading: true, // Визуальное отображение загрузки
-    filters: undefined,
     sorting: undefined, // Тип сортировки, который у нас выбран, когда загружается страница в первый раз, то мы сюда его устанавливаем с квери параметров в адресной строке
     checkedTags: [], // Выбранные теги, которые тоже устанавливаются первый раз из адресной строки, если они там есть
   }),
@@ -187,6 +186,7 @@ export default {
   // Как только мы закрываем этот раздел, мы подчищаем страницу от тегов сортировки
   beforeDestroy() {
     this.$store.commit('clearSortingReleases')
+    this.$store.commit('clearReleasesForAuthor')
     this.$store.commit('clearSelectTagsForReleases')
     this.$store.commit('clearReleases')
   },
