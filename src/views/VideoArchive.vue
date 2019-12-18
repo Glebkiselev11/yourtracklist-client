@@ -10,6 +10,7 @@
       <SideBarForVideo 
         :sorting-video="this.sortingVideo"
         :select-tags-for-video="this.selectTagsForVideo"
+        :videos-tags="this.videosTags"
       />
       
       <!-- Прелоадер -->
@@ -36,7 +37,7 @@ export default {
       'videos', // Карточки превьюх видео
       'count', // Количество найденых видео по нашим фильтрам (всего сколько найдено во всей базе)
       'pageSize', // Размер одной страницы (для пагинации)
-      'releasesTags', // ! еще не готово (videosTags)Доступные теги релизов
+      'videosTags', // Доступные теги видео записей
       'sortingVideo', // Тип сортировки видео
       'selectTagsForVideo', // Выбранные теги для поиска видео (где стоят галки)
     ])

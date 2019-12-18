@@ -36,64 +36,59 @@ export default {
     }
   },
   mutations: {
-    setReleases(state, releases) {
-      state.releases = releases
+    setReleases(s, releases) {
+      s.releases = releases
+    },
+    clearReleases(s) {
+      s.releases = undefined
     },
 
-    setSortingReleases(state, sorting) {
-      state.sortingReleases = sorting
+    setSortingReleases(s, sorting) {
+      s.sortingReleases = sorting
+    },
+    clearSortingReleases(s) {
+      s.sortingReleases = undefined
     },
 
-    setReleasesTags(state, tags) {
-      state.releasesTags = tags
+    setReleasesTags(s, tags) {
+      s.releasesTags = tags
     },
 
-    setSelectTagsForReleases(state, tags) {
+    setSelectTagsForReleases(s, tags) {
       if (typeof tags === 'string') {
-        state.selectTagsForReleases.push(tags)
+        s.selectTagsForReleases.push(tags)
       } else if (typeof tags === 'object'){
-        state.selectTagsForReleases = tags
+        s.selectTagsForReleases = tags
       }
     },
-
-    setReleasesForAuthor(state, author) {
-      state.releasesForAuthor = author
+    clearSelectTagsForReleases(s) {
+      s.selectTagsForReleases = []
     },
 
-    
 
-    
-
-    clearReleases(state) {
-      state.releases = undefined
+    setReleasesForAuthor(s, author) {
+      s.releasesForAuthor = author
     },
 
-    clearSortingReleases(state) {
-      state.sortingReleases = undefined
-    },
-
-    clearSelectTagsForReleases(state) {
-      state.selectTagsForReleases = []
-    },
-
-    clearReleasesForAuthor(state) {
-      state.releasesForAuthor = undefined
+    clearReleasesForAuthor(s) {
+      s.releasesForAuthor = undefined
     }
   },
+  
   state: {
     releases: undefined, // релизы одной страницы пагинации, у нас там пока только 9 релизов на одной страница, возможно в будущем
     sortingReleases: undefined, // Тип сортировки, которую используем
     selectTagsForReleases: [], // Теги которые используем при получение релизов
     releasesTags: undefined, // Теги которые доступны для выбора в релизах в определенном фильтре или для определенного автора( то бишь не показываем лишнее)
     releasesForAuthor: undefined, // Релизы конкретного атвора
-    
   },
+
   getters: {
-    releasesTags: state => state.releasesTags,
-    releases: state => state.releases,
-    sortingReleases: state => state.sortingReleases,
-    selectTagsForReleases: state => state.selectTagsForReleases,
-    releasesForAuthor: state => state.releasesForAuthor,
+    releasesTags: s => s.releasesTags,
+    releases: s => s.releases,
+    sortingReleases: s => s.sortingReleases,
+    selectTagsForReleases: s => s.selectTagsForReleases,
+    releasesForAuthor: s => s.releasesForAuthor,
     
   }
 }

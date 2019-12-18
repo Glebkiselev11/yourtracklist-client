@@ -10,7 +10,7 @@
 
     <!-- Выбираем Теги -->
     <CheckTags 
-      :tags="releasesTags"
+      :tags="videosTags"
       :select-tags="selectTagsForVideo"
       @tags="setTags"
     />
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
 import SelectSort from '@/components/side-sort-bar/SelectSort.vue'
 import CheckTags from '@/components/side-sort-bar/CheckTags.vue'
 export default {
@@ -29,6 +28,7 @@ export default {
   props: [
     'sortingVideo', // Тип сортировки видео
     'selectTagsForVideo', // Выбранные теги для поиска видео (где стоят галки)
+    'videosTags', // Доступные теги для видео записей
   ],
   methods: {
     // Прослушиваем с дочернего компонента способ сортировки
@@ -49,12 +49,6 @@ export default {
       this.$store.commit('setSelectTagsForVideo', tag)
     }
   },
-
-  computed: {
-    // ! Переносим их в род-компонент, как толко сделаем функционал под получение  видео, а не релизов
-    ...mapGetters(['releasesTags']),
-  },
-
 
 }
 </script>

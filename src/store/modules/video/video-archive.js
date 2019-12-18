@@ -6,14 +6,17 @@ export default {
     // Получает 9 видео с базы
     async getVideo({commit, getters}) {
 
-      console.log(commit)
       // Вытаскиваем из стора метод сортировки видео
       // Теги и количество отображаемых на одной странице записей
       const {pageSize, sortingVideo, pageNum , selectTagsForVideo: tags} = getters
 
       try {
-        const data = await axios.post('/api/get-video', {sortingVideo, tags, pageSize, pageNum})
-        console.log(data)
+        const {data : {videos, count, pageCount, tags : videosTags}} = await axios.post('/api/get-video', {sortingVideo, tags, pageSize, pageNum})
+
+        commit('setVideos', videos)
+        commit('setCount', count)
+        commit('setPageCount', pageCount)
+        commit('setVideosTags', videosTags)
 
       } catch (error) {
         
@@ -23,34 +26,47 @@ export default {
     }
   },
   mutations: {
-    setSortingVideo(state, sorting) {
-      state.sortingVideo = sorting
-    },
-    clearSortingVideo(state) {
-      state.sortingVideo = undefined
+    setVideos(s, videos) {
+      s.videos = videos
     },
 
-    setSelectTagsForVideo(state, tags) {
+    clearVideos(s) {
+      s.videos = undefined
+    },
+
+    setSortingVideo(s, sorting) {
+      s.sortingVideo = sorting
+    },
+    clearSortingVideo(s) {
+      s.sortingVideo = undefined
+    },
+
+    setSelectTagsForVideo(s, tags) {
       if (typeof tags === 'string') {
-        state.selectTagsForVideo.push(tags)
+        s.selectTagsForVideo.push(tags)
       } else if (typeof tags === 'object'){
-        state.selectTagsForVideo = tags
+        s.selectTagsForVideo = tags
       }
     },
+    clearSelectTagsForVideo(s) {
+      s.selectTagsForVideo = []
+    },
 
-    clearSelectTagsForVideo(state) {
-      state.selectTagsForVideo = []
+    setVideosTags(s, tags) {
+      s.videosTags = tags
     },
 
   },
   state: {
+    videosTags: undefined, // Теги которые доступны для выбора в видео в определенном фильтре или для определенного автора( то бишь не показываем лишние теги, для которых ничего нет)
     selectTagsForVideo: [], // Теги которые используем при получение видео
     sortingVideo: undefined, // Тип сортировки видео
-    video: undefined, // видео одной страницы пагинации
+    videos: undefined, // видео записи одной страницы пагинации
   },
   getters: {
+    videosTags: s => s.videosTags,
+    selectTagsForVideo: s => s.selectTagsForVideo,
     sortingVideo: s => s.sortingVideo,
-    video: s => s.video,
-    selectTagsForVideo: s => s.selectTagsForVideo
+    videos: s => s.videos,
   },
 }
