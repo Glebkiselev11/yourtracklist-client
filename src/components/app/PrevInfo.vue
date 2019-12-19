@@ -1,6 +1,6 @@
 <template>
   <!-- Компонент информации о релизе / видео которая распологается в предпросмотре (дата/ название и автор )-->
-  <div>
+  <div class="prev-info-wrap">
     <!-- Здесь преобразуем формат времени в ISO в более привлекательный формат -->
     <span v-if="date" class="date">{{new Date(date).toLocaleDateString('ru-RU', {month: 'long', day: 'numeric', year: 'numeric'})}}</span>
     
@@ -11,10 +11,11 @@
     <a v-else :href="url" class="name" target="_blank">{{name}}</a>
 
     <!-- Здесь выводим ссылку на дискографию артиста, если он не один, то через цикл -->
-    <p class="author"  
-      v-for="(author, index) in this.authors"
-      :key="index"
-    >
+    <div class="author-name-wrap">
+      <p class="author"  
+        v-for="(author, index) in this.authors"
+        :key="index"
+      >
       
       <router-link class="active-link"
         :to="'/author/' + author.permalink"
@@ -23,6 +24,8 @@
       <!-- Добавляем & знак между артистами если их несколько -->
       <span v-if="authors.length > 1 && (index !== authors.length - 1)">&</span>
     </p>
+    </div>
+    
   </div>
 </template>
 
@@ -51,31 +54,45 @@ export default {
 
 <style scoped>
 
+  .prev-info-wrap {
+    width: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .date {
     font-size: 14px;
     font-weight: 400;
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
   }
 
   .name {
+    max-width: inherit;
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 4px;
-    display: block;
+    white-space: nowrap;
     cursor: pointer;
+  }
+
+  .author-name-wrap {
+    margin: 2px 0 1px 0;
+    max-width: inherit;
   }
 
   .author {
     font-size: 16px;
     font-weight: 500;
     display: inline;
+    line-height: 160%;
+    
   }
-
 
   .author span {
     margin: 0 5px;
   }  
+
   .active-link:hover {
     border-bottom: 1px solid black;
   }

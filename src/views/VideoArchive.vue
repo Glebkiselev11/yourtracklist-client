@@ -14,10 +14,39 @@
       />
       
       <!-- Прелоадер -->
-      <!-- <Loader v-if="loading"/> -->
+      <Loader v-if="loading"/>
       
-      <!-- Основное окно куда выводим релизы -->
-      
+      <!-- Основное окно куда выводим видео -->
+      <div v-else class="window-wrap">
+     
+        <!-- Количество видео -->
+        <span class="number-of-releases" v-if="count > 0">Найдено {{count}} видео</span>
+
+        <!-- Сюда итерируем сами релизы / миксы -->
+        <div class="archive-wrap">
+
+          <!-- Итерируемый итем -->
+          <VideoItem 
+            v-for="(video, index) in videos"
+            :key="index"
+            :video="video"
+          />
+        </div>
+
+
+        <!-- Пагинация (для визуального представления был использован плагин vuejs-paginate, 
+          а сама логика для работы с нашей таблицей лежит в @/mixins/pagination.mixin.js) -->
+        <Paginate
+          v-if="pageCount && (count > pageSize)"
+          :page-count="pageCount"
+          v-model="pageNum"
+          :prev-text="'Назад'"
+          :next-text="'Вперед'"
+          :container-class="'pagination'"
+          :page-class="'page-item'"
+          :active-class="'page-active'"
+        />
+      </div>
 
     </div>
 
@@ -27,11 +56,19 @@
 <script> 
 import {mapGetters} from 'vuex'
 import SideBarForVideo from '@/components/side-sort-bar/SideBarForVideo.vue'
+import paginationMixin from '@/mixins/pagination.mixin.js'
+import VideoItem from '@/components/app/video/VideoPrevCartItem.vue'
+
 export default {
   name: 'Video-archive',
+  data: () => ({
+    loading: true, // Визуальное отображение загрузки
+  }),
   components: {
-    SideBarForVideo, 
+    SideBarForVideo,
+    VideoItem 
   },
+  mixins: [ paginationMixin ], // Тут мы инициализируем миксин который нужен для пагинации
   computed: {
     ...mapGetters([
       'videos', // Карточки превьюх видео
@@ -40,7 +77,8 @@ export default {
       'videosTags', // Доступные теги видео записей
       'sortingVideo', // Тип сортировки видео
       'selectTagsForVideo', // Выбранные теги для поиска видео (где стоят галки)
-    ])
+    ]),
+
   },
   async created() {
     // При открытие в раз , мы смотрим что у нас есть в роуторе
@@ -137,6 +175,44 @@ export default {
     display: flex;
     width: 100%;
     justify-content: space-between;
+  }
+
+  /* Обертка под карточки и пагинацию */
+  .window-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 200px;
+    width: 892px;
+  }
+
+  /* Спан с количеством найденых релизов */
+  .number-of-releases {
+    margin-left: auto;
+    margin-bottom: 30px;
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+
+  /* Только для карточек */
+  .archive-wrap {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  /* Делалает отступ 26 пикселей всем, кроме каждого 3 элемента */
+  .video-item:not(:nth-child(3n)) {
+    margin-right: 26px;
+  }
+
+
+  /* Карточка релиза */
+  .video-item {
+    margin-bottom: 60px;
   }
 </style>
 

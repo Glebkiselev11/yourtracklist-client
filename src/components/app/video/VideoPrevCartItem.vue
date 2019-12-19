@@ -49,6 +49,10 @@ export default {
 
 <style scoped>
 
+  .video-item {
+    width: 280px;
+  }
+
   .cover-wrap {
     overflow: hidden;
     margin-bottom: 10px;
@@ -64,4 +68,6 @@ export default {
     width: 280px;
     height: 200px;
   }
+
+  
 </style>
