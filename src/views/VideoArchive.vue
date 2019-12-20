@@ -10,8 +10,9 @@
       <!-- Локальное название артиста -->
       <h1 class="archive-title">Видео <b>{{this.localNameAuthor}}</b></h1>
 
-      <!-- Кнопка которая переходит к видео записям артиста -->
+      <!-- Кнопка которая переходит к релизам артиста (если они у него есть) -->
       <ArrowButton 
+        v-if="this.thereIsReleases && this.localNameAuthor"
         :title="'Релизы ' + this.localNameAuthor"
         :arrow-color="'#000'"
         :forward="true"
@@ -95,6 +96,7 @@ export default {
       'sortingVideo', // Тип сортировки видео
       'localNameAuthor', // Локальное название автора, для которого мы ищем видео
       'selectTagsForVideo', // Выбранные теги для поиска видео (где стоят галки)
+      'thereIsReleases', // Информация о том, есть ли релизы (есть ли мы запрашивали видео для конкретного автора) у автора
     ]),
 
   },

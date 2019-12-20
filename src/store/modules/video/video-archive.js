@@ -11,19 +11,21 @@ export default {
       const {pageSize, sortingVideo, pageNum , selectTagsForVideo: tags, authorPermalinkForVideos: authorPermalink} = getters
 
       try {
-        const {data : {videos, count, pageCount, tags : videosTags}} = await axios.post('/api/get-video', {sortingVideo, tags, pageSize, pageNum, authorPermalink})
+        const {data : {videos, count, pageCount, tags : videosTags, thereIs}} = await axios.post('/api/get-video', {sortingVideo, tags, pageSize, pageNum, authorPermalink})
 
         commit('setVideos', videos)
         commit('setCount', count)
         commit('setPageCount', pageCount)
         commit('setVideosTags', videosTags)
 
-
-        // И если мы получали релизы для определнного автора, то ставим в стор его локальное имя
+        // И если мы получали видео для определнного автора, то ставим в стор его локальное имя
         if (authorPermalink) {
-          // Передаем в метод, который лежит в authors/index.js массив авторов (потому что у релиза может быть несколько авторов) первого релиза
+          // Передаем в метод, который лежит в authors/index.js массив авторов (потому что у видео может быть несколько авторов) первого видео
           // И пермалинк автора, который нас интересует, чтобы по нему достать локальное имя автора
           commit('setLocalNameAuthor', { authors : videos[0].authors,  authorPermalink})
+          
+          // Информация о том, есть ли релизы у автора, для которого мы запрашивали видео
+          commit('setThereIsReleases', thereIs)
         }
 
       } catch (error) {
@@ -70,6 +72,14 @@ export default {
 
     clearAuthorPermalinkForVideos(s) {
       s.authorPermalinkForVideos = undefined
+    },
+
+    setThereIsReleases(s, thereIs) {
+      s.thereIsReleases = thereIs
+    },
+
+    clearThereIsReleases(s) {
+      s.thereIsReleases = false
     }
 
   },
@@ -79,6 +89,7 @@ export default {
     sortingVideo: undefined, // Тип сортировки видео
     videos: undefined, // видео записи одной страницы пагинации
     authorPermalinkForVideos: undefined, // Пермалинк автора, для которого мы ищем видео
+    thereIsReleases: false, // Информация, есть ли релизы для автора, для которого мы ищем видео
   },
   getters: {
     videosTags: s => s.videosTags,
@@ -86,5 +97,6 @@ export default {
     sortingVideo: s => s.sortingVideo,
     videos: s => s.videos,
     authorPermalinkForVideos: s => s.authorPermalinkForVideos,
+    thereIsReleases: s => s.thereIsReleases,
   },
 }
