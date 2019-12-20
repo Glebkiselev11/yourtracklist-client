@@ -12,6 +12,7 @@
 
       <!-- Кнопка которая переходит к видео записям артиста -->
       <ArrowButton 
+        v-if="this.thereIsVideos && this.localNameAuthor"
         :title="'Видео ' + this.localNameAuthor"
         :arrow-color="'#000'"
         :forward="true"
@@ -96,6 +97,7 @@ export default {
       'releasesTags', // Доступные теги релизов
       'sortingReleases', // Тип сортировки релизов
       'selectTagsForReleases', // Выбранные теги для поиска релизов (где стоят галки)
+      'thereIsVideos', // Информация о том, есть ли видео (есть ли мы запрашивали релизы для конкретного автора) у автора
     ]),
 
     // Вычисляет текст записи исходя из количества релизов
