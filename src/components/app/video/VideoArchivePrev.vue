@@ -1,8 +1,9 @@
 <template>
-  <!-- Компонент предпросмотра 4 видео, который используется пока только на странице автора -->
+  <!-- Компонент предпросмотра 4 последних видео из архива -->
   <div class="wrap">
     <TopBar 
       title="Видео"
+      @click="routerTo"
     />
 
     <!-- Здесь выводим видео -->
@@ -25,10 +26,23 @@ import VideoItem from '@/components/app/video/VideoPrevCartItem.vue'
 export default {
   name: 'Video-prev-author',
   props: ['fourLatestVideo'],
-
   components: {
     TopBar, VideoItem
-  }
+  },
+  methods: {
+
+    // Переходит к видео
+    routerTo() {
+      // Если в компонент был переданана ссылка на автора, то переходим к видео записям определенного автора
+      if (this.authorPermalink) {
+        this.$router.push({ path: '/video-archive', query: { author: this.authorPermalink }})
+      } else {
+        // Иначе просто переходим к релизам
+        this.$router.push({ path: '/video-archive'})
+      }
+      
+    }
+  },
 }
 </script>
 

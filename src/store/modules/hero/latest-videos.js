@@ -1,34 +1,34 @@
 import axios from 'axios'
 
-// Модуль для главной страницы, где мы с бэкенда подгружаем 3 последних видео
+// Модуль для главной страницы, где мы с бэкенда подгружаем 4 последних видео
 export default {
   actions: {
-    async getThreeLatesVideos({commit}) {
+    async getFourLatesVideos({commit}) {
       try {
-        const {data} = await axios.post('/api/get-tree-lates-videos')
+        const {data} = await axios.post('/api/get-four-lates-videos')
         console.log(data)
-        commit('setThreeLatesVideos', data)
+        commit('setFourLatesVideos', data)
       } catch(error) {
         console.log(error)
       }
     }
   },
   mutations: {
-    setThreeLatesVideos(state, videos) {
-      state.threeLatestVideos = videos
+    setFourLatesVideos(state, videos) {
+      state.fourLatestVideos = videos
     },
 
-    clearThreeLatesVideos(state) {
-      state.threeLatestVideos = undefined
+    clearFourLatesVideos(state) {
+      state.fourLatestVideos = undefined
     }
   },
   state: {
     // 3 последних видео, которые мы отображаем на главной странице
-    threeLatestVideos: undefined,
+    fourLatestVideos: undefined,
   },
   getters: {
-    threeLatestVideos(state) {
-      return state.threeLatestVideos
+    fourLatestVideos(state) {
+      return state.fourLatestVideos
     }
   }
 }

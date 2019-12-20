@@ -49,7 +49,6 @@ export default {
 
 <style scoped>
   .wrap {
-    margin-top: 150px;
     width: 100%;
   }
 

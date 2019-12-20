@@ -50,8 +50,8 @@
       :four-latest-releases="this.fourLastReleasesForAuthor"
     />
 
-    <!-- А тут 4 последних видео автора, этот компонент используется пока только на странице автора. (на главной странице у нас другой компонент) -->
-    <VideoPrevAuthor 
+    <!-- А тут 4 последних видео автора -->
+    <VideoArchivePrev 
       v-show="this.fourLastVideosForAuthor.length" 
       :author-permalink="authorInfo.permalink"
       :fourLatestVideo="this.fourLastVideosForAuthor"
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import VideoPrevAuthor from '@/components/app/video/VideoPrevAuthor.vue'
+import VideoArchivePrev from '@/components/app/video/VideoArchivePrev.vue'
 import ReleaseArchivePrev from '@/components/app/music/ReleaseArchivePrev.vue'
 import {mapGetters} from 'vuex'
 export default {
@@ -73,7 +73,7 @@ export default {
     fakeLastFourRel: []
   }),
   components: {
-    ReleaseArchivePrev, VideoPrevAuthor
+    ReleaseArchivePrev, VideoArchivePrev
   },
   async created() {
     await this.$store.dispatch('getAuthorById', this.$route.params.permalink)

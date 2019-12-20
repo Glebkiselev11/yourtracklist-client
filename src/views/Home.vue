@@ -10,8 +10,8 @@
     />
 
     <!-- Промо блок с видео записями, где выводим 3 последних видоса -->
-    <ViedeoHome 
-      :three-latest-videos="this.threeLatestVideos"
+    <VideoArchivePrev 
+      :fourLatestVideo="this.fourLatestVideos"
     />
 
     <!-- Промо блок с миксами, где выводим 4 рандомных микса -->
@@ -25,7 +25,7 @@
 <script>
 import Hero from '@/components/home/Hero.vue'
 import ReleaseArchivePrev from '@/components/app/music/ReleaseArchivePrev.vue'
-import ViedeoHome from '@/components/home/VideoHome.vue'
+import VideoArchivePrev from '@/components/app/video/VideoArchivePrev.vue'
 import MixesHome from '@/components/home/MixesHome.vue'
 // import LabelHome from '@/components/home/LabelHome.vue'
 import {mapGetters} from 'vuex'
@@ -34,21 +34,21 @@ export default {
   name: 'Home',
   components: {
     // LabelHome,
-    ReleaseArchivePrev, ViedeoHome, MixesHome, Hero
+    ReleaseArchivePrev, VideoArchivePrev, MixesHome, Hero
   },
   async mounted() {
     // При загрузке компонента вызываем релизы, видео для главной страницы
     await this.$store.dispatch('getFourLatesReleases')
-    await this.$store.dispatch('getThreeLatesVideos')
+    await this.$store.dispatch('getFourLatesVideos')
   },
   computed: {
     // Забираем значения из стора
-    ...mapGetters(['fourLatestReleases', 'threeLatestVideos'])
+    ...mapGetters(['fourLatestReleases', 'fourLatestVideos'])
   },
   beforeDestroy() {
-    // ! После закрытия главной страницы мы очищаем из стора загруженные данные, чтобы избежать утечки памяти
+    // После закрытия главной страницы мы очищаем из стора загруженные данные, чтобы избежать утечки памяти
     this.$store.commit('clearFourLatesReleases') // Релизы
-    this.$store.commit('clearThreeLatesVideos') // Видео
+    this.$store.commit('clearFourLatesVideos') // Видео
   }
 }
 </script>
