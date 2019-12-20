@@ -112,7 +112,7 @@ export default {
   methods: {
     // Отправляет к видео записям автора
     goToVideosAuthor() {
-      console.log('Нажали кнопку к видео записям автора, которых пока нет))')
+      this.$router.push({ path: '/video-archive', query: {author: this.$route.query.author}})
     }
   },
   async created() {
@@ -137,7 +137,7 @@ export default {
 
     // Если есть артист в query параметрах, то этого личная дискография и мы загружаем все релизы только этого автора
     if (this.$route.query.author) {
-      this.$store.commit('setReleasesForAuthor', this.$route.query.author)
+      this.$store.commit('setAuthorPermalinkForReleases', this.$route.query.author)
     }
 
     // Устанавлием в store теги релизов которые выбраны
@@ -163,8 +163,8 @@ export default {
       // либо жмем по тегам в карточках и мы дополняем эти теги в store)
       this.$store.commit('setSelectTagsForReleases', to.query.tag)
 
-      // Устанавливаем в стор автора если он есть
-      this.$store.commit('setReleasesForAuthor', this.$route.query.author)
+      // Устанавливаем в стор пермалинк автора если он есть
+      this.$store.commit('setAuthorPermalinkForReleases', this.$route.query.author)
 
       // И очищаем старого автора из стора (его локальное имя) если в routore нету автора
       // Это нужно, чтобы автор на время не пропадал, если мы шелкаем фильтры 
@@ -186,7 +186,7 @@ export default {
   // Как только мы закрываем этот раздел, мы подчищаем страницу от тегов сортировки
   beforeDestroy() {
     this.$store.commit('clearSortingReleases')
-    this.$store.commit('clearReleasesForAuthor')
+    this.$store.commit('clearAuthorPermalinkForReleases')
     this.$store.commit('clearSelectTagsForReleases')
     this.$store.commit('clearReleases')
   },

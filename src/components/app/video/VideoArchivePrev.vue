@@ -25,7 +25,7 @@ import VideoItem from '@/components/app/video/VideoPrevCartItem.vue'
 
 export default {
   name: 'Video-prev-author',
-  props: ['fourLatestVideo'],
+  props: ['fourLatestVideo', 'authorPermalink'],
   components: {
     TopBar, VideoItem
   },
@@ -37,7 +37,7 @@ export default {
       if (this.authorPermalink) {
         this.$router.push({ path: '/video-archive', query: { author: this.authorPermalink }})
       } else {
-        // Иначе просто переходим к релизам
+        // Иначе просто переходим к видео
         this.$router.push({ path: '/video-archive'})
       }
       

@@ -8,13 +8,15 @@ export default {
 
       // Вытаскиваем из стора метод сортировки релиза
       // Теги и количество отображаемых на одной странице записей
-      const {pageSize, sortingReleases, pageNum , releasesForAuthor, selectTagsForReleases: tags} = getters
+      const {pageSize, sortingReleases, pageNum , authorPermalinkForReleases : authorPermalink, selectTagsForReleases: tags} = getters
 
       try {
-        const {data : {releases, count, pageCount, tags : releasesTags}} = await axios.post('/api/get-release', {sortingReleases, tags, pageSize, pageNum, releasesForAuthor})
+        const {data : {releases, count, pageCount, tags : releasesTags}} = await axios.post('/api/get-release', {sortingReleases, tags, pageSize, pageNum, authorPermalink})
 
         // Вносим релизы
         commit('setReleases', releases)
+
+        console.log(releases)
 
         // И количество найденых релизов
         commit('setCount', count)
@@ -26,8 +28,10 @@ export default {
         commit('setReleasesTags', releasesTags)
 
         // И если мы получали релизы для определнного автора, то ставим в стор его локальное имя
-        if (releasesForAuthor) {
-          commit('setLocalNameAuthor', { releases,  releasesForAuthor})
+        if (authorPermalink) {
+          // Передаем в метод, который лежит в authors/index.js массив авторов (потому что у релиза может быть несколько авторов) первого релиза
+          // И пермалинк автора, который нас интересует, чтобы по нему достать локальное имя автора
+          commit('setLocalNameAuthor', { authors : releases[0].authors,  authorPermalink})
         }
         
       } catch (error) {
@@ -66,12 +70,12 @@ export default {
     },
 
 
-    setReleasesForAuthor(s, author) {
-      s.releasesForAuthor = author
+    setAuthorPermalinkForReleases(s, author) {
+      s.authorPermalinkForReleases = author
     },
 
-    clearReleasesForAuthor(s) {
-      s.releasesForAuthor = undefined
+    clearAuthorPermalinkForReleases(s) {
+      s.authorPermalinkForReleases = undefined
     }
   },
   
@@ -80,7 +84,7 @@ export default {
     sortingReleases: undefined, // Тип сортировки, которую используем
     selectTagsForReleases: [], // Теги которые используем при получение релизов
     releasesTags: undefined, // Теги которые доступны для выбора в релизах в определенном фильтре или для определенного автора( то бишь не показываем лишнее)
-    releasesForAuthor: undefined, // Релизы конкретного атвора
+    authorPermalinkForReleases: undefined, // Пермалинк автора, для которого мы ищем релизы
   },
 
   getters: {
@@ -88,7 +92,7 @@ export default {
     releases: s => s.releases,
     sortingReleases: s => s.sortingReleases,
     selectTagsForReleases: s => s.selectTagsForReleases,
-    releasesForAuthor: s => s.releasesForAuthor,
+    authorPermalinkForReleases: s => s.authorPermalinkForReleases,
     
   }
 }

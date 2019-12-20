@@ -1,7 +1,24 @@
 <template>
   <!-- Страница Архива видео записей -->
   <div class="wrap">
-    <h1 class="archive-title">Видео</h1>
+
+    <!-- Отображаем если нет автора в квери параметрах и не загружены данные о авторе -->
+    <h1 v-if="!this.$route.query.author && !this.localNameAuthor" class="archive-title">Видео</h1>
+    
+    <!-- Отображаем этот блок, если это релизы определенного автора -->
+    <div v-else class="archive-title-wrap">
+      <!-- Локальное название артиста -->
+      <h1 class="archive-title">Видео <b>{{this.localNameAuthor}}</b></h1>
+
+      <!-- Кнопка которая переходит к видео записям артиста -->
+      <ArrowButton 
+        :title="'Релизы ' + this.localNameAuthor"
+        :arrow-color="'#000'"
+        :forward="true"
+        :styles="'color: black; font-size: 25px; font-weight: 300;'"
+        @click="goToReleasesAuthor"
+      />
+    </div>
 
 
     <div class="container">
@@ -76,9 +93,16 @@ export default {
       'pageSize', // Размер одной страницы (для пагинации)
       'videosTags', // Доступные теги видео записей
       'sortingVideo', // Тип сортировки видео
+      'localNameAuthor', // Локальное название автора, для которого мы ищем видео
       'selectTagsForVideo', // Выбранные теги для поиска видео (где стоят галки)
     ]),
 
+  },
+  methods: {
+    // Метод для стрелки в самом верху, который перекидывает к релизам автора
+    goToReleasesAuthor() {
+      this.$router.push({ path: '/releases-archive', query: {author: this.$route.query.author}})
+    }
   },
   async created() {
     // При открытие в раз , мы смотрим что у нас есть в роуторе
@@ -101,7 +125,7 @@ export default {
 
     // Если есть артист в query параметрах, то этого личная дискография и мы загружаем все релизы только этого автора
     if (this.$route.query.author) {
-      this.$store.commit('setReleasesForAuthor', this.$route.query.author)
+      this.$store.commit('setAuthorPermalinkForVideos', this.$route.query.author)
     }
 
     // Устанавлием в store теги релизов которые выбраны
@@ -124,14 +148,13 @@ export default {
     // Следит за изменениями роутера
     async '$route' (to) {
       
-      // ! Остановились здесь
 
       // Ставит в $store теги из urla (нужно для того, чтобы когда мы в ручную меняем url 
       // либо жмем по тегам в карточках и мы дополняем эти теги в store)
       this.$store.commit('setSelectTagsForVideo', to.query.tag)
 
-      // ! TODO: Устанавливаем в стор автора если он есть
-      // this.$store.commit('setReleasesForAuthor', this.$route.query.author)
+      // Устанавливаем в стор пермалинк автора если он есть
+      this.$store.commit('setAuthorPermalinkForVideos', this.$route.query.author)
 
       // И очищаем старого автора из стора (его локальное имя) если в routore нету автора
       // Это нужно, чтобы автор на время не пропадал, если мы шелкаем фильтры 
@@ -153,6 +176,7 @@ export default {
   // Как только мы закрываем этот раздел, мы подчищаем страницу от тегов сортировки
   beforeDestroy() {
     this.$store.commit('clearSortingVideo')
+    this.$store.commit('clearAuthorPermalinkForVideos')
     this.$store.commit('clearSelectTagsForVideo')
     this.$store.commit('clearVideos')
   },
