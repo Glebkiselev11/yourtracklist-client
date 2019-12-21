@@ -1,6 +1,12 @@
 <template>
   <!-- Компонент итема видео, который мы используем на странице автора, в архиве видео. -->
   <div class="video-item">
+    <!-- Передаем в компонент отвечающий за отображание тегов - массив с тегами -->
+    <PrevTagsHeader
+      link-to="/video-archive/"
+      :tags-array="video.tags"
+    />
+
     <!-- Обложка -->
     <div class="cover-wrap">
       <a 
@@ -35,13 +41,14 @@
 
 <script>
 import PrevVideoInfo from '@/components/app/video/PrevVideoInfo.vue'
+import PrevTagsHeader from '@/components/app/tags/PrevTagsHeader.vue'
 import PrevInfo from '@/components/app/PrevInfo.vue'
 import VideoPlayButton from '@/components/app/video/VideoPlayButton.vue'
 export default {
   name: 'video-prev-cart-item',
   props: ['video'],
   components: {
-    PrevVideoInfo, PrevInfo, VideoPlayButton
+    PrevVideoInfo, PrevInfo, VideoPlayButton, PrevTagsHeader
   }
 }
 </script>

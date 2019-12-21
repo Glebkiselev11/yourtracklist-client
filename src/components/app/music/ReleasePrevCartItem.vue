@@ -52,7 +52,7 @@ export default {
   .release-item {
     width: 280px;
     height: 425px;
-    border-top: 1px solid black;
+    
   }
 
 

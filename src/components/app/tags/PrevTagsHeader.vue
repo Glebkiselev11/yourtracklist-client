@@ -36,15 +36,15 @@
 <style scoped>
 
   .release-tags {
+    width: inherit;
     display: inline-block;
-    margin-top: 7px;
-    margin-bottom: 12px;
-    margin-right: 5px;
+    padding: 7px 0;
     font-size: 14px;
     font-weight: 300;
+    border-top: 1px solid black;
   }
 
-  .release-tags a  {
+  .release-tags a:hover {
     cursor: pointer;
   }
 </style>

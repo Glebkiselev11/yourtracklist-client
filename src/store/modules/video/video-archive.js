@@ -13,6 +13,7 @@ export default {
       try {
         const {data : {videos, count, pageCount, tags : videosTags, thereIs}} = await axios.post('/api/get-video', {sortingVideo, tags, pageSize, pageNum, authorPermalink})
 
+        console.log(videos)
         commit('setVideos', videos)
         commit('setCount', count)
         commit('setPageCount', pageCount)
