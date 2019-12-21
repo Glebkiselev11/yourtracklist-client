@@ -52,7 +52,6 @@ export default {
   .release-item {
     width: 280px;
     height: 425px;
-    
   }
 
 

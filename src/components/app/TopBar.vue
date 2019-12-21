@@ -1,9 +1,11 @@
 <template>
-  <!-- На главной странице у секций вверху находится заголовок и кнопка -->
+  <!-- Используется у превьюх видео/релизов куда выводяться 4 последних -->
   <div class="top-bar">
     <h2>{{title}}</h2>
     
+
     <AnimationButton
+      v-if="count > 4"
       @click="click"
       :title="'Показать больше'"
     />
@@ -14,7 +16,10 @@
 import AnimationButton from '@/components/app/AnimationButton'
 export default {
   name: 'TopBar',
-  props: ['title'],
+  props: [
+    'title', // Заголовок
+    'count', // Количество всего релизов / видео (от этого зависит показываем ли мы кнопку или нет)
+  ],
   components: {
     AnimationButton
   },

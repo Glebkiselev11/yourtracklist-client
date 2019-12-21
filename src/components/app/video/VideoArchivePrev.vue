@@ -4,6 +4,7 @@
     <TopBar 
       title="Видео"
       @click="routerTo"
+      :count="this.count"
     />
 
     <!-- Здесь выводим видео -->
@@ -25,7 +26,12 @@ import VideoItem from '@/components/app/video/VideoPrevCartItem.vue'
 
 export default {
   name: 'Video-prev-author',
-  props: ['fourLatestVideo', 'authorPermalink'],
+  props: [
+    'fourLatestVideo', // Четыре видео (их может быть меньше, если например тут видео для определенного автора а у автора всего их 3 например)
+    // * Нижние пропсы нужны только в том случае когда мы этот компонент используем на странице автора
+    'authorPermalink', // Ссылка на автора
+    'count', // Сколько видео всего у автора
+  ],
   components: {
     TopBar, VideoItem
   },

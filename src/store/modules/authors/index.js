@@ -7,11 +7,15 @@ export default {
   actions: {
     // Получаем автора по ID, а так же 4 последних его релиза и 4 последних его видео
     async getAuthorById({commit}, permalink) {
-      const {data : {author, releases, videos}} = await axios.post('/api/get-author-by-id', { permalink })
+      const {data : {author, releases, releasesCount, videos, videosCount}} = await axios.post('/api/get-author-by-id', { permalink })
 
       commit('setAuthorInfo', author)
+
       commit('setFourLastReleasesForAuthor', releases)
+      commit('setReleasesCountForAuthor', releasesCount)
+
       commit('setFourLastVideosForAuthor', videos)
+      commit('setVideosCountForAuthor', videosCount)
     },
 
     // Получаем всех авторов (а именно их имена и пермалинки)

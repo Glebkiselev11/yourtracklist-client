@@ -7,6 +7,7 @@
     <TopBar 
       title="Релизы"
       @click="routerTo"
+      :count="this.count"
     />
 
     <!-- Обертка под релизы, который мы будем итерировать циклом -->
@@ -30,7 +31,12 @@ import ReleaseItem from '@/components/app/music/ReleasePrevCartItem.vue'
 
 export default {
   name: 'ReleaseArchivePrev',
-  props: ['fourLatestReleases', 'authorPermalink'],
+  props: [
+    'fourLatestReleases', // Четыре релиза (их может быть меньше, если например тут релизы для определенного автора а у автора всего их 3 например)
+    // * Нижние пропсы нужны только в том случае когда мы этот компонент используем на странице автора
+    'authorPermalink', // Ссылка на автора
+    'count', // Сколько релизов всего у автора
+  ],
   components: {
     TopBar, ReleaseItem
   },

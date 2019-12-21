@@ -43,11 +43,12 @@
       </div>
       
 
-    <!-- Здесь показываем 4 релиза, пока используем тот же компонент что и на главной -->
+    <!-- Здесь показываем 4 релиза автора -->
     <ReleaseArchivePrev
       v-show="this.fourLastReleasesForAuthor.length" 
       :author-permalink="authorInfo.permalink"
       :four-latest-releases="this.fourLastReleasesForAuthor"
+      :count="this.releasesCountForAuthor"
     />
 
     <!-- А тут 4 последних видео автора -->
@@ -55,6 +56,7 @@
       v-show="this.fourLastVideosForAuthor.length" 
       :author-permalink="authorInfo.permalink"
       :fourLatestVideo="this.fourLastVideosForAuthor"
+      :count="this.videosCountForAuthor"
     />
 
     </div>
@@ -81,7 +83,13 @@ export default {
     this.loading = false
   },
   computed: {
-    ...mapGetters(['authorInfo', 'fourLastReleasesForAuthor', 'fourLastVideosForAuthor'])
+    ...mapGetters([
+      'authorInfo', // Информация о авторе, теги, ссылки
+      'fourLastReleasesForAuthor', // Превью 4 релизов автора (их может быть и меньше 4)
+      'releasesCountForAuthor', // Количество сколько всего релизов у автора
+      'fourLastVideosForAuthor', // Превью 4 видео автора (их может быть и меньше 4)
+      'videosCountForAuthor', // Количество сколько всего видео у автора
+    ])
   },
   beforeDestroy() {
     // ! После закрытия страницы автора, мы очищаем инфу о нем из стейта
