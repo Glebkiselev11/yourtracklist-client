@@ -67,13 +67,13 @@ export default {
 
     // Прослушиваем с дочернего компонента максимальное кол-во треков в релизах
     setMaxTracks(max) {
-      this.$router.push({ query: { ...this.$route.query, max }})
+      this.$router.push({ query: { ...this.$route.query, max, min: this.$store.getters.minTracksOfReleases }})
       this.$store.commit('setMaxTracksOfReleases', max)
     },
 
     // Прослушиваем с дочернего компонента минимальное кол-во треков в релизах
     setMinTracks(min) {
-      this.$router.push({ query: { ...this.$route.query, min }})
+      this.$router.push({ query: { ...this.$route.query, min, max: this.$store.getters.maxTracksOfReleases }})
       this.$store.commit('setMinTracksOfReleases', min)
     }
 

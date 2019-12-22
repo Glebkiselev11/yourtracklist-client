@@ -152,6 +152,10 @@ export default {
     // Устанавливаем в стор номер текущей страницы из роутера
     this.$store.commit('setPageNum', +this.$route.query.page || 1)
 
+    // Вносим в стор инфу из квери параметра о диапазоне треков (нужно для того, чтобы если ты выбрал диапазон треков, перезапустил страницу и все сохранилось)
+    this.$store.commit('setMinTracksOfReleases', this.$route.query.min)
+    this.$store.commit('setMaxTracksOfReleases', this.$route.query.max)
+
     // Очищаем локальное имя автора, чтобы если мы загрузили нового, старое название не мелькнуло в заголовке
     this.$store.commit('clearLocalNameAuthor')
 
@@ -195,6 +199,8 @@ export default {
     this.$store.commit('clearAuthorPermalinkForReleases')
     this.$store.commit('clearSelectTagsForReleases')
     this.$store.commit('clearReleases')
+    this.$store.commit('clearMinTracksOfReleases')
+    this.$store.commit('clearMaxTracksOfReleases')
   },
 
 }
