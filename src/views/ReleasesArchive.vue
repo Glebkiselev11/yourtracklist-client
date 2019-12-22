@@ -173,6 +173,9 @@ export default {
       // либо жмем по тегам в карточках и мы дополняем эти теги в store)
       this.$store.commit('setSelectTagsForReleases', to.query.tag)
 
+      this.$store.commit('setMinTracksOfReleases', this.$route.query.min)
+      this.$store.commit('setMaxTracksOfReleases', this.$route.query.max)
+
       // Устанавливаем в стор пермалинк автора если он есть
       this.$store.commit('setAuthorPermalinkForReleases', this.$route.query.author)
 

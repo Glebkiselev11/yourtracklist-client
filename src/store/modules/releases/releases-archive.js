@@ -25,8 +25,7 @@ export default {
           pageCount, 
           tags : releasesTags, 
           thereIs, 
-          minTracks, 
-          maxTracks,
+          numberOfTracks,
         }} = await axios.post('/api/get-release', {
           sortingReleases, 
           tags, 
@@ -36,6 +35,10 @@ export default {
           minTracksOfReleases, 
           maxTracksOfReleases,
         })
+
+        // ! Вытаскиваем из пришедших данных с бэкенда информацию о самом минимальном количестве терков и о максимальном
+        let minTracks = numberOfTracks[0].n
+        let maxTracks = numberOfTracks[numberOfTracks.length - 1].n
 
         // Вносим релизы
         commit('setReleases', releases)
@@ -132,6 +135,7 @@ export default {
     releasesTags: undefined, // Теги которые доступны для выбора в релизах в определенном фильтре или для определенного автора( то бишь не показываем лишнее)
     minTracksOfReleases: undefined, // Минимальное количество треков в релизах
     maxTracksOfReleases: undefined, // Максимальное количество треков в релизах
+    numberOfTracks: [], // ! Массив информации о том, какое количество треков в релизах (нужно для фильтра по кол-ву треков, чтобы мы знали, )
     authorPermalinkForReleases: undefined, // Пермалинк автора, для которого мы ищем релизы
     thereIsVideos: false, // Информация, есть ли видео для автора, для которого мы ищем релизы
   },
