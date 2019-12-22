@@ -1,7 +1,7 @@
 <template>
   <!-- Компонент для выбора доступных тегов в сортировках, используется в архивах релизов, видео, миксов -->
   <div class="checkbox-tags-wrap">
-    <p>Сортировать по тегам</p>
+    <h3 class="sorting-title" >Сортировать по тегам</h3>
 
     <!-- Итерируем с базы данных теги -->
     <div class="checkbox-tag-item" 
@@ -40,10 +40,9 @@ export default {
     margin-top: 50px;
   }
 
-  .checkbox-tags-wrap p {
+  .sorting-title {
     font-size: 20px;
     font-weight: 500;
-    
     display: block; 
     margin-bottom: 20px;
   }

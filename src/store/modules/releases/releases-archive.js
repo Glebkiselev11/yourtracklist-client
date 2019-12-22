@@ -8,10 +8,34 @@ export default {
 
       // Вытаскиваем из стора метод сортировки релиза
       // Теги и количество отображаемых на одной странице записей
-      const {pageSize, sortingReleases, pageNum , authorPermalinkForReleases : authorPermalink, selectTagsForReleases: tags} = getters
+      const {
+        pageSize, 
+        sortingReleases, 
+        pageNum, 
+        authorPermalinkForReleases : authorPermalink, 
+        selectTagsForReleases: tags,
+        minTracksOfReleases, 
+        maxTracksOfReleases,
+      } = getters
 
       try {
-        const {data : {releases, count, pageCount, tags : releasesTags, thereIs}} = await axios.post('/api/get-release', {sortingReleases, tags, pageSize, pageNum, authorPermalink})
+        const {data : {
+          releases, 
+          count, 
+          pageCount, 
+          tags : releasesTags, 
+          thereIs, 
+          minTracks, 
+          maxTracks,
+        }} = await axios.post('/api/get-release', {
+          sortingReleases, 
+          tags, 
+          pageSize, 
+          pageNum, 
+          authorPermalink, 
+          minTracksOfReleases, 
+          maxTracksOfReleases,
+        })
 
         // Вносим релизы
         commit('setReleases', releases)
@@ -21,6 +45,9 @@ export default {
         commit('setPageCount', pageCount)
         // Устанавливаем возможные теги для релизов
         commit('setReleasesTags', releasesTags)
+        // Вносим минимальное и максимальное кол-во треков в выбранных релизах
+        commit('setMinTracksOfReleases', minTracks)
+        commit('setMaxTracksOfReleases', maxTracks)
 
         // И если мы получали релизы для определнного автора, то ставим в стор его локальное имя
         if (authorPermalink) {
@@ -80,6 +107,22 @@ export default {
     clearThereIsVideos(s) {
       s.thereIsVideos = false
     },
+
+    setMinTracksOfReleases(s, min) {
+      s.minTracksOfReleases = min
+    },
+    clearMinTracksOfReleases(s) {
+      s.minTracksOfReleases = undefined
+    },
+
+    setMaxTracksOfReleases(s, max) {
+      s.maxTracksOfReleases = max
+    },
+    clearMaxTracksOfReleases(s) {
+      s.maxTracksOfReleases = undefined
+    }
+
+
   },
   
   state: {
@@ -87,11 +130,15 @@ export default {
     sortingReleases: undefined, // Тип сортировки, которую используем
     selectTagsForReleases: [], // Теги которые используем при получение релизов
     releasesTags: undefined, // Теги которые доступны для выбора в релизах в определенном фильтре или для определенного автора( то бишь не показываем лишнее)
+    minTracksOfReleases: undefined, // Минимальное количество треков в релизах
+    maxTracksOfReleases: undefined, // Максимальное количество треков в релизах
     authorPermalinkForReleases: undefined, // Пермалинк автора, для которого мы ищем релизы
     thereIsVideos: false, // Информация, есть ли видео для автора, для которого мы ищем релизы
   },
 
   getters: {
+    minTracksOfReleases: s => s.minTracksOfReleases,
+    maxTracksOfReleases: s => s.maxTracksOfReleases,
     releasesTags: s => s.releasesTags,
     releases: s => s.releases,
     sortingReleases: s => s.sortingReleases,

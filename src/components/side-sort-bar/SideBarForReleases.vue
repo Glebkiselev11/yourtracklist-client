@@ -8,6 +8,14 @@
       @sorting="setSorting"
     />
 
+    <!-- Вибираем количество треков в релизе -->
+    <MinMaxTracks 
+      :min-tracks="this.minTracks"
+      :max-tracks="this.maxTracks"
+      @max="setMaxTracks"
+      @min="setMinTracks"
+    />
+
     <!-- Выбираем Теги -->
     <CheckTags 
       :tags="releasesTags"
@@ -20,16 +28,23 @@
 </template>
 
 <script>
-// import {mapGetters} from 'vuex'
 import SelectSort from '@/components/side-sort-bar/SelectSort.vue'
 import CheckTags from '@/components/side-sort-bar/CheckTags.vue'
+import MinMaxTracks from '@/components/side-sort-bar/MinMaxTracks.vue'
+
 export default {
   name: 'Sort-side-bar',
-  components: {SelectSort, CheckTags},
+  components: { 
+    SelectSort, 
+    CheckTags, 
+    MinMaxTracks,
+  },
   props: [
     'releasesTags', // Доступные теги релизов
     'sortingReleases', // Тип сортировки релизов
     'selectTagsForReleases', // Выбранные теги для поиска релизов (где стоят галки)
+    'minTracks', // Минимальное кол-во треков в релизах
+    'maxTracks', // Максимальное кол-во треков в релизах
   ],
   methods: {
     // Прослушиваем с дочернего компонента способ сортировки
@@ -48,7 +63,21 @@ export default {
 
       // И коммитим в стор выбранные теги
       this.$store.commit('setSelectTagsForReleases', tag)
+    },
+
+    // Прослушиваем с дочернего компонента максимальное кол-во треков в релизах
+    setMaxTracks(max) {
+      this.$router.push({ query: { ...this.$route.query, max }})
+      this.$store.commit('setMaxTracksOfReleases', max)
+    },
+
+    // Прослушиваем с дочернего компонента минимальное кол-во треков в релизах
+    setMinTracks(min) {
+      this.$router.push({ query: { ...this.$route.query, min }})
+      this.$store.commit('setMinTracksOfReleases', min)
     }
+
   },
 }
 </script>
+
