@@ -25,13 +25,7 @@
     <div class="container">
 
       <!-- Боковая сортировка -->
-      <SideBarForReleases 
-        :releases-tags="this.releasesTags"
-        :sorting-releases="this.sortingReleases"
-        :select-tags-for-releases="this.selectTagsForReleases"
-        :min-tracks="this.minTracksOfReleases"
-        :max-tracks="this.maxTracksOfReleases"
-      />
+      <SideBarForReleases />
       
       <!-- Прелоадер -->
       <Loader v-if="loading"/>
@@ -96,11 +90,6 @@ export default {
       'count', // Количество найденых релизов по нашим фильтрам (всего сколько найдено во всей базе)
       'localNameAuthor', // Локальное название автора, для которого мы ищем релизы
       'pageSize', // Размер одной страницы (для пагинации)
-      'releasesTags', // Доступные теги релизов
-      'minTracksOfReleases', // Минимальное количество треков в релизах
-      'maxTracksOfReleases', // Максимальное количество треков в релизах
-      'sortingReleases', // Тип сортировки релизов
-      'selectTagsForReleases', // Выбранные теги для поиска релизов (где стоят галки)
       'thereIsVideos', // Информация о том, есть ли видео (есть ли мы запрашивали релизы для конкретного автора) у автора
     ]),
 

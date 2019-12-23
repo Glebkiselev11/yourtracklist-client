@@ -25,11 +25,7 @@
     <div class="container">
 
       <!-- Боковая панель с сортировкой -->
-      <SideBarForVideo 
-        :sorting-video="this.sortingVideo"
-        :select-tags-for-video="this.selectTagsForVideo"
-        :videos-tags="this.videosTags"
-      />
+      <SideBarForVideo />
       
       <!-- Прелоадер -->
       <Loader v-if="loading"/>
@@ -92,10 +88,7 @@ export default {
       'videos', // Карточки превьюх видео
       'count', // Количество найденых видео по нашим фильтрам (всего сколько найдено во всей базе)
       'pageSize', // Размер одной страницы (для пагинации)
-      'videosTags', // Доступные теги видео записей
-      'sortingVideo', // Тип сортировки видео
       'localNameAuthor', // Локальное название автора, для которого мы ищем видео
-      'selectTagsForVideo', // Выбранные теги для поиска видео (где стоят галки)
       'thereIsReleases', // Информация о том, есть ли релизы (есть ли мы запрашивали видео для конкретного автора) у автора
     ]),
 

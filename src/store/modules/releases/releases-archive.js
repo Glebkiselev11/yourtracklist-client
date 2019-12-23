@@ -25,7 +25,9 @@ export default {
           pageCount, 
           tags : releasesTags, 
           thereIs, 
-          numberOfTracks,
+          minTracks,
+          maxTracks,
+          rangeNumberOfTracks,
         }} = await axios.post('/api/get-release', {
           sortingReleases, 
           tags, 
@@ -36,9 +38,6 @@ export default {
           maxTracksOfReleases,
         })
 
-        // ! Вытаскиваем из пришедших данных с бэкенда информацию о самом минимальном количестве терков и о максимальном
-        let minTracks = numberOfTracks[0].n
-        let maxTracks = numberOfTracks[numberOfTracks.length - 1].n
 
         // Вносим релизы
         commit('setReleases', releases)
@@ -48,9 +47,11 @@ export default {
         commit('setPageCount', pageCount)
         // Устанавливаем возможные теги для релизов
         commit('setReleasesTags', releasesTags)
+        
         // Вносим минимальное и максимальное кол-во треков в выбранных релизах
         commit('setMinTracksOfReleases', minTracks)
         commit('setMaxTracksOfReleases', maxTracks)
+        commit('setRangeNumberOfTracks', rangeNumberOfTracks)
 
         // И если мы получали релизы для определнного автора, то ставим в стор его локальное имя
         if (authorPermalink) {
@@ -123,8 +124,14 @@ export default {
     },
     clearMaxTracksOfReleases(s) {
       s.maxTracksOfReleases = undefined
-    }
+    },
 
+    setRangeNumberOfTracks(s, range) {
+      s.rangeNumberOfTracks = range
+    },
+    clearRangeNumberOfTracks(s) {
+      s.rangeNumberOfTracks = undefined
+    },
 
   },
   
@@ -135,18 +142,19 @@ export default {
     releasesTags: undefined, // Теги которые доступны для выбора в релизах в определенном фильтре или для определенного автора( то бишь не показываем лишнее)
     minTracksOfReleases: undefined, // Минимальное количество треков в релизах
     maxTracksOfReleases: undefined, // Максимальное количество треков в релизах
-    numberOfTracks: [], // ! Массив информации о том, какое количество треков в релизах (нужно для фильтра по кол-ву треков, чтобы мы знали, )
+    rangeNumberOfTracks: undefined, // Диапазон доступного кол-ва треков в релизах
     authorPermalinkForReleases: undefined, // Пермалинк автора, для которого мы ищем релизы
     thereIsVideos: false, // Информация, есть ли видео для автора, для которого мы ищем релизы
   },
 
   getters: {
-    minTracksOfReleases: s => s.minTracksOfReleases,
-    maxTracksOfReleases: s => s.maxTracksOfReleases,
-    releasesTags: s => s.releasesTags,
     releases: s => s.releases,
     sortingReleases: s => s.sortingReleases,
     selectTagsForReleases: s => s.selectTagsForReleases,
+    releasesTags: s => s.releasesTags,
+    minTracksOfReleases: s => s.minTracksOfReleases,
+    maxTracksOfReleases: s => s.maxTracksOfReleases,
+    rangeNumberOfTracks: s => s.rangeNumberOfTracks,
     authorPermalinkForReleases: s => s.authorPermalinkForReleases,
     thereIsVideos: s => s.thereIsVideos,
     

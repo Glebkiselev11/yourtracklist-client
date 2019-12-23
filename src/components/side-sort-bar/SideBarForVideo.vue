@@ -20,16 +20,21 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 import SelectSort from '@/components/side-sort-bar/SelectSort.vue'
 import CheckTags from '@/components/side-sort-bar/CheckTags.vue'
+
 export default {
   name: 'Sort-side-bar',
   components: {SelectSort, CheckTags},
-  props: [
-    'sortingVideo', // Тип сортировки видео
-    'selectTagsForVideo', // Выбранные теги для поиска видео (где стоят галки)
-    'videosTags', // Доступные теги для видео записей
-  ],
+  computed: {
+    ...mapGetters([
+      'videosTags', // Доступные теги видео записей
+      'sortingVideo', // Тип сортировки видео
+      'selectTagsForVideo', // Выбранные теги для поиска видео (где стоят галки)
+    ])
+  },
   methods: {
     // Прослушиваем с дочернего компонента способ сортировки
     setSorting(sorting) {

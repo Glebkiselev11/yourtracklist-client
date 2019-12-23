@@ -28,12 +28,18 @@ export default {
   props: [
     'minTracks', // Минимальное кол-во треков в релизах
     'maxTracks', // Максимальное кол-во треков в релизах
+    'rangeNumberOfTracks', // Диапазон доступного кол-ва треков в релизах 
   ],
   
   methods: {
-    // Методы для управления плюсом и минусом
+    // ! Методы для управления плюсом и минусом
     plusMinTracks() {
+      console.log(this.rangeNumberOfTracks)
+
+      console.log(this.minTracks)
       let min = this.minTracks + 1
+
+
       this.$emit('min', min)
     },
     minusMinTracks() {

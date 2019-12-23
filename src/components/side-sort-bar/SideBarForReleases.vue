@@ -10,8 +10,9 @@
 
     <!-- Вибираем количество треков в релизе -->
     <MinMaxTracks 
-      :min-tracks="this.minTracks"
-      :max-tracks="this.maxTracks"
+      :min-tracks="this.minTracksOfReleases"
+      :max-tracks="this.maxTracksOfReleases"
+      :range-number-of-tracks="this.rangeNumberOfTracks"
       @max="setMaxTracks"
       @min="setMinTracks"
     />
@@ -28,6 +29,8 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 import SelectSort from '@/components/side-sort-bar/SelectSort.vue'
 import CheckTags from '@/components/side-sort-bar/CheckTags.vue'
 import MinMaxTracks from '@/components/side-sort-bar/MinMaxTracks.vue'
@@ -39,13 +42,16 @@ export default {
     CheckTags, 
     MinMaxTracks,
   },
-  props: [
-    'releasesTags', // Доступные теги релизов
-    'sortingReleases', // Тип сортировки релизов
-    'selectTagsForReleases', // Выбранные теги для поиска релизов (где стоят галки)
-    'minTracks', // Минимальное кол-во треков в релизах
-    'maxTracks', // Максимальное кол-во треков в релизах
-  ],
+  computed: {
+    ...mapGetters([
+      'minTracksOfReleases', // Минимальное количество треков в релизах
+      'maxTracksOfReleases', // Максимальное количество треков в релизах
+      'sortingReleases', // Тип сортировки релизов
+      'selectTagsForReleases', // Выбранные теги для поиска релизов (где стоят галки)
+      'rangeNumberOfTracks', // Диапазон доступного кол-ва треков в релизах
+      'releasesTags', // Доступные теги релизов
+    ])
+  },
   methods: {
     // Прослушиваем с дочернего компонента способ сортировки
     setSorting(sorting) {
