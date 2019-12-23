@@ -49,38 +49,52 @@ export default {
   computed: {
     // Минимальное возможное кол-во треков, мы этот показатель вытаскиваем из rangeNumberOfTracks
     minPossible() {
-      return this.rangeNumberOfTracks[0]
+      return this.rangeNumberOfTracks ? this.rangeNumberOfTracks[0] : 2
     },
     // Максимально возмоное кол-во треков
     maxPossible() {
-      return this.rangeNumberOfTracks[this.rangeNumberOfTracks.length - 1]
+      return this.rangeNumberOfTracks ? this.rangeNumberOfTracks[this.rangeNumberOfTracks.length - 1] : 4
     }
 
   },
   methods: {
     // Методы для управления плюсом и минусом
     plusMinTracks() {
-      console.log(this.rangeNumberOfTracks)
+      
+      // Тут мы просто проходимся циклом по массиву и ищем первое ближайшее кол-во треков
+      for(let i = 0; i < this.rangeNumberOfTracks.length; i++) {
+        if (this.rangeNumberOfTracks[i] == this.minTracks) { 
+          this.$emit('min', this.rangeNumberOfTracks[i + 1])
+          break
+        }
+      }
 
-      console.log(this.minTracks)
-      let min = this.minTracks + 1
-
-
-      this.$emit('min', min)
     },
     minusMinTracks() {
-      let min = this.minTracks - 1
-      this.$emit('min', min)
+      for(let i = this.rangeNumberOfTracks.length; i > 0; i--) {
+        if (this.rangeNumberOfTracks[i] == this.minTracks) { 
+          this.$emit('min', this.rangeNumberOfTracks[i - 1])
+          break
+        }
+      }
     },
 
     plusMaxTracks() {
-      let max = this.maxTracks + 1
-      this.$emit('max', max)
+      for(let i = 0; i < this.rangeNumberOfTracks.length; i++) {
+        if (this.rangeNumberOfTracks[i] == this.maxTracks) { 
+          this.$emit('max', this.rangeNumberOfTracks[i + 1])
+          break
+        }
+      }
     },
 
     minusMaxTracks() {
-      let max = this.maxTracks - 1
-      this.$emit('max', max)
+      for(let i = this.rangeNumberOfTracks.length; i > 0; i--) {
+        if (this.rangeNumberOfTracks[i] == this.maxTracks) { 
+          this.$emit('max', this.rangeNumberOfTracks[i - 1])
+          break
+        }
+      }
     }
   }
 }
