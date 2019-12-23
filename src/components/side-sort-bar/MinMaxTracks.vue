@@ -4,17 +4,33 @@
     <h3 class="sorting-title">Количество треков</h3>
 
     <div class="min-max-item">
-      <button class="count-button" @click="minusMinTracks">—</button>
+      <button class="count-button"
+        :class="minPossible >= minTracks ? 'count-button--disable' : ''" 
+        @click="minusMinTracks"
+      >—</button>
+      
       <input type="text" v-model="minTracks" id="minTracks" readonly>
-      <button class="count-button" @click="plusMinTracks">+</button>
+      
+      <button class="count-button" 
+        :class="maxPossible <= minTracks ? 'count-button--disable' : ''"
+        @click="plusMinTracks"
+      >+</button>
       
       <label for="minTracks">Минимум</label>
     </div>
 
     <div class="min-max-item">
-      <button class="count-button" @click="minusMaxTracks">—</button>
+      <button class="count-button"
+        :class="minPossible >= maxTracks ? 'count-button--disable' : ''"
+        @click="minusMaxTracks"
+      >—</button>
+      
       <input type="text" v-model="maxTracks" id="maxTracks" readonly>
-      <button class="count-button" @click="plusMaxTracks">+</button>
+      
+      <button class="count-button"
+        :class="maxPossible <= maxTracks ? 'count-button--disable' : ''" 
+        @click="plusMaxTracks"
+      >+</button>
 
       <label for="maxTracks">Максимум</label>
     </div>
@@ -28,11 +44,21 @@ export default {
   props: [
     'minTracks', // Минимальное кол-во треков в релизах
     'maxTracks', // Максимальное кол-во треков в релизах
-    'rangeNumberOfTracks', // Диапазон доступного кол-ва треков в релизах 
+    'rangeNumberOfTracks', // Диапазон доступного кол-ва треков в релизах
   ],
-  
+  computed: {
+    // Минимальное возможное кол-во треков, мы этот показатель вытаскиваем из rangeNumberOfTracks
+    minPossible() {
+      return this.rangeNumberOfTracks[0]
+    },
+    // Максимально возмоное кол-во треков
+    maxPossible() {
+      return this.rangeNumberOfTracks[this.rangeNumberOfTracks.length - 1]
+    }
+
+  },
   methods: {
-    // ! Методы для управления плюсом и минусом
+    // Методы для управления плюсом и минусом
     plusMinTracks() {
       console.log(this.rangeNumberOfTracks)
 
@@ -102,4 +128,13 @@ export default {
     background-color: black;
     color: white;
   }
+
+  /* Класс для неактивной кнопки, нужен для того, что если нету релизов у которых треков меньше 2, то мы блочим нажатия на минус, если уже стоит 2 */
+  .count-button--disable {
+    background-color: rgba(128, 128, 128, 0.384);
+    pointer-events: none;
+    color: rgba(128, 128, 128, 0.342);
+    border: 1px solid rgba(128, 128, 128, 0.445);
+  }
+
 </style>
