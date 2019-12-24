@@ -97,7 +97,7 @@
 <script>
 import {mapGetters} from 'vuex'
 export default {
-  name: 'Release-cart',
+  name: 'Release-card',
 
   async mounted() {
     // При загрузке карточки релиза, мы из адресной строки вытаскиваем ссылку автора и ссылку релиза
@@ -118,7 +118,7 @@ export default {
     }
   },
   beforeDestroy() {
-    // ! После закрытия мы очищаем стор от загруженного релиза
+    // После закрытия мы очищаем стор от загруженного релиза
     this.$store.commit('clearReleaseInfo') // Релиз
   }
 }

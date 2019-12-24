@@ -29,23 +29,30 @@ const router = new Router({
       component: () => import('@/views/ReleasesArchive')
     },
     { 
-      // Тут к примеру мы заходим в релиз /release-cart/tidecruz/ambient-vol-1
-      path: '/release-cart/:author_permalink/:release_permalink',
-      name: 'Release-cart',
+      // Тут к примеру мы заходим в релиз /release/tidecruz/ambient-vol-1
+      path: '/release/:author_permalink/:release_permalink',
+      name: 'Release-card',
       meta: {layout: 'main'}, // Обертка под наше приложение
-      component: () => import('@/views/ReleaseCart.vue')
-    },
-    {
-      path: '/author/:permalink',
-      name: 'Author-page',
-      meta: {layout: 'main'},
-      component: () => import('@/views/AuthorPage.vue')
+      component: () => import('@/views/ReleaseCard.vue')
     },
     {
       path: '/video-archive',
       name: 'Video-archive',
       meta: {layout: 'main', auth: true},
       component: () => import('@/views/VideoArchive.vue')
+    },
+    {
+      // Тут к примеру мы заходим в карточку видео /video/QjMME7LGoJw
+      path: '/video/:video_permalink',
+      name: 'Video-cart',
+      meta: {layout: 'main'}, // Обертка под наше приложение
+      component: () => import('@/views/VideoCart.vue')
+    },
+    {
+      path: '/author/:permalink',
+      name: 'Author-page',
+      meta: {layout: 'main'},
+      component: () => import('@/views/AuthorPage.vue')
     },
     {
       path: '/admin--panel',

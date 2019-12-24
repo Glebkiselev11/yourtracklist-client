@@ -9,9 +9,8 @@
 
     <!-- Обложка -->
     <div class="cover-wrap">
-      <a 
-        :href="`https://www.youtube.com/watch?v=${video.permalink}`" 
-        target="_blank"
+      <router-link 
+        :to="`video/${video.permalink}`" 
         class="video-cover" 
         :style="{ 'backgroundImage' : 'url(' + `https://img.youtube.com/vi/${video.permalink}/hqdefault.jpg` + ')' }"
       > 
@@ -25,7 +24,7 @@
         <PrevVideoInfo 
           :duration="video.duration"
         />
-      </a>
+      </router-link>
 
       
     </div>
@@ -45,7 +44,7 @@ import PrevTagsHeader from '@/components/app/tags/PrevTagsHeader.vue'
 import PrevInfo from '@/components/app/PrevInfo.vue'
 import VideoPlayButton from '@/components/app/video/VideoPlayButton.vue'
 export default {
-  name: 'video-prev-cart-item',
+  name: 'video-prev-card-item',
   props: ['video'],
   components: {
     PrevVideoInfo, PrevInfo, VideoPlayButton, PrevTagsHeader

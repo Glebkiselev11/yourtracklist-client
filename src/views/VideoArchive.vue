@@ -71,7 +71,7 @@
 import {mapGetters} from 'vuex'
 import SideBarForVideo from '@/components/side-sort-bar/SideBarForVideo.vue'
 import paginationMixin from '@/mixins/pagination.mixin.js'
-import VideoItem from '@/components/app/video/VideoPrevCartItem.vue'
+import VideoItem from '@/components/app/video/VideoPrevCardItem.vue'
 
 export default {
   name: 'Video-archive',

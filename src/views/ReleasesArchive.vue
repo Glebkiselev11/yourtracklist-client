@@ -69,7 +69,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import SideBarForReleases from '@/components/side-sort-bar/SideBarForReleases.vue'
-import ReleaseItem from '@/components/app/music/ReleasePrevCartItem.vue'
+import ReleaseItem from '@/components/app/music/ReleasePrevCardItem.vue'
 import paginationMixin from '@/mixins/pagination.mixin.js'
 
 export default {

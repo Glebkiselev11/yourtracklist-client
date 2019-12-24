@@ -4,15 +4,15 @@
     <!-- Здесь преобразуем формат времени в ISO в более привлекательный формат -->
     <span v-if="date" class="date">{{new Date(date).toLocaleDateString('ru-RU', {month: 'long', day: 'numeric', year: 'numeric'})}}</span>
     
-    <!-- Если есть permalink то показываем его, это переход по приложению -->
+    <!-- FIXME: Если есть permalink то показываем его, это переход по приложению -->
     <a  v-if="permalink" @click.prevent="goToReleaseCart" class="name">{{name}}</a>
     
-    <!-- А если нету, то тогда должен быть url это уже внешний переход -->
+    <!-- FIXME: А если нету, то тогда должен быть url это уже внешний переход -->
     <a v-else :href="url" class="name" target="_blank">{{name}}</a>
 
     <!-- Здесь выводим ссылку на дискографию артиста, если он не один, то через цикл -->
     <div class="author-name-wrap">
-      <p class="author"  
+      <p class="author"
         v-for="(author, index) in this.authors"
         :key="index"
       >
@@ -38,13 +38,13 @@ export default {
     goToReleaseCart() {
       // Возможно это костыль, но по сути у нас не бывает больше 4 авторов в одном релизе
       if (this.authors.length === 1) {
-        this.$router.push(`/release-cart/${this.authors[0]['permalink']}/${this.permalink}`)
+        this.$router.push(`/release/${this.authors[0]['permalink']}/${this.permalink}`)
       } else if (this.authors.length === 2) {
-        this.$router.push(`/release-cart/${this.authors[0]['permalink']}+${this.authors[1]['permalink']}/${this.permalink}`)
+        this.$router.push(`/release/${this.authors[0]['permalink']}+${this.authors[1]['permalink']}/${this.permalink}`)
       } else if (this.authors.length === 3) {
-        this.$router.push(`/release-cart/${this.authors[0]['permalink']}+${this.authors[1]['permalink']}+${this.authors[2]['permalink']}/${this.permalink}`)
+        this.$router.push(`/release/${this.authors[0]['permalink']}+${this.authors[1]['permalink']}+${this.authors[2]['permalink']}/${this.permalink}`)
       } else {
-        this.$router.push(`/release-cart/${this.authors[0]['permalink']}+${this.authors[1]['permalink']}+${this.authors[2]['permalink']}+${this.authors[3]['permalink']}/${this.permalink}`)
+        this.$router.push(`/release/${this.authors[0]['permalink']}+${this.authors[1]['permalink']}+${this.authors[2]['permalink']}+${this.authors[3]['permalink']}/${this.permalink}`)
       }
       
     }

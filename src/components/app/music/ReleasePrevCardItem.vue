@@ -23,7 +23,7 @@ import PrevInfo from '@/components/app/PrevInfo.vue'
 import PrevTagsHeader from '@/components/app/tags/PrevTagsHeader.vue'
 
 export default {
-  name: 'Release-prev-cart-item',
+  name: 'Release-prev-card-item',
   props: ['release'],
   components: {
     PrevInfo, PrevTagsHeader
@@ -34,13 +34,13 @@ export default {
 
       // Возможно это костыль, но по сути у нас не бывает больше 4 авторов в одном релизе
       if (authors.length === 1) {
-        this.$router.push(`/release-cart/${authors[0]['permalink']}/${release}`)
+        this.$router.push(`/release/${authors[0]['permalink']}/${release}`)
       } else if (authors.length === 2) {
-        this.$router.push(`/release-cart/${authors[0]['permalink']}+${authors[1]['permalink']}/${release}`)
+        this.$router.push(`/release/${authors[0]['permalink']}+${authors[1]['permalink']}/${release}`)
       } else if (authors.length === 3) {
-        this.$router.push(`/release-cart/${authors[0]['permalink']}+${authors[1]['permalink']}+${authors[2]['permalink']}/${release}`)
+        this.$router.push(`/release/${authors[0]['permalink']}+${authors[1]['permalink']}+${authors[2]['permalink']}/${release}`)
       } else {
-        this.$router.push(`/release-cart/${authors[0]['permalink']}+${authors[1]['permalink']}+${authors[2]['permalink']}+${authors[3]['permalink']}/${release}`)
+        this.$router.push(`/release/${authors[0]['permalink']}+${authors[1]['permalink']}+${authors[2]['permalink']}+${authors[3]['permalink']}/${release}`)
       }
     },
   },
