@@ -16,26 +16,44 @@
       </li>
     </ul>
 
-    <!-- Тут будет поиск -->
-    <div class="search-wrap">
+    <!-- Поиск по сайту -->
+    <button 
+      @click="isShowSearch = true" 
+      class="search-button" 
+      title="Поиск"
+    >
       <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="10" cy="10" r="9.5" stroke="black"/>
         <line x1="17.3536" y1="16.6464" x2="25.8388" y2="25.1317" stroke="black"/>
       </svg>
-    </div>
+    </button>
+
+    <Search 
+      v-if="isShowSearch"
+      @close="isShowSearch = false"
+    
+    />
 
   </div>
 </template>
 
 <script>
+import Search from '@/components/Search'
+
 export default {
   name: 'navbar',
+  data:() => ({
+    isShowSearch: false, // Отвечает за отбражение модального окна поиска
+  }),
+  components: {
+    Search
+  },
   methods: {
+    // По нажатию на логотип переходит на главную страницу
     goToHomePage() {
-      // ! Тут какая то ошибка вылазит, надо подумать что с этим можно сделать
-      this.$router.push('/')
-      
-    }
+      this.$route.path !== '/' ? this.$router.push('/')  : false
+    },
+
   },
   
 }
@@ -70,8 +88,12 @@ export default {
     border-bottom: 1px solid black;
   }
 
-  .search-wrap {
+  .search-button {
     margin-left: auto;
+  }
+
+  .search-button:focus {
+    outline: none;
   }
     
 
