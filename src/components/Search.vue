@@ -28,6 +28,8 @@
 
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'search',
   data: () => ({
@@ -38,6 +40,8 @@ export default {
     setTimeout(() => this.$refs.search.focus(), 200);
   },
   methods: {
+    ...mapActions(['submitSearchQuery']),
+
     // Отслеживаем нажатия на кнопки
     keyHandler(event) {
       switch(true) {
@@ -54,8 +58,14 @@ export default {
     },
 
     // Отправляет наш запрос на бэкенд
-    searchSubmit() {
-      console.log(this.searchQuery)
+    async searchSubmit() {
+      try {
+        await this.submitSearchQuery(this.searchQuery)
+        
+      } catch(e) {
+        console.log(e)
+      }
+      
     }
   },
 }
@@ -79,6 +89,7 @@ export default {
     width: 100%;
     height: 225px;
     background: white;
+    
   }
 
   /* Ограничение для поля поиска и кнопки закрытия */

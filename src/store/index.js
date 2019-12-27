@@ -9,6 +9,7 @@ import video from './modules/video/index.js'
 import releaseCart from './modules/release-cart/index.js'
 import adminModules from './modules/admin-modules/index.js'
 import pagination from './modules/pagination.js'
+import search from './modules/search.js'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,13 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    hero, authors, releases, video, releaseCart, adminModules, pagination
+    hero, 
+    authors, 
+    releases, 
+    video, 
+    releaseCart, 
+    adminModules, 
+    pagination, 
+    search,
   }
 })
