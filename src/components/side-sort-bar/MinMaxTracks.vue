@@ -3,6 +3,7 @@
   <div class="min-max-wrap">
     <h3 class="sorting-title">Количество треков</h3>
 
+    <!-- Кнопки плюс и минус блокируем так, чтобы нельзя было выбрать заранее неправильное кол-во треков в релизах -->
     <div class="min-max-item">
       <button class="count-button"
         :class="minPossible >= minTracks ? 'count-button--disable' : ''" 
@@ -12,7 +13,7 @@
       <input type="text" v-model="minTracks" id="minTracks" readonly>
       
       <button class="count-button" 
-        :class="maxPossible <= minTracks ? 'count-button--disable' : ''"
+        :class="maxPossible <= minTracks || minTracks === maxTracks ? 'count-button--disable' : ''"
         @click="plusMinTracks"
       >+</button>
       
@@ -21,7 +22,7 @@
 
     <div class="min-max-item">
       <button class="count-button"
-        :class="minPossible >= maxTracks ? 'count-button--disable' : ''"
+        :class="minPossible >= maxTracks || minTracks === maxTracks ? 'count-button--disable' : ''"
         @click="minusMaxTracks"
       >—</button>
       

@@ -1,4 +1,4 @@
-import releaseCart from './releaseCart'
+import releaseCard from './releaseCard'
 
 // Основной модуль, под карточки релизов
 export default {
@@ -9,6 +9,6 @@ export default {
   state: {
   },
   modules: {
-    releaseCart
+    releaseCard
   }
 }

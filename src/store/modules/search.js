@@ -4,7 +4,7 @@ import axios from 'axios'
 export default {
   actions: {
     async submitSearchQuery({commit}, searchQuery) {
-
+      console.log(commit)
       try {
         const {data} = await axios.post('/api/search-query', {searchQuery})
 

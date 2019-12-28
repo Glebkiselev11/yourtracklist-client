@@ -6,7 +6,7 @@ import hero from './modules/hero/index.js'
 import authors from './modules/authors/index.js'
 import releases from './modules/releases/index.js'
 import video from './modules/video/index.js'
-import releaseCart from './modules/release-cart/index.js'
+import releaseCard from './modules/release-card/index.js'
 import adminModules from './modules/admin-modules/index.js'
 import pagination from './modules/pagination.js'
 import search from './modules/search.js'
@@ -25,7 +25,7 @@ export default new Vuex.Store({
     authors, 
     releases, 
     video, 
-    releaseCart, 
+    releaseCard, 
     adminModules, 
     pagination, 
     search,

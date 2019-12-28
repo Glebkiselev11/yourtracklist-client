@@ -112,7 +112,7 @@ export default {
     border: none;
     outline: none;
     border-bottom: 1px solid black;
-    font-size: 2rem;
+    font-size: 1.4rem;
     font-weight: 300;
     padding: 0 10px;
   }
