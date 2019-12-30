@@ -54,7 +54,7 @@ export default {
   }
 
   .title {
-    color: white;
+    color: var(--primary-background-color);
     z-index: 3;
   }
   

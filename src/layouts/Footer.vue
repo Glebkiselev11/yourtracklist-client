@@ -1,6 +1,6 @@
 <template>
   <!-- Подвал сайта, который присутствует на всех страницах -->
-  <div class="">
+  <footer class="footer">
     <div class="wrap">
 
       <div class="nav-wrap">
@@ -42,7 +42,7 @@
 
     </div>
     
-  </div>
+  </footer>
 </template>
 
 <script>
@@ -57,15 +57,20 @@ export default {
 </script>
 
 <style scoped>
+  .footer {
+    background-color: var(--primary-background-color);
+  }
+
   .wrap {
     max-width: 1200px;
     margin: auto;
     height: 460px;
-    border-top: 1px solid black;
+    border-top: 1px solid var(--primary-color);
     display: flex;
     align-content: space-between;
     justify-content: space-between;
     flex-wrap: wrap;
+    background-color: var(--primary-background-color);
   }
 
 
@@ -102,7 +107,7 @@ export default {
   .footer-description-wrap {
     width: 100%;
     height: 100px;
-    background: black;
+    background: var(--primary-color);
   }
 
   .footer-descrip {

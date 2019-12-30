@@ -1,6 +1,6 @@
 <template>
   <!-- Компонент навигационной панели, которая отображается на всех страницах приложения -->
-  <div class="navbar-wrap">
+  <header class="navbar-wrap">
     <img class="yt-logo" src="@/../public/img/logo/yt-logo.svg" @click="goToHomePage" alt="">
 
     <!-- Сама навигация -->
@@ -34,11 +34,11 @@
     
     />
 
-  </div>
+  </header>
 </template>
 
 <script>
-import Search from '@/components/Search'
+import Search from '@/components/search/Search.vue'
 
 export default {
   name: 'navbar',
@@ -68,6 +68,7 @@ export default {
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
+    background-color: var(--primary-background-color);
   }
 
   .yt-logo {
@@ -85,7 +86,7 @@ export default {
   }
 
   .navbar-link-item a:hover {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--primary-color);
   }
 
   .search-button {

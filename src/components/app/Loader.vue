@@ -12,8 +12,8 @@ export default {
 <style scoped>
 
 .loader {
-  border: 5px solid #f3f3f3; /* Light grey */
-  border-top: 5px solid black; /* Blue */
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid var(--primary-color);
   border-radius: 50%;
   width: 70px;
   height: 70px;

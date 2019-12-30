@@ -27,12 +27,31 @@ export default {
 </script>
 
 <style>
+  /* Здесь мы объявляем глобальные переменные для всего приложения */
+  :root {
+    /* Цвет заднего фона */
+    --primary-background-color: white; 
+
+    /* Цвет текста, цвет обводок */
+    --primary-color: black;
+  }
+
   .container {
     max-width: 1200px;
     margin: auto;
   }
 
+  #app {
+    font-size: 16px;
+    background-color: var(--primary-background-color);
+  }
+
+  input, textarea {
+    background-color: var(--primary-background-color);
+  }
+
   .body {
+    
     min-height: 60vh;
   }
 
@@ -57,7 +76,7 @@ export default {
 
   a {
     text-decoration: none;
-    color: black;
+    color: var(--primary-color);
     cursor: pointer;
   }
 
@@ -87,15 +106,15 @@ export default {
     width: 30px;
     height: 30px;
     margin: 0 5px;
-    border: 1px solid black;
+    border: 1px solid var(--primary-color);
   }
 
   .page-active a {
-    background: black;
+    background: var(--primary-color);
   }
 
   .page-active a {
-    color: white;
+    color: var(--primary-background-color);
   }
 
 </style>

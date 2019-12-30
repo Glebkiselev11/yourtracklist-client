@@ -94,7 +94,7 @@ export default {
   }  
 
   .active-link:hover {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--primary-color);
   }
 
   .not-active-link {

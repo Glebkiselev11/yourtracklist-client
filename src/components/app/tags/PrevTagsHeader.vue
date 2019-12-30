@@ -41,7 +41,7 @@
     padding: 7px 0;
     font-size: 14px;
     font-weight: 300;
-    border-top: 1px solid black;
+    border-top: 1px solid var(--primary-color);
   }
 
   .release-tags a:hover {

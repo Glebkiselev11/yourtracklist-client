@@ -17,8 +17,25 @@
           ref="search" 
           class="search-input" 
           type="text"
-          placeholder="Введите имя исполнителя или название релиза / видео">
+          placeholder="Введите имя исполнителя или название релиза / видео"
+        >
+
+        <!-- Сообщение об ошибке поиска -->
+        <span 
+          v-if="searchResult === 2"
+          class="search-errors"
+        >Ничего не найдено</span>
+
+      
       </div>
+
+      <!-- Нижнее окно куда выводим найденые релизы, авторов, видео -->
+      <SearchResult 
+        v-if="searchResult === 1"
+      />
+      
+
+      
         
       
     </div>
@@ -28,19 +45,28 @@
 
 
 <script>
-import { mapActions } from 'vuex'
+import SearchResult from '@/components/search/Search-result.vue'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'search',
   data: () => ({
     searchQuery: '', // Поисковой запрос
   }),
+  components: {
+    SearchResult
+  },
+  computed: {
+    ...mapGetters(['searchResult'])
+  },
   created() {
     // Как тольк открываем поиск - сразу ставим фокус на поле ввода
     setTimeout(() => this.$refs.search.focus(), 200);
   },
   methods: {
     ...mapActions(['submitSearchQuery']),
+    ...mapMutations(['clearSearchResult']),
+    
 
     // Отслеживаем нажатия на кнопки
     keyHandler(event) {
@@ -59,15 +85,14 @@ export default {
 
     // Отправляет наш запрос на бэкенд
     async searchSubmit() {
-      try {
-        await this.submitSearchQuery(this.searchQuery)
-        
-      } catch(e) {
-        console.log(e)
-      }
-      
+      await this.submitSearchQuery(this.searchQuery)
     }
   },
+
+  beforeDestroy() {
+    this.clearSearchResult()
+  },
+  
 }
 </script>
 
@@ -87,8 +112,7 @@ export default {
   .search-wrap {
     margin: auto;
     width: 100%;
-    height: 225px;
-    background: white;
+    background: var(--primary-background-color);
     
   }
 
@@ -97,6 +121,7 @@ export default {
     display: flex;
     flex-direction: column;
     padding-top: 100px;
+    height: 235px;
   }
 
   .search-close-btn {
@@ -111,9 +136,13 @@ export default {
   .search-input {
     border: none;
     outline: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--primary-color);
     font-size: 1.4rem;
     font-weight: 300;
     padding: 0 10px;
+  }
+
+  .search-errors {
+    margin: 25px 10px 10px;
   }
 </style>

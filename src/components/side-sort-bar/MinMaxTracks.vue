@@ -140,7 +140,7 @@ export default {
   }
 
   .count-button:hover {
-    background-color: black;
+    background-color: var(--primary-color);
     color: white;
   }
 

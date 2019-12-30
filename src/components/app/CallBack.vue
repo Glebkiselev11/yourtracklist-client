@@ -72,7 +72,7 @@ export default {
     width: 100%;
     font-size: 16px;
     border: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--primary-color);
   }
 
   /* span где отображется максимальное кол-во символов */
@@ -86,11 +86,11 @@ export default {
 
   .input:focus {
     outline: none;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid var(--primary-color);
   }
 
   button {
     width: 100%;
-    border: 1px solid black;
+    border: 1px solid var(--primary-color);
   }
 </style>

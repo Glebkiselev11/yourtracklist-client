@@ -21,7 +21,7 @@ export default {
   }
 
   .prev-video-wrap span{
-    color: white;
+    color: var(--primary-background-color);
     font-size: 14px;
     font-weight: 300;
     padding: 7px 10px;
