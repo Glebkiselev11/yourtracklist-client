@@ -10,12 +10,18 @@
 <script>
 
 export default {
-  name: 'Video-cart',
+  name: 'Video-card',
   data: () => ({
     videoPermalink: undefined, // Уникальный пермалинк, по которому мы получаем видос с ютуба
   }),
   mounted() {
     this.videoPermalink = this.$route.params.video_permalink
+  },
+  watch: {
+    // Следит за изменениями роутера (нужно если ссылка изменилась (из поиска) открыть новое видео)
+    '$route' () {
+      this.videoPermalink = this.$route.params.video_permalink
+    }
   },
 }
 </script>

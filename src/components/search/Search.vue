@@ -104,6 +104,7 @@ export default {
     width: 100%;
     height: 100vh;
     position: fixed;
+    overflow-y: scroll;
     top: 0; left: 0;
     background: rgba(0, 0, 0, 0.91);
     z-index: 1;

@@ -10,10 +10,12 @@
 
     <img class="release-image" :src="release.cover" alt="cover" @click="openRelease(release.authors, release.permalink)">
     <PrevInfo 
+      @close="$emit('close')"
       :date="release.date"
       :name="release.name"
       :permalink="release.permalink"
       :authors="release.authors"
+      :type="'release'"
     />
   </div>
 </template>
@@ -32,16 +34,21 @@ export default {
     // Открывает релиз (по клику на обложку)
     openRelease(authors, release) {
 
-      // Возможно это костыль, но по сути у нас не бывает больше 4 авторов в одном релизе
-      if (authors.length === 1) {
-        this.$router.push(`/release/${authors[0]['permalink']}/${release}`)
-      } else if (authors.length === 2) {
-        this.$router.push(`/release/${authors[0]['permalink']}+${authors[1]['permalink']}/${release}`)
-      } else if (authors.length === 3) {
-        this.$router.push(`/release/${authors[0]['permalink']}+${authors[1]['permalink']}+${authors[2]['permalink']}/${release}`)
-      } else {
-        this.$router.push(`/release/${authors[0]['permalink']}+${authors[1]['permalink']}+${authors[2]['permalink']}+${authors[3]['permalink']}/${release}`)
+      // Эмитим (для меню поиска) чтобы при переходе в альбом закрыть страницу поиска
+      this.$emit('close')
+
+      let pushString = '/release/'
+
+      for (let i = 0; i < authors.length; i++) {
+        const author = authors[i]
+        
+        // Собираем строку из авторов, чтобы на выходе у нас получилось cat-soup+drip-133, если автора два
+        pushString += i < 1 ? `${author['permalink']}` : `+${author['permalink']}`
       }
+
+      // И отправляем результат в роутер (на выходе получиться так: '/release/cat-soup+drip-133/loss-prevention')
+      this.$router.push(`${pushString}/${release}`)
+      
     },
   },
 }

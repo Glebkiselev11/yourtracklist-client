@@ -9,8 +9,8 @@
 
     <!-- Обложка -->
     <div class="cover-wrap">
-      <router-link 
-        :to="`video/${video.permalink}`" 
+      <a
+        @click.prevent="openVideo(video.authors, video.permalink)"
         class="video-cover" 
         :style="{ 'backgroundImage' : 'url(' + `https://img.youtube.com/vi/${video.permalink}/hqdefault.jpg` + ')' }"
       > 
@@ -24,16 +24,18 @@
         <PrevVideoInfo 
           :duration="video.duration"
         />
-      </router-link>
+      </a>
 
       
     </div>
     
     <PrevInfo 
+      @close="$emit('close')"
       :date="video.date"
       :name="video.name"
       :authors="video.authors"
-      :url="`https://www.youtube.com/watch?v=${video.permalink}`" 
+      :permalink="video.permalink" 
+      :type="'video'"
     />
   </div>
 </template>
@@ -48,7 +50,27 @@ export default {
   props: ['video'],
   components: {
     PrevVideoInfo, PrevInfo, VideoPlayButton, PrevTagsHeader
-  }
+  },
+  methods: {
+    // Открывает видео
+    openVideo(authors, permalink) {
+
+      // Эмитим (для меню поиска) чтобы при переходе в карточку видео, закрыть страницу поиска
+      this.$emit('close')
+
+      let pushString = '/video/'
+
+      for (let i = 0; i < authors.length; i++) {
+        const author = authors[i]
+        
+        // Собираем строку из авторов, чтобы на выходе у нас получилось cat-soup+drip-133, если автора два
+        pushString += i < 1 ? `${author['permalink']}` : `+${author['permalink']}`
+      }
+
+      // И отправляем результат в роутер (на выходе получиться так: '/video/cat-soup+drip-133/sFf322gv')
+      this.$router.push(`${pushString}/${permalink}`)
+    }
+  },
 }
 </script>
 

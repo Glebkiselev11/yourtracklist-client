@@ -107,6 +107,20 @@ export default {
     // и по ним запрашиваем с бэкенда нужный релиз
     await this.$store.dispatch('getReleaseInfo', {author, release})
   },
+  watch: {
+    // Следит за изменениями роутера (нужно если ссылка изменилась (из поиска) открыть новый альбом)
+    async '$route' () {
+      // Cначала удаляем из стора релиз который был до этого
+      this.$store.commit('clearReleaseInfo')
+
+      // После вытаскиваем из роутера данные, по которым получим релиз
+      const author = this.$route.params.author_permalink
+      const release = this.$route.params.release_permalink
+
+      // и по ним запрашиваем с бэкенда нужный релиз
+      await this.$store.dispatch('getReleaseInfo', {author, release})
+    }
+  },
   computed: {
     // Тут мы его получаем
     ...mapGetters(['releaseInfo'])

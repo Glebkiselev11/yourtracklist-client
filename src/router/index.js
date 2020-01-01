@@ -42,11 +42,11 @@ const router = new Router({
       component: () => import('@/views/VideoArchive.vue')
     },
     {
-      // Тут к примеру мы заходим в карточку видео /video/QjMME7LGoJw
-      path: '/video/:video_permalink',
-      name: 'Video-cart',
+      // Тут к примеру мы заходим в карточку видео /video/cat-soup/QjMME7LGoJw
+      path: '/video/:author_permalink/:video_permalink',
+      name: 'Video-card',
       meta: {layout: 'main'}, // Обертка под наше приложение
-      component: () => import('@/views/VideoCart.vue')
+      component: () => import('@/views/VideoCard.vue')
     },
     {
       path: '/author/:permalink',

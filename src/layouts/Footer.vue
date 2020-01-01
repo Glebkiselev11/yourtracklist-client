@@ -58,7 +58,7 @@ export default {
 
 <style scoped>
   .footer {
-    background-color: var(--primary-background-color);
+    /* background-color: var(--primary-background-color); */
   }
 
   .wrap {
@@ -70,7 +70,7 @@ export default {
     align-content: space-between;
     justify-content: space-between;
     flex-wrap: wrap;
-    background-color: var(--primary-background-color);
+    /* background-color: var(--primary-background-color); */
   }
 
 

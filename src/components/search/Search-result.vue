@@ -27,15 +27,28 @@
       <!-- Сюда выводим релизы (если они найдены) -->
       <div class="search-release-wrap">
         <h5 class="search-result-title">{{releasesTitleText}}</h5>
-        
         <ReleaseItem
           v-for="(release, index) of searchReleases"
           :key="index"
           :release="release"
           :id="'release-item' + index"
+          @close="$emit('close')"
         />
-
       </div>
+
+      <!-- Сюда выводим видео (если они найдены) -->
+      <div class="search-videos-wrap">
+        <h5 class="search-result-title">{{videosTitleText}}</h5>
+        <!-- Итерируемый итем -->
+        <VideoItem 
+          v-for="(video, index) in searchVideos"
+          :key="index"
+          :video="video"
+          :id="'video-item' + index"
+          @close="$emit('close')"
+        />
+      </div>
+
 
     </div> <!-- Основное окно: конец -->
     
@@ -47,11 +60,13 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import ReleaseItem from '@/components/app/music/ReleasePrevCardItem.vue'
+import VideoItem from '@/components/app/video/VideoPrevCardItem.vue'
 
 export default {
   name: 'search-result',
   components: {
-    ReleaseItem // Карточка релиза
+    ReleaseItem, // Карточка релиза
+    VideoItem, // Карточка видео
   },
   computed: {
     ...mapGetters([
@@ -92,7 +107,18 @@ export default {
         default:
           return `Найдено ${l} релизов`
       }
+    },
 
+    // В зависимости от кол-ва видео возвращает валидный текст
+    videosTitleText() {
+      const l = this.searchVideosCount
+
+      switch (true) {
+        case l === 0:
+          return `Видео не найдено`
+        default:
+          return `Найдено ${l} видео`
+      }
     }
   },
   methods: {
@@ -136,6 +162,7 @@ export default {
     display: grid;
     grid-template-columns: 3fr 10fr;
     grid-gap: 3em;
+    padding-bottom: 5em; 
   }
 
   /* Боковая панель результатов (пока для авторов используется) */
@@ -156,7 +183,8 @@ export default {
 
   /* Основная часть, куда мы выводим релизы / видео / миксы */
   .search-main-result {
-
+    display: grid;
+    grid-gap: 3rem;
   }
 
   /* Под релизы */
@@ -164,20 +192,41 @@ export default {
     display: grid;
     grid-template-areas: 
       "title title title"
-      "item0 item1 item2";
+      "rel-item0 rel-item1 rel-item2";
     grid-template-rows: 1fr auto;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 1em;
+    grid-gap: 1.5em 1em;
   }
   #release-item0 {
-    grid-area: item0;
+    grid-area: rel-item0;
   }
   #release-item1 {
-    grid-area: item1;
+    grid-area: rel-item1;
   }
   #release-item2 {
-    grid-area: item2;
+    grid-area: rel-item2;
   }
+
+  /* Под видео */
+  .search-videos-wrap {
+    display: grid;
+    grid-template-areas: 
+      "title title title"
+      "video-item0 video-item1 video-item2";
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1.5em 1em;
+  }
+  #video-item0 {
+    grid-area: video-item0;
+  }
+  #video-item1 {
+    grid-area: video-item1;
+  }
+  #video-item2 {
+    grid-area: video-item2;
+  }
+  
 
 
 
