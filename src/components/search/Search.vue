@@ -32,6 +32,7 @@
       <!-- Нижнее окно куда выводим найденые релизы, авторов, видео -->
       <SearchResult 
         v-if="searchResult === 1"
+        @close="$emit('close')"
       />
       
 

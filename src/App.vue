@@ -43,15 +43,14 @@ export default {
 
   #app {
     font-size: 16px;
-    background-color: var(--primary-background-color);
+    /* background-color: var(--primary-background-color); */
   }
 
   input, textarea {
     background-color: var(--primary-background-color);
   }
 
-  .body {
-    
+  .body {    
     min-height: 60vh;
   }
 
@@ -88,7 +87,7 @@ export default {
 
 
   .archive-title {
-    font-size: 40px;
+    font-size: 2.5rem;
     font-weight: 300;
   }
 

@@ -20,7 +20,7 @@ export default {
 <style scoped>
   button {
     max-height: 35px;
-    border: 1px solid black;
+    border: 1px solid var(--primary-color);
     background: transparent;
     font-weight: 300;
     font-size: 16px;
@@ -32,11 +32,11 @@ export default {
   button:before {
     content:'';
     position: absolute;
-    top: 0;
-    left: 0;
     width: 0;
-    height: 33px;
-    background: black;
+    height: 35px;
+    top: -1px;
+    left: 0;
+    background: var(--primary-color);
     transition: all 0.4s ease;
     z-index: -1;
   }
@@ -46,6 +46,6 @@ export default {
   }
 
   button:hover {
-    color: white;
+    color: var(--primary-background-color);
   }
 </style>

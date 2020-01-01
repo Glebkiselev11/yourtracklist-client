@@ -2,28 +2,57 @@
   <!-- Компонент окна куда выводятся результаты поиска -->
   <div class="search-result-wrap container" >
 
-    <!-- Сюда выводим найденых авторов -->
-    <div class="search-authors-result">
+    <!-- Боковая панель (пока используется для авторов) -->
+    <div class="search-sidebar-result">
+      
+      <!-- Сюда выводим найденых авторов -->
       <h5 class="search-result-title">{{authorsTitleText}}</h5>
-
       <ul class="search-authors-list" v-if="searchAuthors.length">
         <li 
-        v-for="(author, index) of searchAuthors"
-        :key="index"
-        class="search-author-item"
-        >{{author.name}}</li>
+          v-for="(author, index) of searchAuthors"
+          :key="index"
+          class="search-author-item"
+        > 
+          <a 
+            @click.prevent="goToAuthorPage(author.permalink)"
+          >{{author.name}}</a>
+        </li>
       </ul>
+    </div>  <!-- Боковая панель: конец -->
+   
 
-    </div>
+    <!-- Основное окно куда выводим релизы / видео / миксы(в будущем)  -->
+    <div class="search-main-result">
+
+      <!-- Сюда выводим релизы (если они найдены) -->
+      <div class="search-release-wrap">
+        <h5 class="search-result-title">{{releasesTitleText}}</h5>
+        
+        <ReleaseItem
+          v-for="(release, index) of searchReleases"
+          :key="index"
+          :release="release"
+          :id="'release-item' + index"
+        />
+
+      </div>
+
+    </div> <!-- Основное окно: конец -->
+    
+    
 
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import ReleaseItem from '@/components/app/music/ReleasePrevCardItem.vue'
 
 export default {
   name: 'search-result',
+  components: {
+    ReleaseItem // Карточка релиза
+  },
   computed: {
     ...mapGetters([
       'searchReleases', // Найденые три релиза по поиску
@@ -47,7 +76,23 @@ export default {
         default:
           return `Найдено ${l} авторов`
       }
-      
+    },
+
+    // В зависимости от кол-ва релизов возвращает валидный текст
+    releasesTitleText() {
+      const l = this.searchReleasesCount
+
+      switch (true) {
+        case l === 0:
+          return `Релизов не найдено`
+        case l < 2:
+          return `Найден ${l} релиз`
+        case l < 5:
+          return `Найдено ${l} релиза`
+        default:
+          return `Найдено ${l} релизов`
+      }
+
     }
   },
   methods: {
@@ -58,6 +103,14 @@ export default {
       'clearSearchVideosCount',
       'clearSearchAuthors',
     ]),
+
+    // Перекидывает на страницу автора по клику на найденого автора
+    goToAuthorPage(permalink) {
+      this.$router.push(`/author/${permalink}`)
+
+      // Закрывает окно поиска
+      this.$emit('close')
+    }
   },
   // Когда закрываем компонент - чистим мусор в сторе
   beforeDestroy() {
@@ -71,13 +124,65 @@ export default {
 </script>
 
 <style scoped>
-  .search-result-wrap {
-    margin-top: 10px;
-    background-color: var(--primary-background-color);
-  }
-
   .search-result-title {
     font-size: 1.125rem;
     font-weight: 500;
+    grid-area: title;
   }
+
+  /* Основное окно результатов */
+  .search-result-wrap {
+    background-color: var(--primary-background-color);
+    display: grid;
+    grid-template-columns: 3fr 10fr;
+    grid-gap: 3em;
+  }
+
+  /* Боковая панель результатов (пока для авторов используется) */
+  .search-sidebar-result {
+    /* Здесь стили не нужны */
+  }
+
+  /* Для вывода авторов */
+  .search-authors-list {
+    margin-top: 20px;
+    
+  }
+  .search-author-item {
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 150%;
+  }
+
+  /* Основная часть, куда мы выводим релизы / видео / миксы */
+  .search-main-result {
+
+  }
+
+  /* Под релизы */
+  .search-release-wrap {
+    display: grid;
+    grid-template-areas: 
+      "title title title"
+      "item0 item1 item2";
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1em;
+  }
+  #release-item0 {
+    grid-area: item0;
+  }
+  #release-item1 {
+    grid-area: item1;
+  }
+  #release-item2 {
+    grid-area: item2;
+  }
+
+
+
+
+  
+
+  
 </style>
