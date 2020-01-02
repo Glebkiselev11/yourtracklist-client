@@ -18,7 +18,7 @@
 
     <!-- Поиск по сайту -->
     <button 
-      @click="isShowSearch = true" 
+      @click="$store.commit('openSearchWindow')" 
       class="search-button" 
       title="Поиск"
     >
@@ -29,8 +29,8 @@
     </button>
 
     <Search 
-      v-if="isShowSearch"
-      @close="isShowSearch = false"
+      v-if="searchWindow"
+      @close="$store.commit('closeSearchWindow')"
     
     />
 
@@ -39,12 +39,15 @@
 
 <script>
 import Search from '@/components/search/Search.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'navbar',
-  data:() => ({
-    isShowSearch: false, // Отвечает за отбражение модального окна поиска
-  }),
+  computed: {
+    ...mapGetters([
+      'searchWindow', // Отвечает за отбражение модального окна поиска
+    ])
+  },
   components: {
     Search
   },
@@ -60,6 +63,7 @@ export default {
 </script>
 
 <style scoped>
+  
 
   .navbar-wrap {
     max-width: 1200px;

@@ -63,6 +63,7 @@ export default {
   created() {
     // Как тольк открываем поиск - сразу ставим фокус на поле ввода
     setTimeout(() => this.$refs.search.focus(), 200);
+    
   },
   methods: {
     ...mapActions(['submitSearchQuery']),
@@ -105,9 +106,10 @@ export default {
     height: 100vh;
     position: fixed;
     overflow-y: scroll;
+    visibility: visible;
     top: 0; left: 0;
     background: rgba(0, 0, 0, 0.91);
-    z-index: 1;
+    z-index: 2;
   }
 
   /* Фон поиска (белый на всю ширину) */

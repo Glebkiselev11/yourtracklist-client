@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+  <!-- Динамический класс для блокирования скрола во всем приложении, кроме окна поиска -->
+  <div id="app" 
+    :class="searchWindow ? 'open-search' : ''"
+  >
 
     <!-- Контейнер с максимальной шириной 1200px -->
     <div class="container">
@@ -19,10 +22,17 @@
 <script>
 import Navbar from '@/layouts/Navbar'
 import Footer from '@/layouts/Footer'
+import { mapGetters } from 'vuex'
+
+
 export default {
   components: {
     Navbar, Footer
-  }
+  },
+  computed: {
+    ...mapGetters(['searchWindow']) // Отвечает за показ модального окна поиска
+  },
+
 }
 </script>
 
@@ -36,6 +46,13 @@ export default {
     --primary-color: black;
   }
 
+  /* Нужен, чтобы когда открылось модальное окно, отключилась прокрутка во всем приложении кроме модального окна */
+  .open-search {
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* Главный контейнер под декстоп */
   .container {
     max-width: 1200px;
     margin: auto;
@@ -52,6 +69,7 @@ export default {
 
   .body {    
     min-height: 60vh;
+    
   }
 
   .status-ok {

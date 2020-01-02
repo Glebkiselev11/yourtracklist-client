@@ -150,6 +150,7 @@ export default {
 </script>
 
 <style scoped>
+  
   .search-result-title {
     font-size: 1.125rem;
     font-weight: 500;

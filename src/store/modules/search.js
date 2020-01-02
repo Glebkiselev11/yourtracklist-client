@@ -36,6 +36,14 @@ export default {
 
   },
   mutations: {
+    // Переключатели для модального окна
+    openSearchWindow(s) {
+      s.searchWindow = true
+    },
+    closeSearchWindow(s) {
+      s.searchWindow = false
+    },
+
     // num = 1 Что то найдено, показываем компонент куда выводим результаты
     // num = 2 Ничего не было найдено по поисковому запросу (показываем сообщение что ничего не найдено)
     setSearchResult(s, num) {
@@ -85,6 +93,7 @@ export default {
 
   },
   state: {
+    searchWindow: false, // Отвечает за показ модального окна поиска
     searchResult: 0, // Отвечает за то найдено ли что то или нет
     searchReleases: null, // 3 Найденых релиза
     searchReleasesCount: 0, // Кол-во найденых релизов всего (то что выше это только то что показываем)
@@ -93,6 +102,7 @@ export default {
     searchAuthors: null, // Найденые автора, их мы пока без ограничния показываем всех найденых
   },
   getters: {
+    searchWindow: s => s.searchWindow,
     searchResult: s => s.searchResult,
     searchReleases: s => s.searchReleases,
     searchReleasesCount: s => s.searchReleasesCount,
