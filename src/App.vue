@@ -50,6 +50,7 @@ export default {
   .open-search {
     overflow: hidden;
     height: 100vh;
+    margin-right: 20px;
   }
 
   /* Главный контейнер под декстоп */

@@ -15,7 +15,8 @@
         > 
           <a 
             @click.prevent="goToAuthorPage(author.permalink)"
-          >{{author.name}}</a>
+            v-html="author.name"
+          ></a>
         </li>
       </ul>
     </div>  <!-- Боковая панель: конец -->
@@ -64,6 +65,9 @@ import VideoItem from '@/components/app/video/VideoPrevCardItem.vue'
 
 export default {
   name: 'search-result',
+  props: [
+    'searchQuery', // Поисковой запрос по которому мы нашли релизы / авторов / видео
+  ],
   components: {
     ReleaseItem, // Карточка релиза
     VideoItem, // Карточка видео
@@ -194,7 +198,7 @@ export default {
     grid-template-areas: 
       "title title title"
       "rel-item0 rel-item1 rel-item2";
-    grid-template-rows: 1fr auto;
+    grid-template-rows: 25px auto;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1.5em 1em;
   }
@@ -214,7 +218,7 @@ export default {
     grid-template-areas: 
       "title title title"
       "video-item0 video-item1 video-item2";
-    grid-template-rows: 1fr auto;
+    grid-template-rows: 25px 100%;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1.5em 1em;
   }

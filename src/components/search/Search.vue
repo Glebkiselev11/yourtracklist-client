@@ -33,12 +33,10 @@
       <SearchResult 
         v-if="searchResult === 1"
         @close="$emit('close')"
+        :searchQuery="this.searchQuery"
       />
       
 
-      
-        
-      
     </div>
     
   </div>
@@ -52,7 +50,7 @@ import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'search',
   data: () => ({
-    searchQuery: '', // Поисковой запрос
+    searchQuery: '', // Поисковой запрос по которому мы в базе ищем нужные данные
   }),
   components: {
     SearchResult
@@ -127,7 +125,7 @@ export default {
   .search-input-wrap {
     display: flex;
     flex-direction: column;
-    padding-top: 100px;
+    padding-top: 80px;
     height: 235px;
   }
 

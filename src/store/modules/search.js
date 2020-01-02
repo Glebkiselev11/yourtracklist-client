@@ -16,7 +16,7 @@ export default {
 
         commit('setSearchReleases', releases)
         commit('setSearchVideos', videos)
-        commit('setSearchAuthors', authors)
+        commit('setSearchAuthors', {authors, searchQuery})
         commit('setSearchReleasesCount', releasesCount)
         commit('setSearchVideosCount', videosCount)
 
@@ -61,7 +61,6 @@ export default {
     },
 
     setSearchReleasesCount(s, releasesCount) {
-      console.log(releasesCount)
       s.searchReleasesCount = releasesCount
     },
     clearSearchReleasesCount(s) {
@@ -76,17 +75,26 @@ export default {
     },
 
     setSearchVideosCount(s, videosCount) {
-      console.log(videosCount)
       s.searchVideosCount = videosCount
     },
     clearSearchVideosCount(s) {
       s.searchVideosCount = 0
     },
 
-    setSearchAuthors(s, authors) {
-      console.log(authors.length)
+    // Устанавлиеваем в стейт авторов, предварительно обрамляя те буквы, по которым были найдены эти авторы
+    setSearchAuthors(s, {authors, searchQuery}) {
+      const reg = new RegExp(searchQuery, 'gi');
+
+      for (let i = 0; i < authors.length; i++) {
+        const name = authors[i]['name']
+
+        // Находит буквы / слова и окрашивает их в желтый цвет
+        authors[i]['name'] = name.replace(reg, "<mark>" + '$&' + "</mark>")
+      }
+
       s.searchAuthors = authors
     },
+
     clearSearchAuthors(s) {
       s.searchAuthors = null
     },

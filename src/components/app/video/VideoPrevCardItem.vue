@@ -5,6 +5,7 @@
     <PrevTagsHeader
       link-to="/video-archive/"
       :tags-array="video.tags"
+      @close="$emit('close')"
     />
 
     <!-- Обложка -->
@@ -83,7 +84,7 @@ export default {
 
   .cover-wrap {
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   .video-cover {
     background-repeat: no-repeat;

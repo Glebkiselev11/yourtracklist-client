@@ -4,7 +4,7 @@
     <!-- Передаем в компонент отвечающий за отображание тегов - массив с тегами -->
     <PrevTagsHeader
       link-to="/releases-archive/"
-      
+      @close="$emit('close')"
       :tags-array="release.tags"
     />
 
@@ -66,7 +66,7 @@ export default {
     cursor: pointer;
     width: 280px;
     height: 280px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
   }
 
 </style>
