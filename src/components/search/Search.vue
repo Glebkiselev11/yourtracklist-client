@@ -1,7 +1,7 @@
 <template>
   <!-- Модальное окно с поиском по сайту -->
   <div class="wrap">
-    <div class="search-wrap">
+    <div class="search-wrap" v-on-clickaway="away">
       <div class="container search-input-wrap">
         <!-- Кнопка которая закрывает модальное окно поиска -->
         <button class="search-close-btn" @click="$emit('close')">
@@ -68,7 +68,11 @@ export default {
   methods: {
     ...mapActions(['submitSearchQuery']),
     ...mapMutations(['clearSearchResult']),
-    
+
+    // По клику на черный фон - закрывает модальное окно поиска
+    away() {
+      this.$emit('close');
+    },
 
     // Отслеживаем нажатия на кнопки
     keyHandler(event) {
@@ -109,7 +113,7 @@ export default {
     visibility: visible;
     top: 0; left: 0;
     background: rgba(0, 0, 0, 0.91);
-    z-index: 2;
+    z-index: 1;
   }
 
   /* Фон поиска (белый на всю ширину) */
@@ -117,7 +121,6 @@ export default {
     margin: auto;
     width: 100%;
     background: var(--primary-background-color);
-    
   }
 
   /* Ограничение для поля поиска и кнопки закрытия */

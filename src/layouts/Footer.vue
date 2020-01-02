@@ -34,7 +34,7 @@
     <div class="footer-description-wrap">
       
       <div class="container footer-descrip">
-        <p>©2019 yourtracklist</p>
+        <p>©2020 yourtracklist</p>
         <p>designer: Daria Ver</p>
         <p>developer: Gleb kiselev</p>
 
