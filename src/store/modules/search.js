@@ -3,7 +3,7 @@ import axios from 'axios'
 // Основной модуль, под поиск по сайту
 export default {
   actions: {
-    async submitSearchQuery({commit}, searchQuery) {
+    async submitSearchQuery({commit, dispatch}, searchQuery) {
       
       try {
         const {data : {
@@ -14,12 +14,15 @@ export default {
           videosCount, // кол-во всего найденых видеозаписей
         }} = await axios.post('/api/search-query', {searchQuery})
 
-        commit('setSearchReleases', releases)
-        commit('setSearchVideos', videos)
-        commit('setSearchAuthors', {authors, searchQuery})
+
         commit('setSearchReleasesCount', releasesCount)
         commit('setSearchVideosCount', videosCount)
 
+        // Пропускаем через обрамления тегами, букв / слов по которым мы искали
+        dispatch('letterMark', { dataArray : authors, searchQuery, commitName : 'setSearchAuthors'})
+        dispatch('letterMark', { dataArray : releases, searchQuery, commitName : 'setSearchReleases'})
+        dispatch('letterMark', { dataArray : videos, searchQuery, commitName : 'setSearchVideos'})
+        
         // Активируем окно результата, если что то найдено
         if (releasesCount || videosCount || authors.length) {
           commit('setSearchResult', 1) // 1 если что то найдено
@@ -27,11 +30,26 @@ export default {
           commit('setSearchResult', 2) // 2 если ничего не было найдено
         }
 
-        // console.log(releases, videos, authors, releasesCount, videosCount)
-
       } catch (error) {
         console.log(error)
       }
+    },
+
+    // Добавление в название HTML теги выделяя нужные буквы которые использовались для поиска этого автора / релиза / видео
+    // dataArray - массив объектов в котором мы дополняем тегами нужные буквы / слова
+    // searchQuery - поисковой запрос, по которму мы выделяем нужные буквы / слова
+    // commitName - название мутации через которую мы помещаем в нужный стейт
+    letterMark({commit}, { dataArray, searchQuery, commitName } ) {
+      const reg = new RegExp(searchQuery, 'gi');
+
+      for (let i = 0; i < dataArray.length; i++) {
+        const name = dataArray[i]['name']
+
+        // Находит буквы / слова и окрашивает их в желтый цвет
+        dataArray[i]['name'] = name.replace(reg, "<mark>" + '$&' + "</mark>")
+      }
+
+      commit(commitName, dataArray)
     }
 
   },
@@ -81,17 +99,7 @@ export default {
       s.searchVideosCount = 0
     },
 
-    // Устанавлиеваем в стейт авторов, предварительно обрамляя те буквы, по которым были найдены эти авторы
-    setSearchAuthors(s, {authors, searchQuery}) {
-      const reg = new RegExp(searchQuery, 'gi');
-
-      for (let i = 0; i < authors.length; i++) {
-        const name = authors[i]['name']
-
-        // Находит буквы / слова и окрашивает их в желтый цвет
-        authors[i]['name'] = name.replace(reg, "<mark>" + '$&' + "</mark>")
-      }
-
+    setSearchAuthors(s, authors) {
       s.searchAuthors = authors
     },
 
@@ -117,6 +125,5 @@ export default {
     searchVideos: s => s.searchVideos,
     searchVideosCount: s => s.searchVideosCount,
     searchAuthors: s => s.searchAuthors,
-    
   }
 }

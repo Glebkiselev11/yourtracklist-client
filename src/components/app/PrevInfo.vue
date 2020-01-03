@@ -5,10 +5,10 @@
     <span v-if="date" class="date">{{new Date(date).toLocaleDateString('ru-RU', {month: 'long', day: 'numeric', year: 'numeric'})}}</span>
     
     <!-- FIXME: Если есть permalink то показываем его, это переход по приложению -->
-    <a  v-if="permalink" @click.prevent="routerGo" class="name">{{name}}</a>
+    <a  v-if="permalink" @click.prevent="routerGo" class="name" v-html="name"></a>
     
     <!-- А если нету, то тогда должен быть url это уже внешний переход -->
-    <a v-else :href="url" class="name" target="_blank">{{name}}</a>
+    <a v-else :href="url" class="name" target="_blank" v-html="name"></a>
 
     <!-- Здесь выводим ссылку на дискографию артиста, если он не один, то через цикл -->
     <div class="author-name-wrap">
