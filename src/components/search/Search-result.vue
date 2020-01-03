@@ -28,6 +28,14 @@
       <!-- Сюда выводим релизы (если они найдены) -->
       <div class="search-release-wrap">
         <h5 class="search-result-title">{{releasesTitleText}}</h5>
+
+        <AnimationButton
+          class="anim-button"
+          v-if="searchReleasesCount > 3"
+          @click="goToReleasesArchive"
+          :title="'Показать все результаты'"
+        />
+
         <ReleaseItem
           v-for="(release, index) of searchReleases"
           :key="index"
@@ -40,6 +48,14 @@
       <!-- Сюда выводим видео (если они найдены) -->
       <div class="search-videos-wrap">
         <h5 class="search-result-title">{{videosTitleText}}</h5>
+
+        <AnimationButton
+          class="anim-button"
+          v-if="searchVideosCount > 3"
+          @click="goToVideosArchive"
+          :title="'Показать все результаты'"
+        />
+
         <!-- Итерируемый итем -->
         <VideoItem 
           v-for="(video, index) in searchVideos"
@@ -62,6 +78,7 @@
 import { mapGetters, mapMutations } from 'vuex'
 import ReleaseItem from '@/components/app/music/ReleasePrevCardItem.vue'
 import VideoItem from '@/components/app/video/VideoPrevCardItem.vue'
+import AnimationButton from '@/components/app/AnimationButton'
 
 export default {
   name: 'search-result',
@@ -71,6 +88,7 @@ export default {
   components: {
     ReleaseItem, // Карточка релиза
     VideoItem, // Карточка видео
+    AnimationButton, // Кнопка 'показать больше'
   },
   computed: {
     ...mapGetters([
@@ -140,6 +158,15 @@ export default {
 
       // Закрывает окно поиска
       this.$emit('close')
+    },
+
+    // Переходит в архив релизов
+    goToReleasesArchive() {
+
+    },
+
+    goToVideosArchive() {
+
     }
   },
   // Когда закрываем компонент - чистим мусор в сторе
@@ -159,6 +186,11 @@ export default {
     font-size: 1.125rem;
     font-weight: 500;
     grid-area: title;
+  }
+
+  .anim-button {
+    justify-self: end;
+    grid-area: anim-button;
   }
 
   /* Основное окно результатов */
@@ -196,9 +228,9 @@ export default {
   .search-release-wrap {
     display: grid;
     grid-template-areas: 
-      "title title title"
+      "title title anim-button"
       "rel-item0 rel-item1 rel-item2";
-    grid-template-rows: 25px auto;
+    grid-template-rows: 1fr auto;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1.5em 1em;
   }
@@ -216,9 +248,9 @@ export default {
   .search-videos-wrap {
     display: grid;
     grid-template-areas: 
-      "title title title"
+      "title title anim-button"
       "video-item0 video-item1 video-item2";
-    grid-template-rows: 25px 100%;
+    grid-template-rows: 1fr auto;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1.5em 1em;
   }

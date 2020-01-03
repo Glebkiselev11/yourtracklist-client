@@ -27,9 +27,10 @@ export default {
     padding: 7px 20px;
     position: relative;
     transition: all 400ms ease; 
+    z-index: 1;
   }
 
-  button:before {
+  button::after {
     content:'';
     position: absolute;
     width: 0;
@@ -41,7 +42,7 @@ export default {
     z-index: -1;
   }
 
-  button:hover:before {
+  button:hover:after {
     width: 100%;
   }
 
