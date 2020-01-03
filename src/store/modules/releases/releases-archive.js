@@ -72,14 +72,14 @@ export default {
       s.releases = releases
     },
     clearReleases(s) {
-      s.releases = undefined
+      s.releases = null
     },
 
     setSortingReleases(s, sorting) {
-      s.sortingReleases = sorting
+      s.sortingReleases = sorting || 'new'
     },
     clearSortingReleases(s) {
-      s.sortingReleases = undefined
+      s.sortingReleases = 'new'
     },
 
     setReleasesTags(s, tags) {
@@ -102,7 +102,7 @@ export default {
       s.authorPermalinkForReleases = author
     },
     clearAuthorPermalinkForReleases(s) {
-      s.authorPermalinkForReleases = undefined
+      s.authorPermalinkForReleases = null
     },
 
     setThereIsVideos(s, thereIs) {
@@ -116,35 +116,43 @@ export default {
       s.minTracksOfReleases = min
     },
     clearMinTracksOfReleases(s) {
-      s.minTracksOfReleases = undefined
+      s.minTracksOfReleases = null
     },
 
     setMaxTracksOfReleases(s, max) {
       s.maxTracksOfReleases = max
     },
     clearMaxTracksOfReleases(s) {
-      s.maxTracksOfReleases = undefined
+      s.maxTracksOfReleases = null
     },
 
     setRangeNumberOfTracks(s, range) {
       s.rangeNumberOfTracks = range
     },
     clearRangeNumberOfTracks(s) {
-      s.rangeNumberOfTracks = undefined
+      s.rangeNumberOfTracks = null
+    },
+
+    setSearchQueryForReleases(s, search) {
+      s.searchQueryForReleases = search
+    },
+    clearSearchQueryForReleases(s) {
+      s.searchQueryForReleases = null
     },
 
   },
   
   state: {
-    releases: undefined, // релизы одной страницы пагинации, у нас там пока только 9 релизов на одной страница, возможно в будущем
-    sortingReleases: undefined, // Тип сортировки, которую используем
+    releases: null, // релизы одной страницы пагинации, у нас там пока только 9 релизов на одной страница, возможно в будущем
+    sortingReleases: 'new', // Тип сортировки, которую используем
     selectTagsForReleases: [], // Теги которые используем при получение релизов
-    releasesTags: undefined, // Теги которые доступны для выбора в релизах в определенном фильтре или для определенного автора( то бишь не показываем лишнее)
-    minTracksOfReleases: undefined, // Минимальное количество треков в релизах
-    maxTracksOfReleases: undefined, // Максимальное количество треков в релизах
-    rangeNumberOfTracks: undefined, // Диапазон доступного кол-ва треков в релизах
-    authorPermalinkForReleases: undefined, // Пермалинк автора, для которого мы ищем релизы
+    releasesTags: null, // Теги которые доступны для выбора в релизах в определенном фильтре или для определенного автора( то бишь не показываем лишнее)
+    minTracksOfReleases: null, // Минимальное количество треков в релизах
+    maxTracksOfReleases: null, // Максимальное количество треков в релизах
+    rangeNumberOfTracks: null, // Диапазон доступного кол-ва треков в релизах
+    authorPermalinkForReleases: null, // Пермалинк автора, для которого мы ищем релизы
     thereIsVideos: false, // Информация, есть ли видео для автора, для которого мы ищем релизы
+    searchQueryForReleases: null, // Поисковой запрос для релизов, который мы получаем из квери параметров
   },
 
   getters: {
@@ -157,6 +165,6 @@ export default {
     rangeNumberOfTracks: s => s.rangeNumberOfTracks,
     authorPermalinkForReleases: s => s.authorPermalinkForReleases,
     thereIsVideos: s => s.thereIsVideos,
-    
+    searchQueryForReleases: s => s.searchQueryForReleases,
   }
 }

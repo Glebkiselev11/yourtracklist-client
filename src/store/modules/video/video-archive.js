@@ -42,14 +42,14 @@ export default {
     },
 
     clearVideos(s) {
-      s.videos = undefined
+      s.videos = null
     },
 
     setSortingVideo(s, sorting) {
-      s.sortingVideo = sorting
+      s.sortingVideo = sorting || "new"
     },
     clearSortingVideo(s) {
-      s.sortingVideo = undefined
+      s.sortingVideo = "new"
     },
 
     setSelectTagsForVideo(s, tags) {
@@ -72,7 +72,7 @@ export default {
     },
 
     clearAuthorPermalinkForVideos(s) {
-      s.authorPermalinkForVideos = undefined
+      s.authorPermalinkForVideos = null
     },
 
     setThereIsReleases(s, thereIs) {
@@ -85,11 +85,11 @@ export default {
 
   },
   state: {
-    videosTags: undefined, // Теги которые доступны для выбора в видео в определенном фильтре или для определенного автора( то бишь не показываем лишние теги, для которых ничего нет)
+    videosTags: null, // Теги которые доступны для выбора в видео в определенном фильтре или для определенного автора( то бишь не показываем лишние теги, для которых ничего нет)
     selectTagsForVideo: [], // Теги которые используем при получение видео
-    sortingVideo: undefined, // Тип сортировки видео
-    videos: undefined, // видео записи одной страницы пагинации
-    authorPermalinkForVideos: undefined, // Пермалинк автора, для которого мы ищем видео
+    sortingVideo: "new", // Тип сортировки видео
+    videos: null, // видео записи одной страницы пагинации
+    authorPermalinkForVideos: null, // Пермалинк автора, для которого мы ищем видео
     thereIsReleases: false, // Информация, есть ли релизы для автора, для которого мы ищем видео
   },
   getters: {

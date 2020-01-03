@@ -45,6 +45,8 @@
         />
       </div>
 
+      <hr>
+
       <!-- Сюда выводим видео (если они найдены) -->
       <div class="search-videos-wrap">
         <h5 class="search-result-title">{{videosTitleText}}</h5>
@@ -160,12 +162,14 @@ export default {
       this.$emit('close')
     },
 
-    // Переходит в архив релизов
+    // Переходит в архив найденых релизов
     goToReleasesArchive() {
-
+      console.log('release')
     },
 
+    // в архив найденых видео
     goToVideosArchive() {
+      console.log('videos')
 
     }
   },

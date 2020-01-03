@@ -76,8 +76,6 @@ export default {
   name: 'Releases-archive',
   data: () => ({
     loading: true, // Визуальное отображение загрузки
-    sorting: undefined, // Тип сортировки, который у нас выбран, когда загружается страница в первый раз, то мы сюда его устанавливаем с квери параметров в адресной строке
-    checkedTags: [], // Выбранные теги, которые тоже устанавливаются первый раз из адресной строки, если они там есть
   }),
   mixins: [ paginationMixin ], // Тут мы инициализируем миксин который нужен для пагинации
   components: {
@@ -124,22 +122,20 @@ export default {
       case 'artist' :
         this.$store.commit('setSortingReleases', 'artist')
         break
-      // Если там что то другое, иили вообще нет типа сортировки, то по умолчанию ставим как new
-      default:
-        this.$store.commit('setSortingReleases', 'new')
-        break
+      // По-умолчанию в сторе у нас стоит сортировка "new"
     }
 
     // Если есть артист в query параметрах, то этого личная дискография и мы загружаем все релизы только этого автора
-    if (this.$route.query.author) {
-      this.$store.commit('setAuthorPermalinkForReleases', this.$route.query.author)
-    }
-
+    if (this.$route.query.author) this.$store.commit('setAuthorPermalinkForReleases', this.$route.query.author)
+    
     // Устанавлием в store теги релизов которые выбраны
     this.$store.commit('setSelectTagsForReleases', this.$route.query.tag)
 
     // Устанавливаем в стор номер текущей страницы из роутера
     this.$store.commit('setPageNum', +this.$route.query.page || 1)
+
+    // ? Устанавливаем поисковой запрос (если он есть)
+    this.$store.commit('setSearchQueryForReleases', this.$route.query.searh)
 
     // Вносим в стор инфу из квери параметра о диапазоне треков (нужно для того, чтобы если ты выбрал диапазон треков, перезапустил страницу и все сохранилось)
     this.$store.commit('setMinTracksOfReleases', this.$route.query.min)
@@ -158,30 +154,33 @@ export default {
     // Следит за изменениями роутера
     async '$route' (to) {
 
-      // Ставит в $store теги из urla (нужно для того, чтобы когда мы в ручную меняем url 
-      // либо жмем по тегам в карточках и мы дополняем эти теги в store)
-      this.$store.commit('setSelectTagsForReleases', to.query.tag)
+      //  Сначала чистим из стора старые параметры 
+      this.$store.commit('clearSortingReleases')
+      this.$store.commit('clearSelectTagsForReleases')
 
-      this.$store.commit('setMinTracksOfReleases', this.$route.query.min)
-      this.$store.commit('setMaxTracksOfReleases', this.$route.query.max)
+
+      // Ставит в $store теги из urla (нужно для того, чтобы когда мы в ручную меняем url 
+      // либо жмем по тегам в карточках - мы дополняем эти теги в store)
+      this.$store.commit('setSelectTagsForReleases', to.query.tag)
+      this.$store.commit('setSortingReleases', to.query.sorting)
+
+      this.$store.commit('setMinTracksOfReleases', to.query.min)
+      this.$store.commit('setMaxTracksOfReleases', to.query.max)
 
       // Устанавливаем в стор пермалинк автора если он есть
-      this.$store.commit('setAuthorPermalinkForReleases', this.$route.query.author)
+      this.$store.commit('setAuthorPermalinkForReleases', to.query.author)
 
       // И очищаем старого автора из стора (его локальное имя) если в routore нету автора
       // Это нужно, чтобы автор на время не пропадал, если мы шелкаем фильтры 
-      if (!this.$route.query.author) {
-        this.$store.commit('clearLocalNameAuthor')
-      }
+      if (!to.query.author) this.$store.commit('clearLocalNameAuthor')
       
-
       // До запроса включаем лоадер
       this.loading = true
 
-      // И как только роутер меняется делает запрос на бэк с новыми фильтрами, которые у нас храняться в стейте
+      // И как только роутер меняется делаем запрос на бэк с новыми фильтрами, которые у нас храняться в стейте
       await this.$store.dispatch('getReleases')
 
-      // Как запрос прошел - выключаем
+      // Как запрос прошел - выключаем лоадер
       this.loading = false
     }
   },

@@ -112,16 +112,13 @@ export default {
       case 'artist' :
         this.$store.commit('setSortingVideo', 'artist')
         break
-      // Если там что то другое, иили вообще нет типа сортировки, то по умолчанию ставим как new
-      default:
-        this.$store.commit('setSortingVideo', 'new')
-        break
+      // По-умолчанию в сторе у нас стоит сортировка "new"
+
     }
 
     // Если есть артист в query параметрах, то этого личная дискография и мы загружаем все релизы только этого автора
-    if (this.$route.query.author) {
-      this.$store.commit('setAuthorPermalinkForVideos', this.$route.query.author)
-    }
+    if (this.$route.query.author) this.$store.commit('setAuthorPermalinkForVideos', this.$route.query.author)
+    
 
     // Устанавлием в store теги релизов которые выбраны
     this.$store.commit('setSelectTagsForVideo', this.$route.query.tag)
@@ -143,21 +140,22 @@ export default {
     // Следит за изменениями роутера
     async '$route' (to) {
       
+      // Перед сменой роутера, чистим стор от хлама на всякий случай
+      this.$store.commit('clearSortingVideo')
+      this.$store.commit('clearSelectTagsForVideo')
 
       // Ставит в $store теги из urla (нужно для того, чтобы когда мы в ручную меняем url 
       // либо жмем по тегам в карточках и мы дополняем эти теги в store)
       this.$store.commit('setSelectTagsForVideo', to.query.tag)
+      this.$store.commit('setSortingVideo', to.query.sorting)
 
       // Устанавливаем в стор пермалинк автора если он есть
-      this.$store.commit('setAuthorPermalinkForVideos', this.$route.query.author)
+      this.$store.commit('setAuthorPermalinkForVideos', to.query.author)
 
       // И очищаем старого автора из стора (его локальное имя) если в routore нету автора
       // Это нужно, чтобы автор на время не пропадал, если мы шелкаем фильтры 
-      if (!this.$route.query.author) {
-        this.$store.commit('clearLocalNameAuthor')
-      }
+      if (!to.query.author) this.$store.commit('clearLocalNameAuthor')
       
-
       // До запроса включаем лоадер
       this.loading = true
 
