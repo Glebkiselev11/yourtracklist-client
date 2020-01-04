@@ -157,17 +157,17 @@ export default {
     // Перекидывает на страницу автора по клику на найденого автора
     goToAuthorPage(permalink) {
       this.$router.push(`/author/${permalink}`)
-
       // Закрывает окно поиска
       this.$emit('close')
     },
 
-    // Переходит в архив найденых релизов
     goToReleasesArchive() {
-      console.log('release')
+      this.$router.push({ path: '/releases-archive/' , query: { search: this.searchQuery }})
+      // Закрывает окно поиска
+      this.$emit('close')
     },
 
-    // в архив найденых видео
+    // TODO: в архив найденых видео
     goToVideosArchive() {
       console.log('videos')
 

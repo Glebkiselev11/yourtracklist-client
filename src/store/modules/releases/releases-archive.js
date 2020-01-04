@@ -4,7 +4,7 @@ import axios from 'axios'
 export default {
   actions: {
     // Получает 9 релизов с базы
-    async getReleases({commit, getters}) {
+    async getReleases({commit, getters, dispatch}) {
 
       // Вытаскиваем из стора метод сортировки релиза
       // Теги и количество отображаемых на одной странице записей
@@ -40,9 +40,13 @@ export default {
           searchQueryForReleases,
         })
 
+        // Вносим полученные релизы (если есть поисковой запрос, то предварительно обрамляем названия тегами)
+        if (searchQueryForReleases) {
+          dispatch('letterMark', { dataArray : releases, searchQuery: searchQueryForReleases, commitName : 'setReleases'})
+        } else {
+          commit('setReleases', releases)
+        }
 
-        // Вносим релизы
-        commit('setReleases', releases)
         // И количество найденых релизов
         commit('setCount', count)
         // И количество страниц пагинации
