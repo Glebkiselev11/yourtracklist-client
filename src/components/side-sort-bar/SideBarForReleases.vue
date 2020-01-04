@@ -46,9 +46,10 @@ export default {
     ...mapGetters([
       'minTracksOfReleases', // Минимальное количество треков в релизах
       'maxTracksOfReleases', // Максимальное количество треков в релизах
+      'rangeNumberOfTracks', // Диапазон доступного кол-ва треков в релизах
+
       'sortingReleases', // Тип сортировки релизов
       'selectTagsForReleases', // Выбранные теги для поиска релизов (где стоят галки)
-      'rangeNumberOfTracks', // Диапазон доступного кол-ва треков в релизах
       'releasesTags', // Доступные теги релизов
     ])
   },
@@ -71,15 +72,16 @@ export default {
       this.$store.commit('setSelectTagsForReleases', tag)
     },
 
+
     // Прослушиваем с дочернего компонента максимальное кол-во треков в релизах
     setMaxTracks(max) {
-      this.$router.push({ query: { ...this.$route.query, max, min: this.$store.getters.minTracksOfReleases }})
+      this.$router.push({ query: { ...this.$route.query, max, min: this.minTracksOfReleases }})
       this.$store.commit('setMaxTracksOfReleases', max)
     },
 
     // Прослушиваем с дочернего компонента минимальное кол-во треков в релизах
     setMinTracks(min) {
-      this.$router.push({ query: { ...this.$route.query, min, max: this.$store.getters.maxTracksOfReleases }})
+      this.$router.push({ query: { ...this.$route.query, min, max: this.maxTracksOfReleases }})
       this.$store.commit('setMinTracksOfReleases', min)
     }
 

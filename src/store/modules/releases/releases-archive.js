@@ -16,6 +16,7 @@ export default {
         selectTagsForReleases: tags,
         minTracksOfReleases, 
         maxTracksOfReleases,
+        searchQueryForReleases,
       } = getters
 
       try {
@@ -36,6 +37,7 @@ export default {
           authorPermalink, 
           minTracksOfReleases, 
           maxTracksOfReleases,
+          searchQueryForReleases,
         })
 
 
@@ -113,14 +115,14 @@ export default {
     },
 
     setMinTracksOfReleases(s, min) {
-      s.minTracksOfReleases = min
+      s.minTracksOfReleases = min || s.minTracksOfReleases
     },
     clearMinTracksOfReleases(s) {
       s.minTracksOfReleases = null
     },
 
     setMaxTracksOfReleases(s, max) {
-      s.maxTracksOfReleases = max
+      s.maxTracksOfReleases = max || s.maxTracksOfReleases
     },
     clearMaxTracksOfReleases(s) {
       s.maxTracksOfReleases = null

@@ -50,11 +50,11 @@ export default {
   computed: {
     // Минимальное возможное кол-во треков, мы этот показатель вытаскиваем из rangeNumberOfTracks
     minPossible() {
-      return this.rangeNumberOfTracks ? this.rangeNumberOfTracks[0] : 2
+      return this.rangeNumberOfTracks ? this.rangeNumberOfTracks[0] : this.minTracks
     },
     // Максимально возмоное кол-во треков
     maxPossible() {
-      return this.rangeNumberOfTracks ? this.rangeNumberOfTracks[this.rangeNumberOfTracks.length - 1] : 4
+      return this.rangeNumberOfTracks ? this.rangeNumberOfTracks[this.rangeNumberOfTracks.length - 1] : this.maxTracks
     }
 
   },

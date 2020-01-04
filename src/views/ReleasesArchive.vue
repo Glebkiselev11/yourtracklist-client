@@ -134,8 +134,8 @@ export default {
     // Устанавливаем в стор номер текущей страницы из роутера
     this.$store.commit('setPageNum', +this.$route.query.page || 1)
 
-    // ? Устанавливаем поисковой запрос (если он есть)
-    this.$store.commit('setSearchQueryForReleases', this.$route.query.searh)
+    // ! Устанавливаем поисковой запрос (если он есть)
+    this.$store.commit('setSearchQueryForReleases', this.$route.query.search)
 
     // Вносим в стор инфу из квери параметра о диапазоне треков (нужно для того, чтобы если ты выбрал диапазон треков, перезапустил страницу и все сохранилось)
     this.$store.commit('setMinTracksOfReleases', this.$route.query.min)
@@ -163,6 +163,9 @@ export default {
       // либо жмем по тегам в карточках - мы дополняем эти теги в store)
       this.$store.commit('setSelectTagsForReleases', to.query.tag)
       this.$store.commit('setSortingReleases', to.query.sorting)
+
+      // ! Устанавливаем поисковой запрос (если он есть)
+      this.$store.commit('setSearchQueryForReleases', to.query.search)
 
       this.$store.commit('setMinTracksOfReleases', to.query.min)
       this.$store.commit('setMaxTracksOfReleases', to.query.max)
