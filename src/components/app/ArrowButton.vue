@@ -55,7 +55,6 @@ export default {
 
   .title {
     color: var(--primary-background-color);
-    z-index: 3;
   }
   
   .arrow {

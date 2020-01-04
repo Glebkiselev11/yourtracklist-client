@@ -2,13 +2,10 @@
   <!-- Страница релизов, где есть сайд бар с фильтрам и основное поле куда мы выводим релизы -->
   <div class="wrap">
 
-    <!-- Отображаем если нет автора в квери параметрах и не загружены данные о авторе -->
-    <h1 v-if="!this.$route.query.author && !this.localNameAuthor" class="archive-title">Релизы</h1>
-    
-    <!-- Отображаем этот блок, если это релизы определенного автора -->
-    <div v-else class="archive-title-wrap">
+    <!-- Верхний блок с заголовком и кнопкой по которой можно перейти к видео, если они есть у этого автора -->
+    <div class="archive-title-wrap">
       <!-- Локальное название артиста -->
-      <h1 class="archive-title">Релизы <b>{{this.localNameAuthor}}</b></h1>
+      <h1 class="archive-title" v-html="titleGenerator"></h1>
 
       <!-- Кнопка которая переходит к видео записям артиста -->
       <ArrowButton 
@@ -34,7 +31,7 @@
       <div v-else class="window-wrap">
      
         <!-- Количество найденых релизов -->
-        <span class="number-of-releases" v-if="count > 0">Найден{{count == 1 ? '': 'o'}} {{count}} {{countText}}</span>
+        <span class="number-of-releases" v-if="count > 0">{{countText}}</span>
 
         <!-- Сюда итерируем сами релизы / миксы -->
         <div class="archive-wrap">
@@ -89,17 +86,31 @@ export default {
       'localNameAuthor', // Локальное название автора, для которого мы ищем релизы
       'pageSize', // Размер одной страницы (для пагинации)
       'thereIsVideos', // Информация о том, есть ли видео (есть ли мы запрашивали релизы для конкретного автора) у автора
+      'searchQueryForReleases', // Поисковой запрос для релизов, который мы получаем из квери параметров
     ]),
 
     // Вычисляет текст записи исходя из количества релизов
     countText() {
       if (this.count == 1) {
-        return 'релиз'
-      } else if (this.count <= 4) {
-        return 'релиза'
-      } else {
-        return 'релизов'
-      }
+        return `Найден 1 релиз`
+      } 
+      if (this.count <= 4) {
+        return `Найдено ${this.count} релиза`
+      }      
+      return `Найдено ${this.count} релизов`
+    },
+
+    // Генерирует валидный заголовок в зависимости от того на странице релизов автора мы , или на страницы найденых релизов 
+    titleGenerator() {
+      if (this.$route.query.author && this.localNameAuthor) {
+        return `Релизы <b>${this.localNameAuthor}</b>`
+      } 
+  
+      if (this.searchQueryForReleases) {
+        return `Релизы по запросу <mark>${this.searchQueryForReleases}</mark>`
+      } 
+        
+      return `Релизы`
     }
   },
   methods: {
@@ -134,7 +145,7 @@ export default {
     // Устанавливаем в стор номер текущей страницы из роутера
     this.$store.commit('setPageNum', +this.$route.query.page || 1)
 
-    // ! Устанавливаем поисковой запрос (если он есть)
+    // Устанавливаем поисковой запрос (если он есть)
     this.$store.commit('setSearchQueryForReleases', this.$route.query.search)
 
     // Вносим в стор инфу из квери параметра о диапазоне треков (нужно для того, чтобы если ты выбрал диапазон треков, перезапустил страницу и все сохранилось)
@@ -164,7 +175,7 @@ export default {
       this.$store.commit('setSelectTagsForReleases', to.query.tag)
       this.$store.commit('setSortingReleases', to.query.sorting)
 
-      // ! Устанавливаем поисковой запрос (если он есть)
+      // Устанавливаем поисковой запрос (если он есть)
       this.$store.commit('setSearchQueryForReleases', to.query.search)
 
       this.$store.commit('setMinTracksOfReleases', to.query.min)

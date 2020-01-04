@@ -1,14 +1,11 @@
 <template>
   <!-- Страница Архива видео записей -->
   <div class="wrap">
-
-    <!-- Отображаем если нет автора в квери параметрах и не загружены данные о авторе -->
-    <h1 v-if="!this.$route.query.author && !this.localNameAuthor" class="archive-title">Видео</h1>
-    
-    <!-- Отображаем этот блок, если это релизы определенного автора -->
-    <div v-else class="archive-title-wrap">
+ 
+    <!-- Верхний блок с заголовком и кнопкой по которой можно перейти к релизам, если они есть у этого автора -->
+    <div class="archive-title-wrap">
       <!-- Локальное название артиста -->
-      <h1 class="archive-title">Видео <b>{{this.localNameAuthor}}</b></h1>
+      <h1 class="archive-title" v-html="titleGenerator"></h1>
 
       <!-- Кнопка которая переходит к релизам артиста (если они у него есть) -->
       <ArrowButton 
@@ -91,6 +88,18 @@ export default {
       'localNameAuthor', // Локальное название автора, для которого мы ищем видео
       'thereIsReleases', // Информация о том, есть ли релизы (есть ли мы запрашивали видео для конкретного автора) у автора
     ]),
+
+    titleGenerator() {
+      if (this.$route.query.author && this.localNameAuthor) {
+        return `Видео <b>${this.localNameAuthor}</b>`
+      } 
+  
+      // if (this.searchQueryForReleases) {
+      //   return `Видео по запросу <mark>${this.searchQueryForReleases}</mark>`
+      // } 
+        
+      return `Видео`
+    }
 
   },
   methods: {

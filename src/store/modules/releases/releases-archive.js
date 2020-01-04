@@ -47,12 +47,9 @@ export default {
           commit('setReleases', releases)
         }
 
-        // И количество найденых релизов
-        commit('setCount', count)
-        // И количество страниц пагинации
-        commit('setPageCount', pageCount)
-        // Устанавливаем возможные теги для релизов
-        commit('setReleasesTags', releasesTags)
+        commit('setCount', count) // И количество найденых релизов
+        commit('setPageCount', pageCount) // И количество страниц пагинации
+        commit('setReleasesTags', releasesTags) // Устанавливаем возможные теги для релизов
         
         // Вносим минимальное и максимальное кол-во треков в выбранных релизах
         commit('setMinTracksOfReleases', minTracks)
@@ -119,14 +116,14 @@ export default {
     },
 
     setMinTracksOfReleases(s, min) {
-      s.minTracksOfReleases = min || s.minTracksOfReleases
+      s.minTracksOfReleases = min
     },
     clearMinTracksOfReleases(s) {
       s.minTracksOfReleases = null
     },
 
     setMaxTracksOfReleases(s, max) {
-      s.maxTracksOfReleases = max || s.maxTracksOfReleases
+      s.maxTracksOfReleases = max
     },
     clearMaxTracksOfReleases(s) {
       s.maxTracksOfReleases = null
