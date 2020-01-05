@@ -139,21 +139,18 @@ export default {
     // Если есть артист в query параметрах, то этого личная дискография и мы загружаем все релизы только этого автора
     if (this.$route.query.author) this.$store.commit('setAuthorPermalinkForReleases', this.$route.query.author)
     
-    // Устанавлием в store теги релизов которые выбраны
-    this.$store.commit('setSelectTagsForReleases', this.$route.query.tag)
+    // Устанавлием в store теги релизов которые выбраны (если они есть)
+    if (this.$route.query.tag) this.$store.commit('setSelectTagsForReleases', this.$route.query.tag)
 
     // Устанавливаем в стор номер текущей страницы из роутера
     this.$store.commit('setPageNum', +this.$route.query.page || 1)
 
     // Устанавливаем поисковой запрос (если он есть)
-    this.$store.commit('setSearchQueryForReleases', this.$route.query.search)
+    if (this.$route.query.search) this.$store.commit('setSearchQueryForReleases', this.$route.query.search)
 
     // Вносим в стор инфу из квери параметра о диапазоне треков (нужно для того, чтобы если ты выбрал диапазон треков, перезапустил страницу и все сохранилось)
     this.$store.commit('setMinTracksOfReleases', this.$route.query.min)
     this.$store.commit('setMaxTracksOfReleases', this.$route.query.max)
-
-    // Очищаем локальное имя автора, чтобы если мы загрузили нового, старое название не мелькнуло в заголовке
-    this.$store.commit('clearLocalNameAuthor')
 
     // Подгружаем с бэкенда на основе фильтров нужные релизы
     await this.$store.dispatch('getReleases')
@@ -164,36 +161,38 @@ export default {
   watch: {
     // Следит за изменениями роутера
     async '$route' (to) {
-
       //  Сначала чистим из стора старые параметры 
       this.$store.commit('clearSortingReleases')
       this.$store.commit('clearSelectTagsForReleases')
-
 
       // Ставит в $store теги из urla (нужно для того, чтобы когда мы в ручную меняем url 
       // либо жмем по тегам в карточках - мы дополняем эти теги в store)
       this.$store.commit('setSelectTagsForReleases', to.query.tag)
       this.$store.commit('setSortingReleases', to.query.sorting)
-
-      // Устанавливаем поисковой запрос (если он есть)
-      this.$store.commit('setSearchQueryForReleases', to.query.search)
-
       this.$store.commit('setMinTracksOfReleases', to.query.min)
       this.$store.commit('setMaxTracksOfReleases', to.query.max)
 
-      // Устанавливаем в стор пермалинк автора если он есть
-      this.$store.commit('setAuthorPermalinkForReleases', to.query.author)
+      // Устанавливаем поисковой запрос (если он есть)
+      if (to.query.search) {
+        this.$store.commit('setSearchQueryForReleases', to.query.search)
+      } else {
+        // А если нету, то подчищаем за ним в сторе
+        this.$store.commit('clearSearchQueryForReleases')
+      }
 
-      // И очищаем старого автора из стора (его локальное имя) если в routore нету автора
-      // Это нужно, чтобы автор на время не пропадал, если мы шелкаем фильтры 
-      if (!to.query.author) this.$store.commit('clearLocalNameAuthor')
-      
+      // Устанавливаем в стор пермалинк автора если он есть
+      if (to.query.author) {
+        this.$store.commit('setAuthorPermalinkForReleases', to.query.author)
+      } else {
+        // А если в роуторе нету квери параметра, то чистим инфу о авторе из стора
+        this.$store.commit('clearLocalNameAuthor')
+        this.$store.commit('clearAuthorPermalinkForReleases')
+      }
+
       // До запроса включаем лоадер
       this.loading = true
-
       // И как только роутер меняется делаем запрос на бэк с новыми фильтрами, которые у нас храняться в стейте
       await this.$store.dispatch('getReleases')
-
       // Как запрос прошел - выключаем лоадер
       this.loading = false
     }
@@ -202,10 +201,12 @@ export default {
   beforeDestroy() {
     this.$store.commit('clearSortingReleases')
     this.$store.commit('clearAuthorPermalinkForReleases')
+    this.$store.commit('clearLocalNameAuthor')
     this.$store.commit('clearSelectTagsForReleases')
     this.$store.commit('clearReleases')
     this.$store.commit('clearMinTracksOfReleases')
     this.$store.commit('clearMaxTracksOfReleases')
+    this.$store.commit('clearSearchQueryForReleases')
   },
 
 }

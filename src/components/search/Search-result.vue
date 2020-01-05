@@ -161,15 +161,18 @@ export default {
       this.$emit('close')
     },
 
+    // В архив найденых релизов
     goToReleasesArchive() {
       this.$router.push({ path: '/releases-archive/' , query: { search: this.searchQuery }})
       // Закрывает окно поиска
       this.$emit('close')
     },
 
-    // TODO: в архив найденых видео
+    // В архив найденых видео
     goToVideosArchive() {
-      console.log('videos')
+      this.$router.push({ path: '/video-archive/' , query: { search: this.searchQuery }})
+      // Закрывает окно поиска
+      this.$emit('close')
 
     }
   },

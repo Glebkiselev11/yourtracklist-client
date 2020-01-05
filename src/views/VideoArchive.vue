@@ -87,6 +87,7 @@ export default {
       'pageSize', // Размер одной страницы (для пагинации)
       'localNameAuthor', // Локальное название автора, для которого мы ищем видео
       'thereIsReleases', // Информация о том, есть ли релизы (есть ли мы запрашивали видео для конкретного автора) у автора
+      'searchQueryForVideo', // Поисковой запрос для видео, который мы получаем из квери параметров
     ]),
 
     titleGenerator() {
@@ -128,15 +129,14 @@ export default {
     // Если есть артист в query параметрах, то этого личная дискография и мы загружаем все релизы только этого автора
     if (this.$route.query.author) this.$store.commit('setAuthorPermalinkForVideos', this.$route.query.author)
     
-
     // Устанавлием в store теги релизов которые выбраны
-    this.$store.commit('setSelectTagsForVideo', this.$route.query.tag)
+    if (this.$route.query.tag) this.$store.commit('setSelectTagsForVideo', this.$route.query.tag)
 
     // Устанавливаем в стор номер текущей страницы из роутера
     this.$store.commit('setPageNum', +this.$route.query.page || 1)
 
-    // Очищаем локальное имя автора, чтобы если мы загрузили нового, старое название не мелькнуло в заголовке
-    this.$store.commit('clearLocalNameAuthor')
+    // Устанавливаем поисковой запрос (если он есть)
+    if (this.$route.query.search) this.$store.commit('setSearchQueryForVideo', this.$route.query.search)
 
     // Подгружаем с бэкенда на основе фильтров нужные видео
     await this.$store.dispatch('getVideo')
@@ -155,12 +155,15 @@ export default {
 
       // Ставит в $store теги из urla (нужно для того, чтобы когда мы в ручную меняем url 
       // либо жмем по тегам в карточках и мы дополняем эти теги в store)
-      this.$store.commit('setSelectTagsForVideo', to.query.tag)
-      this.$store.commit('setSortingVideo', to.query.sorting)
+      if (to.query.tag) this.$store.commit('setSelectTagsForVideo', to.query.tag)
+      if (to.query.sorting) this.$store.commit('setSortingVideo', to.query.sorting)
 
+      // Устанавливаем поисковой запрос (если он есть)
+      if (to.query.search) this.$store.commit('setSearchQueryForVideo', to.query.search)
+      
       // Устанавливаем в стор пермалинк автора если он есть
-      this.$store.commit('setAuthorPermalinkForVideos', to.query.author)
-
+      if (to.query.author) this.$store.commit('setAuthorPermalinkForVideos', to.query.author)
+      
       // И очищаем старого автора из стора (его локальное имя) если в routore нету автора
       // Это нужно, чтобы автор на время не пропадал, если мы шелкаем фильтры 
       if (!to.query.author) this.$store.commit('clearLocalNameAuthor')
@@ -181,6 +184,7 @@ export default {
     this.$store.commit('clearAuthorPermalinkForVideos')
     this.$store.commit('clearSelectTagsForVideo')
     this.$store.commit('clearVideos')
+    this.$store.commit('clearLocalNameAuthor')
   },
 }
 </script>

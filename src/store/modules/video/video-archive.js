@@ -8,10 +8,31 @@ export default {
 
       // Вытаскиваем из стора метод сортировки видео
       // Теги и количество отображаемых на одной странице записей
-      const {pageSize, sortingVideo, pageNum , selectTagsForVideo: tags, authorPermalinkForVideos: authorPermalink} = getters
+      const { 
+        pageSize, 
+        sortingVideo, 
+        pageNum, 
+        selectTagsForVideo: tags, 
+        authorPermalinkForVideos: authorPermalink,
+        searchQueryForVideo,
+      
+      } = getters
 
       try {
-        const {data : {videos, count, pageCount, tags : videosTags, thereIs}} = await axios.post('/api/get-video', {sortingVideo, tags, pageSize, pageNum, authorPermalink})
+        const {data : { 
+          videos, 
+          count, 
+          pageCount, 
+          tags : videosTags, 
+          thereIs,
+        }} = await axios.post('/api/get-video', { 
+          sortingVideo, 
+          tags, 
+          pageSize, 
+          pageNum, 
+          authorPermalink,
+          searchQueryForVideo,
+        })
 
         console.log(videos)
         commit('setVideos', videos)
@@ -81,7 +102,14 @@ export default {
 
     clearThereIsReleases(s) {
       s.thereIsReleases = false
-    }
+    },
+
+    setSearchQueryForVideo(s, search) {
+      s.searchQueryForVideo = search
+    },
+    clearSearchQueryForVideo(s) {
+      s.searchQueryForVideo = null
+    },
 
   },
   state: {
@@ -91,6 +119,7 @@ export default {
     videos: null, // видео записи одной страницы пагинации
     authorPermalinkForVideos: null, // Пермалинк автора, для которого мы ищем видео
     thereIsReleases: false, // Информация, есть ли релизы для автора, для которого мы ищем видео
+    searchQueryForVideo: null, // Поисковой запрос для видео, который мы получаем из квери параметров
   },
   getters: {
     videosTags: s => s.videosTags,
@@ -99,5 +128,6 @@ export default {
     videos: s => s.videos,
     authorPermalinkForVideos: s => s.authorPermalinkForVideos,
     thereIsReleases: s => s.thereIsReleases,
+    searchQueryForVideo: s => s.searchQueryForVideo,
   },
 }
