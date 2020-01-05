@@ -4,7 +4,7 @@ import axios from 'axios'
 export default {
   actions: {
     // Получает 9 видео с базы
-    async getVideo({commit, getters}) {
+    async getVideo({commit, getters, dispatch}) {
 
       // Вытаскиваем из стора метод сортировки видео
       // Теги и количество отображаемых на одной странице записей
@@ -15,7 +15,6 @@ export default {
         selectTagsForVideo: tags, 
         authorPermalinkForVideos: authorPermalink,
         searchQueryForVideo,
-      
       } = getters
 
       try {
@@ -33,12 +32,18 @@ export default {
           authorPermalink,
           searchQueryForVideo,
         })
-
-        console.log(videos)
-        commit('setVideos', videos)
+        
         commit('setCount', count)
         commit('setPageCount', pageCount)
         commit('setVideosTags', videosTags)
+        
+        // Вносим полученные видео (если есть поисковой запрос, то предварительно обрамляем названия тегами)
+        if (searchQueryForVideo) {
+          dispatch('letterMark', { dataArray : videos, searchQuery: searchQueryForVideo, commitName : 'setVideos'})
+        } else {
+          commit('setVideos', videos)
+        }
+
 
         // И если мы получали видео для определнного автора, то ставим в стор его локальное имя
         if (authorPermalink) {

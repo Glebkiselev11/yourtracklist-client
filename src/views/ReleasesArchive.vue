@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import SideBarForReleases from '@/components/side-sort-bar/SideBarForReleases.vue'
 import ReleaseItem from '@/components/app/music/ReleasePrevCardItem.vue'
 import paginationMixin from '@/mixins/pagination.mixin.js'
@@ -114,46 +114,68 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'setAuthorPermalinkForReleases', // Устанавливает в стор пермалинк автора, если мы ищем релизы для автора
+      'clearAuthorPermalinkForReleases', // Очищает пермалинк для автора
+      'setSortingReleases', // Устанавливает тип сортировки для релизов
+      'clearSortingReleases', // Очищает тип сортировки релизов из стора
+      'setSelectTagsForReleases', // Устанавливает выбранные теги для релизов
+      'clearSelectTagsForReleases',
+      'setPageNum', // Устанавливает номер страницы пагинации
+      'setSearchQueryForReleases', // Устанавливает поисковой запрос для релизов
+      'clearSearchQueryForReleases', // Очищает поисковой запрос для релизов из стора
+      'setMinTracksOfReleases', // Уст мин значение треков
+      'clearMinTracksOfReleases', // Очищает мин кол-во треков
+      'setMaxTracksOfReleases', // Уст макс значение треков
+      'clearMaxTracksOfReleases', // Очищает макс кол-во треков
+      'clearLocalNameAuthor', // Очищает локальное имя для автора
+      'clearReleases', // Очищает загруженные релизы
+    ]),
+    ...mapActions([
+      'getReleases', // Для получения релизов
+    ]),
+
     // Отправляет к видео записям автора
     goToVideosAuthor() {
       this.$router.push({ path: '/video-archive', query: {author: this.$route.query.author}})
     }
   },
+
   async created() {
 
     // При открытие в первый раз сортировки, мы смотрим что у нас есть в роуторе
     // Нужно чтобы селектор, где мы выбираем тип сортировки - синхронизировался с адресной строкой
     switch(this.$route.query.sorting) {
       case 'old' : 
-        this.$store.commit('setSortingReleases', 'old')
+        this.setSortingReleases('old')
         break
       case 'random' :
-        this.$store.commit('setSortingReleases', 'random')
+        this.setSortingReleases('random')
         break
       case 'artist' :
-        this.$store.commit('setSortingReleases', 'artist')
+        this.setSortingReleases('artist')
         break
       // По-умолчанию в сторе у нас стоит сортировка "new"
     }
 
     // Если есть артист в query параметрах, то этого личная дискография и мы загружаем все релизы только этого автора
-    if (this.$route.query.author) this.$store.commit('setAuthorPermalinkForReleases', this.$route.query.author)
+    if (this.$route.query.author) this.setAuthorPermalinkForReleases(this.$route.query.author)
     
     // Устанавлием в store теги релизов которые выбраны (если они есть)
-    if (this.$route.query.tag) this.$store.commit('setSelectTagsForReleases', this.$route.query.tag)
+    if (this.$route.query.tag) this.setSelectTagsForReleases(this.$route.query.tag)
 
     // Устанавливаем в стор номер текущей страницы из роутера
-    this.$store.commit('setPageNum', +this.$route.query.page || 1)
+    this.setPageNum(+this.$route.query.page || 1)
 
     // Устанавливаем поисковой запрос (если он есть)
-    if (this.$route.query.search) this.$store.commit('setSearchQueryForReleases', this.$route.query.search)
+    if (this.$route.query.search) this.setSearchQueryForReleases(this.$route.query.search)
 
     // Вносим в стор инфу из квери параметра о диапазоне треков (нужно для того, чтобы если ты выбрал диапазон треков, перезапустил страницу и все сохранилось)
-    this.$store.commit('setMinTracksOfReleases', this.$route.query.min)
-    this.$store.commit('setMaxTracksOfReleases', this.$route.query.max)
+    this.setMinTracksOfReleases(this.$route.query.min)
+    this.setMaxTracksOfReleases(this.$route.query.max)
 
     // Подгружаем с бэкенда на основе фильтров нужные релизы
-    await this.$store.dispatch('getReleases')
+    await this.getReleases()
     
     // Как только загрузили все, мы выключаем лоадер
     this.loading = false
@@ -162,51 +184,51 @@ export default {
     // Следит за изменениями роутера
     async '$route' (to) {
       //  Сначала чистим из стора старые параметры 
-      this.$store.commit('clearSortingReleases')
-      this.$store.commit('clearSelectTagsForReleases')
+      this.clearSortingReleases()
+      this.clearSelectTagsForReleases()
 
       // Ставит в $store теги из urla (нужно для того, чтобы когда мы в ручную меняем url 
       // либо жмем по тегам в карточках - мы дополняем эти теги в store)
-      this.$store.commit('setSelectTagsForReleases', to.query.tag)
-      this.$store.commit('setSortingReleases', to.query.sorting)
-      this.$store.commit('setMinTracksOfReleases', to.query.min)
-      this.$store.commit('setMaxTracksOfReleases', to.query.max)
+      this.setSelectTagsForReleases(to.query.tag)
+      this.setSortingReleases(to.query.sorting)
+      this.setMinTracksOfReleases(to.query.min)
+      this.setMaxTracksOfReleases(to.query.max)
 
       // Устанавливаем поисковой запрос (если он есть)
       if (to.query.search) {
-        this.$store.commit('setSearchQueryForReleases', to.query.search)
+        this.setSearchQueryForReleases(to.query.search)
       } else {
         // А если нету, то подчищаем за ним в сторе
-        this.$store.commit('clearSearchQueryForReleases')
+        this.clearSearchQueryForReleases()
       }
 
       // Устанавливаем в стор пермалинк автора если он есть
       if (to.query.author) {
-        this.$store.commit('setAuthorPermalinkForReleases', to.query.author)
+        this.setAuthorPermalinkForReleases(to.query.author)
       } else {
         // А если в роуторе нету квери параметра, то чистим инфу о авторе из стора
-        this.$store.commit('clearLocalNameAuthor')
-        this.$store.commit('clearAuthorPermalinkForReleases')
+        this.clearLocalNameAuthor()
+        this.clearAuthorPermalinkForReleases()
       }
 
       // До запроса включаем лоадер
       this.loading = true
       // И как только роутер меняется делаем запрос на бэк с новыми фильтрами, которые у нас храняться в стейте
-      await this.$store.dispatch('getReleases')
+      await this.getReleases()
       // Как запрос прошел - выключаем лоадер
       this.loading = false
     }
   },
   // Как только мы закрываем этот раздел, мы подчищаем страницу от тегов сортировки
   beforeDestroy() {
-    this.$store.commit('clearSortingReleases')
-    this.$store.commit('clearAuthorPermalinkForReleases')
-    this.$store.commit('clearLocalNameAuthor')
-    this.$store.commit('clearSelectTagsForReleases')
-    this.$store.commit('clearReleases')
-    this.$store.commit('clearMinTracksOfReleases')
-    this.$store.commit('clearMaxTracksOfReleases')
-    this.$store.commit('clearSearchQueryForReleases')
+    this.clearSortingReleases()
+    this.clearAuthorPermalinkForReleases()
+    this.clearLocalNameAuthor()
+    this.clearSelectTagsForReleases()
+    this.clearReleases()
+    this.clearMinTracksOfReleases()
+    this.clearMaxTracksOfReleases()
+    this.clearSearchQueryForReleases()
   },
 
 }

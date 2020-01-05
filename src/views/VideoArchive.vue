@@ -65,7 +65,7 @@
 </template>
 
 <script> 
-import {mapGetters} from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import SideBarForVideo from '@/components/side-sort-bar/SideBarForVideo.vue'
 import paginationMixin from '@/mixins/pagination.mixin.js'
 import VideoItem from '@/components/app/video/VideoPrevCardItem.vue'
@@ -90,20 +90,39 @@ export default {
       'searchQueryForVideo', // Поисковой запрос для видео, который мы получаем из квери параметров
     ]),
 
+    // Генерирует валидный заголовок в зависимости от того на странице видео автора мы , или на страницы найденых видео 
     titleGenerator() {
       if (this.$route.query.author && this.localNameAuthor) {
         return `Видео <b>${this.localNameAuthor}</b>`
       } 
   
-      // if (this.searchQueryForReleases) {
-      //   return `Видео по запросу <mark>${this.searchQueryForReleases}</mark>`
-      // } 
+      if (this.searchQueryForVideo) {
+        return `Видео по запросу <mark>${this.searchQueryForVideo}</mark>`
+      } 
         
       return `Видео`
     }
 
   },
   methods: {
+    ...mapMutations([
+      'setSortingVideo', // Устанавливает сортировку для видео
+      'clearSortingVideo', // Очищает сортировку
+      'setAuthorPermalinkForVideos', // Устанавливает пермалинк для автора в стор (если он есть в квери параметрах)
+      'clearAuthorPermalinkForVideos', // Очищает пермалинк
+      'setSelectTagsForVideo', // Устанавливает выбранные теги в стор
+      'clearSelectTagsForVideo', // Очищает теги
+      'setPageNum', // Устанавливает номер страницы (пагинация)
+      'setSearchQueryForVideo', // Устанавливает поисковой запрос для видео
+      'clearSearchQueryForVideo', // Очищает поисковой запрос для видео
+      'clearLocalNameAuthor', // Очищает локальное имя автора
+      'clearVideos', // Очищает видео
+
+    ]),
+    ...mapActions([
+      'getVideo', // Получает видео
+    ]),
+
     // Метод для стрелки в самом верху, который перекидывает к релизам автора
     goToReleasesAuthor() {
       this.$router.push({ path: '/releases-archive', query: {author: this.$route.query.author}})
@@ -114,32 +133,33 @@ export default {
     // Нужно чтобы селектор, где мы выбираем тип сортировки - синхронизировался с адресной строкой
     switch(this.$route.query.sorting) {
       case 'old' : 
-        this.$store.commit('setSortingVideo', 'old')
+        this.setSortingVideo('old')
         break
       case 'random' :
-        this.$store.commit('setSortingVideo', 'random')
+        this.setSortingVideo('random')
         break
       case 'artist' :
-        this.$store.commit('setSortingVideo', 'artist')
+        this.setSortingVideo('artist')
         break
       // По-умолчанию в сторе у нас стоит сортировка "new"
 
     }
 
     // Если есть артист в query параметрах, то этого личная дискография и мы загружаем все релизы только этого автора
-    if (this.$route.query.author) this.$store.commit('setAuthorPermalinkForVideos', this.$route.query.author)
+    if (this.$route.query.author) this.setAuthorPermalinkForVideos(this.$route.query.author)
+ 
     
     // Устанавлием в store теги релизов которые выбраны
-    if (this.$route.query.tag) this.$store.commit('setSelectTagsForVideo', this.$route.query.tag)
+    if (this.$route.query.tag) this.setSelectTagsForVideo(this.$route.query.tag)
 
     // Устанавливаем в стор номер текущей страницы из роутера
-    this.$store.commit('setPageNum', +this.$route.query.page || 1)
+    this.setPageNum(+this.$route.query.page || 1)
 
     // Устанавливаем поисковой запрос (если он есть)
-    if (this.$route.query.search) this.$store.commit('setSearchQueryForVideo', this.$route.query.search)
+    if (this.$route.query.search) this.setSearchQueryForVideo(this.$route.query.search)
 
     // Подгружаем с бэкенда на основе фильтров нужные видео
-    await this.$store.dispatch('getVideo')
+    await this.getVideo()
     
     // Как только загрузили все, мы выключаем лоадер
     this.loading = false
@@ -150,29 +170,36 @@ export default {
     async '$route' (to) {
       
       // Перед сменой роутера, чистим стор от хлама на всякий случай
-      this.$store.commit('clearSortingVideo')
-      this.$store.commit('clearSelectTagsForVideo')
+      this.clearSortingVideo()
+      this.clearSelectTagsForVideo()
 
       // Ставит в $store теги из urla (нужно для того, чтобы когда мы в ручную меняем url 
       // либо жмем по тегам в карточках и мы дополняем эти теги в store)
-      if (to.query.tag) this.$store.commit('setSelectTagsForVideo', to.query.tag)
-      if (to.query.sorting) this.$store.commit('setSortingVideo', to.query.sorting)
+      if (to.query.tag) this.setSelectTagsForVideo(to.query.tag)
+      if (to.query.sorting) this.setSortingVideo(to.query.sorting)
 
       // Устанавливаем поисковой запрос (если он есть)
-      if (to.query.search) this.$store.commit('setSearchQueryForVideo', to.query.search)
+      if (to.query.search) {
+        this.setSearchQueryForVideo(to.query.search)
+      } else {
+        // А если его нет, то чистим стор от поискового запроса
+        this.clearSearchQueryForVideo()
+      }
       
       // Устанавливаем в стор пермалинк автора если он есть
-      if (to.query.author) this.$store.commit('setAuthorPermalinkForVideos', to.query.author)
-      
-      // И очищаем старого автора из стора (его локальное имя) если в routore нету автора
-      // Это нужно, чтобы автор на время не пропадал, если мы шелкаем фильтры 
-      if (!to.query.author) this.$store.commit('clearLocalNameAuthor')
-      
+      if (to.query.author) {
+        this.setAuthorPermalinkForVideos(to.query.author)
+      } else {
+        // А если в роуторе нету квери параметра, то чистим инфу о авторе из стора
+        this.clearLocalNameAuthor()
+        this.clearAuthorPermalinkForVideos()
+      } 
+        
       // До запроса включаем лоадер
       this.loading = true
 
       // И как только роутер меняется делает запрос на бэк с новыми фильтрами, которые у нас храняться в стейте
-      await this.$store.dispatch('getVideo')
+      await this.getVideo()
 
       // Как запрос прошел - выключаем
       this.loading = false
@@ -180,11 +207,12 @@ export default {
   },
   // Как только мы закрываем этот раздел, мы подчищаем страницу от тегов сортировки
   beforeDestroy() {
-    this.$store.commit('clearSortingVideo')
-    this.$store.commit('clearAuthorPermalinkForVideos')
-    this.$store.commit('clearSelectTagsForVideo')
-    this.$store.commit('clearVideos')
-    this.$store.commit('clearLocalNameAuthor')
+    this.clearSortingVideo()
+    this.clearAuthorPermalinkForVideos()
+    this.clearSelectTagsForVideo()
+    this.clearVideos()
+    this.clearLocalNameAuthor()
+    this.clearSearchQueryForVideo()
   },
 }
 </script>
