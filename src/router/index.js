@@ -38,7 +38,7 @@ const router = new Router({
     {
       path: '/video-archive',
       name: 'Video-archive',
-      meta: {layout: 'main', auth: true},
+      meta: {layout: 'main'},
       component: () => import('@/views/VideoArchive.vue')
     },
     {
@@ -59,6 +59,13 @@ const router = new Router({
       name: 'Admin-panel',
       meta: {layout: 'main', auth: true},
       component: () => import('@/views/AdminPanel.vue')
+    },
+    // ! Новая тестовая страница, через которую мы тестируем добавление релези в телеграм
+    {
+      path: '/add-release',
+      name: 'Add-release',
+      meta: {layout: 'main', auth: true},
+      component: () => import('@/views/AddRelease.vue')
     }
 
     // {

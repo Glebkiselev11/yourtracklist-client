@@ -2,6 +2,7 @@
 // Основной админский модуль
 import axios from 'axios'
 import admitVideo from './admin-video.js'
+import addRelease from './add-release.js'
 
 export default {
   actions: {
@@ -88,6 +89,7 @@ export default {
 
   },
   modules: {
-    admitVideo
+    admitVideo,
+    addRelease,
   }
 }
