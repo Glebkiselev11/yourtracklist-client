@@ -6,6 +6,12 @@
       <!-- Стандартные поля -->
       <div class="input-wrap">
 
+        <!-- Для добавления обложки -->
+        <CoverPrev
+          @cover="setCover"
+        
+        />
+
         <div class="input-item">
           <label for="name">Название релиза</label>
           <input type="text" id="name" v-model="name" required>
@@ -14,12 +20,12 @@
       </div>
 
     
-
-      <CoverPrev class="cover-wrap"
-        @cover="setCover"
       
+      
+      <!-- Для добавления треков -->
+      <AddTracksPrev class="tracks-wrap" 
+        @track="setTrack"
       />
-      
 
 
     <button type="submit">Добавить</button>
@@ -28,15 +34,18 @@
 
 <script>
 import CoverPrev from '@/components/admin-panel/CoverPrev.vue'
+import AddTracksPrev from '@/components/admin-panel/AddTracksPrev.vue'
 
 export default {
   name: 'Add-release',
   components: {
     CoverPrev, // Компонент для предпросмотра обложки перед тем  как залить альбом
+    AddTracksPrev, // Компонент для добавления аудио и TODO: отображения загруженных аудио перед загрузкой
   },
   data: () => ({
     name: '', // Название релиза
     cover: null, // Сам файл обложки
+    tracks: [], // Массив треков
   }),
   methods: {
 
@@ -49,12 +58,17 @@ export default {
       formData.append('cover', this.cover)
       formData.append('name', this.name);
 
+      // Добавляем треки
+      formData.append('tracks', this.tracks)
+
       await this.$store.dispatch('addRelease', formData)
 
       // После добавления нового автора очищаем инпуты, если нету ошибки
       if (this.statusForRelease.status === 'ok') {
         this.name = ''
-        this.cover = ''
+        this.cover = null
+        this.tracks = []
+
       }
 
     },
@@ -62,6 +76,11 @@ export default {
     // Получаем с дочернего компонента обложку
     setCover(c) {
       this.cover = c
+    },
+
+    // Получаем с дочернего компонента трек TODO: пока один
+    setTrack(t) {
+      this.tracks.push(t)
     }
   },
 }
@@ -71,10 +90,10 @@ export default {
   .form-wrap {
     display: grid;
     grid-template-areas: 
-      "input cover"
-      "button cover";
-    grid-template-rows: 3fr 1fr;
-    grid-template-columns: 1fr 2ыfr;
+      "input tracks"
+      "button .";
+    grid-template-rows: 1fr 0.3fr;
+    grid-template-columns: 300px auto;
     grid-gap: .5em;
   }
 
@@ -82,8 +101,8 @@ export default {
     grid-area: input;
   }
 
-  .cover-wrap {
-    grid-area: cover;
+  .tracks-wrap {
+
   }
 
   .input-item {
