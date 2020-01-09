@@ -40,12 +40,12 @@ export default {
   name: 'Add-release',
   components: {
     CoverPrev, // Компонент для предпросмотра обложки перед тем  как залить альбом
-    AddTracksPrev, // Компонент для добавления аудио и TODO: отображения загруженных аудио перед загрузкой
+    AddTracksPrev, // Компонент для добавления аудио и отображения загруженных аудио перед загрузкой
   },
   data: () => ({
     name: '', // Название релиза
     cover: null, // Сам файл обложки
-    tracks: [], // Массив треков
+    tracks: null, // Пока только 1 трек
   }),
   methods: {
 
@@ -75,12 +75,14 @@ export default {
 
     // Получаем с дочернего компонента обложку
     setCover(c) {
+      console.log(c)
       this.cover = c
     },
 
     // Получаем с дочернего компонента трек TODO: пока один
     setTrack(t) {
-      this.tracks.push(t)
+      console.log(t)
+      this.tracks = t
     }
   },
 }
