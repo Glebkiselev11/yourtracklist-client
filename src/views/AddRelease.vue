@@ -45,7 +45,7 @@ export default {
   data: () => ({
     name: '', // Название релиза
     cover: null, // Сам файл обложки
-    tracks: null, // Пока только 1 трек
+    tracks: [], // Массив отправляемых треков
   }),
   methods: {
 
@@ -59,7 +59,12 @@ export default {
       formData.append('name', this.name);
 
       // Добавляем треки
-      formData.append('tracks', this.tracks)
+      for (let i = 0; i < this.tracks.length; i++) {
+        formData.append('tracks', this.tracks[i])
+      }
+
+      console.log(this.tracks)
+      console.log(this.cover)
 
       await this.$store.dispatch('addRelease', formData)
 
@@ -82,7 +87,7 @@ export default {
     // Получаем с дочернего компонента трек TODO: пока один
     setTrack(t) {
       console.log(t)
-      this.tracks = t
+      this.tracks.push(t)
     }
   },
 }

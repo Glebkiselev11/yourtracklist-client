@@ -12,7 +12,7 @@
       {{`${index + 1}) ${track.name}`}}
     </div>
 
-    <input type="file" id="tracks" @change="sync" required>
+    <input type="file" id="tracks" @change="sync" required accept=".mp3,audio/*">
 
     <label class="btn-add-track" for="tracks">Добавить трек</label>
 
