@@ -9,6 +9,7 @@
         <!-- Для добавления обложки -->
         <CoverPrev
           @cover="setCover"
+          v-if="reload"
         
         />
 
@@ -20,16 +21,16 @@
 
         <!-- Компоненты куда мы подгружаем всех возможных авторов с базы данных -->
         <AuthorSelectList
+          v-if="reload"
           @selected="selectedAuthors"
         />
 
       </div>
 
     
-      
-      
       <!-- Для добавления треков -->
       <AddTracksPrev class="tracks-wrap" 
+        v-if="reload"
         @track="setTrack"
       />
 
@@ -42,7 +43,7 @@
 import CoverPrev from '@/components/admin-panel/CoverPrev.vue'
 import AddTracksPrev from '@/components/admin-panel/AddTracksPrev.vue'
 import AuthorSelectList from '@/components/app/AuthorsSelectList.vue'
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'Add-release',
@@ -52,11 +53,15 @@ export default {
     AuthorSelectList, // Компонент куда подгружаются все возможные авторы в нашей базе данных, TODO: нужно будет его перереботать в будущем
   },
   data: () => ({
+    reload: true, // ! Нужна чтобы заставить дочерние компоненты пересоздаться
     name: '', // Название релиза
     cover: null, // Сам файл обложки
     tracks: [], // Массив отправляемых треков
     authors: [],  // Массив авторов, так как их может быть несколько, указываем там уникальные ссылки авторов (permalink)
   }),
+  computed: {
+    ...mapGetters(['statusForRelease']),
+  },
   methods: {
     ...mapActions(['addRelease']),
 
@@ -66,8 +71,12 @@ export default {
       let formData = new FormData();
 
       formData.append('name', this.name) // Название релиза
-      formData.append('authors', this.authors) // Автор(ы) релиза
       formData.append('cover', this.cover) // Обложка релиза
+
+      // Добавляем авторов релиза
+      for (let i = 0; i < this.authors.length; i++) {
+        formData.append('authors', this.authors[i].permalink) // Автор(ы) релиза
+      }
 
       // Добавляем треки
       for (let i = 0; i < this.tracks.length; i++) {
@@ -79,10 +88,18 @@ export default {
 
       // TODOS: После добавления нового автора очищаем инпуты, если нету ошибки
       if (this.statusForRelease.status === 'ok') {
+
+        // Откючаем дополнительные комопненты (чтобы вызвать их перерисовку)
+        this.reload = false
+
         this.name = ''
         this.cover = null
         this.tracks = []
+        this.authors = []
 
+        // Cнова включаем
+        setTimeout(() => { this.reload = true }, 0)
+        
       }
 
     },

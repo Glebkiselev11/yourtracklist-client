@@ -78,12 +78,12 @@ export default {
   async created() {
     await this.$store.dispatch('getAuthors')
   },
-  // watch: {
-  //   // Передает родителю выбранного автора
-  //   enterAuthors(enterAuthors) {
-  //     this.$emit('selected', enterAuthors)
-  //   }
-  // },
+  watch: {
+    // Передает родителю выбранного автора
+    enterAuthors(enterAuthors) {
+      this.$emit('selected', enterAuthors)
+    }
+  },
 }
 </script>
 
