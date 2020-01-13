@@ -66,7 +66,7 @@ export default {
         }
         
       } catch (error) {
-        console.log(error)
+        console.log('Ошибка в получении релизов с бэкенда / Error on getting releases from backend', error)
       }
     }
   },

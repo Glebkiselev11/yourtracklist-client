@@ -60,7 +60,7 @@ const router = new Router({
       meta: {layout: 'main', auth: true},
       component: () => import('@/views/AdminPanel.vue')
     },
-    // ! Новая тестовая страница, через которую мы тестируем добавление релези в телеграм
+    // ! Новая тестовая страница, через которую мы тестируем добавление релеза в телеграм
     {
       path: '/add-release',
       name: 'Add-release',

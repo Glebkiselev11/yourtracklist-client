@@ -99,7 +99,7 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'Release-card',
 
-  async mounted() {
+  async created() {
     // При загрузке карточки релиза, мы из адресной строки вытаскиваем ссылку автора и ссылку релиза
     const author = this.$route.params.author_permalink
     const release = this.$route.params.release_permalink

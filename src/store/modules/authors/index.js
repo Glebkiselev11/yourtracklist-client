@@ -56,6 +56,23 @@ export default {
     // При закрытие окна автора мы чистим инфу из стейта
     clearAuthorInfo(state) {
       state.authorInfo = undefined
+    },
+
+    
+
+    // Этот метод нужен для удаления из массива возможных авторов, того автора, которого мы выбрали уже, чтобы лишний раз он не мешался нам
+    clearSelectedAuthor(s, selectPermalink) {
+      for (let i = 0; i < s.authorsArray.length; i++) {
+        if (s.authorsArray[i].permalink === selectPermalink) {
+          s.authorsArray.splice(i, 1)
+          break;
+        }
+      }
+    },
+    // А через этот метод мы возвращаем удаленного автора (если мы вдруг его выбрали случайно, 
+    // а потом удалили из выбранных(ведь в методе выше мы его очищаем из возможных авторов, а тут вовзращаем обратно))
+    returnSelectedAuthor(s, authorObj) {
+      s.authorsArray.push(authorObj)
     }
   },
   state: {

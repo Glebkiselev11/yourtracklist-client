@@ -17,6 +17,12 @@
           <input type="text" id="name" v-model="name" required>
         </div>
 
+
+        <!-- Компоненты куда мы подгружаем всех возможных авторов с базы данных -->
+        <AuthorSelectList
+          @selected="selectedAuthors"
+        />
+
       </div>
 
     
@@ -35,40 +41,43 @@
 <script>
 import CoverPrev from '@/components/admin-panel/CoverPrev.vue'
 import AddTracksPrev from '@/components/admin-panel/AddTracksPrev.vue'
+import AuthorSelectList from '@/components/app/AuthorsSelectList.vue'
+import {mapActions} from 'vuex'
 
 export default {
   name: 'Add-release',
   components: {
     CoverPrev, // Компонент для предпросмотра обложки перед тем  как залить альбом
     AddTracksPrev, // Компонент для добавления аудио и отображения загруженных аудио перед загрузкой
+    AuthorSelectList, // Компонент куда подгружаются все возможные авторы в нашей базе данных, TODO: нужно будет его перереботать в будущем
   },
   data: () => ({
     name: '', // Название релиза
     cover: null, // Сам файл обложки
     tracks: [], // Массив отправляемых треков
+    authors: [],  // Массив авторов, так как их может быть несколько, указываем там уникальные ссылки авторов (permalink)
   }),
   methods: {
+    ...mapActions(['addRelease']),
 
     // Добавляем новый релиз в базу данных
     async addNewRelease() {
 
       let formData = new FormData();
 
-      // Добавляем обложку релиза
-      formData.append('cover', this.cover)
-      formData.append('name', this.name);
+      formData.append('name', this.name) // Название релиза
+      formData.append('authors', this.authors) // Автор(ы) релиза
+      formData.append('cover', this.cover) // Обложка релиза
 
       // Добавляем треки
       for (let i = 0; i < this.tracks.length; i++) {
         formData.append('tracks', this.tracks[i])
       }
 
-      console.log(this.tracks)
-      console.log(this.cover)
+      // И отравляем на бэк все данные
+      await this.addRelease(formData)
 
-      await this.$store.dispatch('addRelease', formData)
-
-      // После добавления нового автора очищаем инпуты, если нету ошибки
+      // TODOS: После добавления нового автора очищаем инпуты, если нету ошибки
       if (this.statusForRelease.status === 'ok') {
         this.name = ''
         this.cover = null
@@ -80,14 +89,18 @@ export default {
 
     // Получаем с дочернего компонента обложку
     setCover(c) {
-      console.log(c)
       this.cover = c
     },
 
-    // Получаем с дочернего компонента трек TODO: пока один
+    // Получаем с дочернего компонента трек 
     setTrack(t) {
-      console.log(t)
+      // И добавляем его в массив треков
       this.tracks.push(t)
+    },
+
+    // Получаем выбранных авторов для релизов
+    selectedAuthors(a) {
+      this.authors = a
     }
   },
 }
