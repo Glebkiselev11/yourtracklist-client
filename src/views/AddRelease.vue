@@ -14,8 +14,7 @@
         />
 
         <div class="input-item">
-          <label for="name">Название релиза</label>
-          <input type="text" id="name" v-model="name" required>
+          <input type="text" placeholder="Название релиза" v-model="name" required>
         </div>
 
 
@@ -42,7 +41,7 @@
 <script>
 import CoverPrev from '@/components/admin-panel/CoverPrev.vue'
 import AddTracksPrev from '@/components/admin-panel/AddTracksPrev.vue'
-import AuthorSelectList from '@/components/app/AuthorsSelectList.vue'
+import AuthorSelectList from '@/components/admin-panel/AuthorsSelectList.vue'
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
@@ -50,10 +49,10 @@ export default {
   components: {
     CoverPrev, // Компонент для предпросмотра обложки перед тем  как залить альбом
     AddTracksPrev, // Компонент для добавления аудио и отображения загруженных аудио перед загрузкой
-    AuthorSelectList, // Компонент куда подгружаются все возможные авторы в нашей базе данных, TODO: нужно будет его перереботать в будущем
+    AuthorSelectList, // Компонент куда подгружаются все возможные авторы в нашей базе данных
   },
   data: () => ({
-    reload: true, // ! Нужна чтобы заставить дочерние компоненты пересоздаться
+    reload: true, // FIXME: (возможно это мы скоро удалим) Нужна чтобы заставить дочерние компоненты пересоздаться
     name: '', // Название релиза
     cover: null, // Сам файл обложки
     tracks: [], // Массив отправляемых треков
@@ -138,15 +137,12 @@ export default {
     grid-area: input;
   }
 
-  .tracks-wrap {
-
-  }
 
   .input-item {
     display: flex;
     width: 200px;
     flex-direction: column;
-    margin: 5px 0px;
+    margin: 20px 0px;
   }
 
   button {
@@ -155,8 +151,10 @@ export default {
     border: 1px solid black;
     background: transparent;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 1rem;
     padding: 7px 20px;
     grid-area: button;
   }
+
+
 </style>

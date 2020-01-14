@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import AuthorSelectList from '@/components/app/AuthorsSelectList.vue'
+import AuthorSelectList from '@/components/admin-panel/AuthorsSelectList.vue'
 import { mapGetters } from 'vuex'
 export default {
   name: 'Add-new-vide',

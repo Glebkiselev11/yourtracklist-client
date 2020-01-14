@@ -24,28 +24,7 @@ export default {
         console.log(error)
       }
       
-      
     },
-
-    // Добавляет релиз в нашу коллекицию
-    async admin_addRelease({commit}, formData) {
-      try {
-        const {data} = await axios.post('/api/add-release', {formData})
-
-        let statusMessage = {}
-
-        // Обрабатываем ошибки базы данных
-        if (data.code === '23505') {statusMessage.message = 'Такой релиз уже есть в базе'; statusMessage.status = 'error'}
-        if (data.code === '42P18') {statusMessage.message = 'Обязательно укажите хотя бы одну ссылку и тег'; statusMessage.status = 'error'}
-        if (data === 'ok') {statusMessage.message = 'Релиз успешно добавлен'; statusMessage.status = 'ok'}
-
-        commit('setStatusForRelease', statusMessage)
-      } catch(error) {
-        console.log(error)
-      }
-
-    },
-
 
     // Возвращает список всех возможных социальных сетей, пока нужен только для админ кабинета, чтобы не пладить кучу инпутов в шаблоне
     async admin_getSocialsNameList({commit}) {
@@ -60,6 +39,16 @@ export default {
     },
 
 
+    // Получает с бэкенда список всех доступных тегов
+    // Используем этот метод при добавлении автора, релиза, видео, трека
+    async getTags({commit}) {
+      try {
+        const {data : tags} = await axios.post('/api/get-tags')
+        commit('setTags', tags)
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
 
   },
@@ -68,24 +57,28 @@ export default {
       state.socialsNameList = data
     },
 
-
     setStatusForAuthor(state, statusMessage) {
       state.statusForAuthor = statusMessage
     },
 
-    setStatusForRelease(state, statusMessage) {
-      state.statusForRelease = statusMessage
+    
+
+    setTags(s, tags) {
+      s.tags = tags
+    },
+    clearTags(s) {
+      s.tags = null
     }
   },
   state: {
-    statusForAuthor: undefined, // Статус о добавлении нового пользователя
-    statusForRelease: undefined, // Статус о добавление нового релиза
-    socialsNameList: [], // Список всех возможных социальных сетей
+    statusForAuthor: null, // Статус о добавлении нового автора
+    socialsNameList: null, // Список всех возможных социальных сетей
+    tags: null, // Все возможные теги
   },
   getters: {
     statusForAuthor: s => s.statusForAuthor,
     socialsNameList: s => s.socialsNameList,
-    statusForRelease: s => s.statusForRelease
+    tags: s => s.tags,
 
   },
   modules: {

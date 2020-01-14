@@ -2,12 +2,11 @@
   <!-- Инпут с списком возможных авторов, который у нас есть 
   в формах добаления релизов и видео -->
   <div class="input-item">
-    <label for="authors">Автор(ы)</label>
-    
+
     <!-- Здесь мы вводим автора в поиск -->
     <input 
       type="text" 
-      id="authors" 
+      placeholder="Автор(ы)"
       list="authorslist" 
       v-model="author" 
       @change="setAuthor"
@@ -97,6 +96,8 @@ export default {
     justify-content: flex-start;
   }
   .author-chip-item {
+    background-color: var(--primary-color);
+    color: var(--primary-background-color);
     height: 20px;
     margin: 2px;
     padding: 0 4px 0 2px;
@@ -104,7 +105,7 @@ export default {
     overflow: hidden; 
     text-overflow: ellipsis;
     font-size: .8rem;
-    border: 1px solid grey;
+    border: 1px solid var(--primary-color);
     position: relative;
   }
   /* Кнопка удаления автора */

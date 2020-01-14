@@ -66,6 +66,14 @@ export default {
 
   input, textarea {
     background-color: var(--primary-background-color);
+    border: none;
+    border-bottom: 1px solid var(--primary-color);
+    font-size: .9rem;
+  }
+
+  input:focus, textarea:focus {
+    outline: none;
+    border-bottom: 2px solid var(--primary-color);
   }
 
   .body {    

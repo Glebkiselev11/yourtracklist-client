@@ -47,7 +47,7 @@ export default {
 
 <style scoped>
   h3 {
-    font-size: 18px;
+    font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 25px;
   }
@@ -70,9 +70,7 @@ export default {
     min-height: 30px;
     max-height: 115px;
     width: 100%;
-    font-size: 16px;
-    border: none;
-    border-bottom: 1px solid var(--primary-color);
+    font-size: 1rem;
   }
 
   /* span где отображется максимальное кол-во символов */
@@ -80,14 +78,9 @@ export default {
     position: absolute;
     right: 0;
     top: -10px;
-    font-size: 10px;
+    font-size: .6rem;
   }
 
-
-  .input:focus {
-    outline: none;
-    border-bottom: 2px solid var(--primary-color);
-  }
 
   button {
     width: 100%;

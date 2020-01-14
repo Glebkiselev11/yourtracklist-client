@@ -1,12 +1,10 @@
 import axios from 'axios'
 
-// ! Тестовый стор на добавление релизов в телеграм
+// ! Это Новый стор на добавление релизов в телеграм
 export default {
   actions: {
     // Добавляет релиз в нашу коллекцию через телеграм
-    // ! Обложку отправили, теперь тестируем отправку аудио файлов в телеграм
     async addRelease({commit}, formData) {
-
       try {
         const {data} = await axios.post('/api/add-release-telegram', formData)
 
@@ -26,15 +24,18 @@ export default {
 
     },
 
+    
   },
   mutations: {
-
+    setStatusForRelease(state, statusMessage) {
+      state.statusForRelease = statusMessage
+    },
   },
 
   state: {
-
+    statusForRelease: null, // Статус о добавление нового релиза
   },
   getters: {
-
+    statusForRelease: s => s.statusForRelease,
   }
 }

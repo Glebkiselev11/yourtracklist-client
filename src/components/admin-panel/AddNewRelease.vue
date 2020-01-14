@@ -1,5 +1,7 @@
 <template>
   <!-- Добавляем через этот компонент новый релиз -->
+
+  <!-- ПЕРЕДЕЛЫВАЕМ ЭТОТ КОМПОНЕНТ !!!! СКОРО НАДО БУДЕТ УДАЛИТЬ ЕГО -->
   <form class="form-wrap" @submit.prevent="addNewRelease">
     <h3>Добавить релиз</h3>
     
@@ -76,7 +78,7 @@
 </template>
 
 <script>
-import AuthorSelectList from '@/components/app/AuthorsSelectList.vue'
+import AuthorSelectList from '@/components/admin-panel/AuthorsSelectList.vue'
 import {mapGetters} from 'vuex'
 export default {
   name: 'Add-new-release',
@@ -107,10 +109,11 @@ export default {
       this.authors = authors
     },
 
+    // TODO: Как только мы доделаем компонент добавления релиза, мы удалим этот компонент (AddNewRelease.vue) полностью
     // Добавляем новый релиз в базу данных
     async addNewRelease() {
 
-      await this.$store.dispatch('admin_addRelease', {
+      await this.$store.dispatch('', {
         name: this.name,
         cover: this.cover,
         tags: this.tags,
