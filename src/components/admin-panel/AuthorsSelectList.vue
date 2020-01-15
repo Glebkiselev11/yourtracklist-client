@@ -29,8 +29,13 @@
         :key="index" 
         class="author-chip-item"
         :style="`flex-grow: ${author.name.length < 5 ? 1 : author.name.length < 10 ? 2 : author.name.length < 15 ? 3 : 4}`"
-        @click="clearAuthor(index)"
-      >{{author.name}}</span>
+      >{{author.name}}
+        <button
+          title="Убрать автора"
+          @click="clearAuthor(index)"
+          class="author-chip-item-btn"
+        >X</button>
+      </span>
     </div>
 
   </div>
@@ -98,31 +103,32 @@ export default {
   .author-chip-item {
     background-color: var(--primary-color);
     color: var(--primary-background-color);
-    height: 20px;
+    height: 1.5em;
+    padding-left: 2px;
     margin: 2px;
-    padding: 0 4px 0 2px;
     white-space: nowrap;
     overflow: hidden; 
     text-overflow: ellipsis;
     font-size: .8rem;
     border: 1px solid var(--primary-color);
     position: relative;
+    display: flex;
+    justify-content: space-between;
   }
   /* Кнопка удаления автора */
-  .author-chip-item::after {
-    position: absolute;
-    content: 'X';
-    right: 0;
+  .author-chip-item-btn {
     color: white;
     height: 100%;
-    width: 10px;
+    width: 16px;
     text-align: center;
     font-weight: 300;
     background: rgba(128, 128, 128, 0.589);
   }
 
-  .author-chip-item:hover {
+  .author-chip-item-btn:hover {
     cursor: pointer;
+    outline: none;
+    background-color: rgb(252, 87, 87);
   }
 </style>
 
