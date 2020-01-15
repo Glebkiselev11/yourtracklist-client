@@ -24,6 +24,11 @@
           @selected="selectedAuthors"
         />
 
+        <TagsSelectList 
+          v-if="reload"
+          @selected="selectedTags"
+        />
+
       </div>
 
     
@@ -42,6 +47,7 @@
 import CoverPrev from '@/components/admin-panel/CoverPrev.vue'
 import AddTracksPrev from '@/components/admin-panel/AddTracksPrev.vue'
 import AuthorSelectList from '@/components/admin-panel/AuthorsSelectList.vue'
+import TagsSelectList from '@/components/admin-panel/TagsSelectList.vue'
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
@@ -50,6 +56,7 @@ export default {
     CoverPrev, // Компонент для предпросмотра обложки перед тем  как залить альбом
     AddTracksPrev, // Компонент для добавления аудио и отображения загруженных аудио перед загрузкой
     AuthorSelectList, // Компонент куда подгружаются все возможные авторы в нашей базе данных
+    TagsSelectList, // Комопонет куда подгружаются все возможные теги 
   },
   data: () => ({
     reload: true, // FIXME: (возможно это мы скоро удалим) Нужна чтобы заставить дочерние компоненты пересоздаться
@@ -57,6 +64,7 @@ export default {
     cover: null, // Сам файл обложки
     tracks: [], // Массив отправляемых треков
     authors: [],  // Массив авторов, так как их может быть несколько, указываем там уникальные ссылки авторов (permalink)
+    tags: [], // Массив тегов, так как их может быть у релиза несколько
   }),
   computed: {
     ...mapGetters(['statusForRelease']),
@@ -75,6 +83,11 @@ export default {
       // Добавляем авторов релиза
       for (let i = 0; i < this.authors.length; i++) {
         formData.append('authors', this.authors[i].permalink) // Автор(ы) релиза
+      }
+
+      // Добавляем теги релиза
+      for (let i = 0; i < this.tags.length; i++) {
+        formData.append('tags', this.tags[i].name) // Автор(ы) релиза
       }
 
       // Добавляем треки
@@ -117,6 +130,10 @@ export default {
     // Получаем выбранных авторов для релизов
     selectedAuthors(a) {
       this.authors = a
+    },
+
+    selectedTags(t) {
+      this.tags = t
     }
   },
 }

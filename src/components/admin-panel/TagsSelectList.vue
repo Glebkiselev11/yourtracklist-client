@@ -13,68 +13,90 @@
     <!-- Удобный поиск тегов в списке -->
     <datalist id="tagslist" >
       <option 
-        v-for="(tag, index) in tagsArray" 
+        v-for="(tag, index) in tags" 
         :key="index" 
         :value="tag.name"
       ></option>
     </datalist>
 
-    <!-- Сюда мы чипсами будем выводить выбранных авторов -->
+    
     <div class="tags-chips-wrap">
-      <span
+      <!-- Сюда мы чипсами будем выводить выбранные теги -->
+      <Chip
         v-for="(tag, index) in enterTags" 
-        :key="index" 
-        class="tag-chip-item"
-        :style="`flex-grow: ${tag.name.length < 5 ? 1 : tag.name.length < 10 ? 2 : tag.name.length < 15 ? 3 : 4}`"
-        @click="clearTag(index)"
-      >{{tag.name}}</span>
+        :key="index"
+        :chip="tag"
+        :buttonTitleMessage="'Убрать тег'"
+        @destroy="clearTag(index)"
+      />
+
     </div>
     
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
+import Chip from '@/components/app/Chip.vue'
+
 export default {
   name: 'Tags-select-list',
+  data: () => ({
+    enterTags: [], // Массив выбранных тегов
+    tag: '', // Выбранный тег
+  }),
+  components: {
+    Chip
+  },
+  computed: {
+    ...mapGetters([
+      'tags', // Массив возможных тегов
+    ]),
+  },
+  methods: {
+    ...mapMutations(['clearSelectedTag', 'returnSelectedTag']),
+
+    // Вносим выбранный тег в массив выбранных тегов :)
+    setTag() {
+      // Находим в нашем массиве возможных тегов по названию
+      const findTag = this.tags.find((e) => {
+        if( e.name === this.tag) 
+          return e
+        }) 
+
+      this.enterTags.push(findTag) // И вносим результат в массив выбранных авторов
+      
+      this.clearSelectedTag(this.tag) // Удаляем из массива возможных тегов, тот тег который выбрали
+      this.tag = '' // После очищаем выбранный тег
+      
+    },
+    // Удаляем выбранный тег
+    clearTag(index) {
+      this.returnSelectedTag(this.enterTags[index]) // Сначала возвращаем в массив возможных тегов
+      this.enterTags.splice(index, 1) // А после удаляем из выбранных тегов
+    }
+  },
+
+  // Получаем список возможных тегов
+  async created() {
+    await this.$store.dispatch('getTags')
+  },
+  watch: {
+    // Передает родителю выбранные теги
+    enterTags(enterTags) {
+      this.$emit('selected', enterTags)
+    }
+  },
 
 }
 </script>
 
 <style scoped>
-  .tag-chips-wrap {
+  .tags-chips-wrap {
     margin-top: 2px;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-  }
-  .tag-chip-item {
-    background-color: var(--primary-color);
-    color: var(--primary-background-color);
-    height: 20px;
-    margin: 2px;
-    padding: 0 4px 0 2px;
-    white-space: nowrap;
-    overflow: hidden; 
-    text-overflow: ellipsis;
-    font-size: .8rem;
-    border: 1px solid var(--primary-color);
-    position: relative;
-  }
-  /* Кнопка удаления автора */
-  .tag-chip-item::after {
-    position: absolute;
-    content: 'X';
-    right: 0;
-    color: white;
-    height: 100%;
-    width: 10px;
-    text-align: center;
-    font-weight: 300;
-    background: rgba(128, 128, 128, 0.589);
-  }
-
-  .tag-chip-item:hover {
-    cursor: pointer;
   }
 
 </style>

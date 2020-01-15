@@ -65,9 +65,25 @@ export default {
 
     setTags(s, tags) {
       s.tags = tags
+      console.log(tags)
     },
     clearTags(s) {
       s.tags = null
+    },
+
+    // Этот метод нужен для удаления из массива возможных тегов, тот тег, который мы выбрали уже, чтобы лишний раз он не мешался нам
+    clearSelectedTag(s, tag) {
+      for (let i = 0; i < s.tags.length; i++) {
+        if (s.tags[i].name === tag) {
+          s.tags.splice(i, 1)
+          break;
+        }
+      }
+    },
+    // А через этот метод мы возвращаем удаленный тег (если мы вдруг его выбрали случайно, 
+    // а потом удалили из выбранных(ведь в методе выше мы его очищаем из возможных тегов, а тут вовзращаем обратно))
+    returnSelectedTag(s, tag) {
+      s.tags.push(tag)
     }
   },
   state: {

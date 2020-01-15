@@ -22,20 +22,17 @@
       ></option>
     </datalist>
 
-    <!-- Сюда мы чипсами будем выводить выбранных авторов -->
+    
     <div class="author-chips-wrap">
-      <span
-        v-for="(author, index) in enterAuthors" 
-        :key="index" 
-        class="author-chip-item"
-        :style="`flex-grow: ${author.name.length < 5 ? 1 : author.name.length < 10 ? 2 : author.name.length < 15 ? 3 : 4}`"
-      >{{author.name}}
-        <button
-          title="Убрать автора"
-          @click="clearAuthor(index)"
-          class="author-chip-item-btn"
-        >X</button>
-      </span>
+      <!-- Сюда мы чипсами будем выводить выбранных авторов -->
+      <Chip 
+        v-for="(author, index) in enterAuthors"
+        :key="index"
+        :chip="author"
+        :buttonTitleMessage="'Убрать автора'"
+        @destroy="clearAuthor(index)"
+      />
+
     </div>
 
   </div>
@@ -43,12 +40,17 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import Chip from '@/components/app/Chip.vue'
+
 export default {
   name: 'Authors-select-list',
   data: () => ({
     enterAuthors: [], // Массив выбранных авторов
     author: '', // Выбранный автор
   }),
+  components: {
+    Chip, // Чипса, которые мы итерируем
+  },
   computed: {
     ...mapGetters([
       'authorsArray', // Массив возможных авторов
@@ -93,42 +95,11 @@ export default {
 
 
 <style scoped>
-
   .author-chips-wrap {
     margin-top: 2px;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-  }
-  .author-chip-item {
-    background-color: var(--primary-color);
-    color: var(--primary-background-color);
-    height: 1.5em;
-    padding-left: 2px;
-    margin: 2px;
-    white-space: nowrap;
-    overflow: hidden; 
-    text-overflow: ellipsis;
-    font-size: .8rem;
-    border: 1px solid var(--primary-color);
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-  }
-  /* Кнопка удаления автора */
-  .author-chip-item-btn {
-    color: white;
-    height: 100%;
-    width: 16px;
-    text-align: center;
-    font-weight: 300;
-    background: rgba(128, 128, 128, 0.589);
-  }
-
-  .author-chip-item-btn:hover {
-    cursor: pointer;
-    outline: none;
-    background-color: rgb(252, 87, 87);
   }
 </style>
 
