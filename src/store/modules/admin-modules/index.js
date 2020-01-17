@@ -26,16 +26,20 @@ export default {
       
     },
 
-    // Возвращает список всех возможных социальных сетей, пока нужен только для админ кабинета, чтобы не пладить кучу инпутов в шаблоне
-    async admin_getSocialsNameList({commit}) {
+    // Проверяет есть ли такая соц сеть в нашей базе, исходя из ссылки
+    async checkSocialLink ({commit}, link) {
+      
       try {
-        const {data} =  await axios.post('/api/get-socials')
-
-        // Полученный массив названий социальных сетей устанавливаем в стейт
-        commit('setSocialsNameList', data)
-      } catch(error) {
+        const {data : {socialDefined}} = await axios.post('/api/check-social', {link})
+        
+        return { socialDefined, link}
+      } catch (error) {
         console.log(error)
+        console.log(commit)
       }
+      
+      
+      
     },
 
 
@@ -53,15 +57,8 @@ export default {
 
   },
   mutations: {
-    setSocialsNameList(state, data) {
-      state.socialsNameList = data
-    },
 
-    setStatusForAuthor(state, statusMessage) {
-      state.statusForAuthor = statusMessage
-    },
 
-    
 
     setTags(s, tags) {
       s.tags = tags
@@ -88,12 +85,11 @@ export default {
   },
   state: {
     statusForAuthor: null, // Статус о добавлении нового автора
-    socialsNameList: null, // Список всех возможных социальных сетей
+
     tags: null, // Все возможные теги
   },
   getters: {
     statusForAuthor: s => s.statusForAuthor,
-    socialsNameList: s => s.socialsNameList,
     tags: s => s.tags,
 
   },

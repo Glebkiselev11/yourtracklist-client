@@ -24,10 +24,14 @@
           @selected="selectedAuthors"
         />
 
+        <!-- Выбираем теги для релиза -->
         <TagsSelectList 
           v-if="reload"
           @selected="selectedTags"
         />
+
+        <!-- Вводим соц сети -->
+        <SocialsInput/>
 
       </div>
 
@@ -48,6 +52,7 @@ import CoverPrev from '@/components/admin-panel/CoverPrev.vue'
 import AddTracksPrev from '@/components/admin-panel/AddTracksPrev.vue'
 import AuthorSelectList from '@/components/admin-panel/AuthorsSelectList.vue'
 import TagsSelectList from '@/components/admin-panel/TagsSelectList.vue'
+import SocialsInput from '@/components/admin-panel/SocialsInput.vue'
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
@@ -57,6 +62,7 @@ export default {
     AddTracksPrev, // Компонент для добавления аудио и отображения загруженных аудио перед загрузкой
     AuthorSelectList, // Компонент куда подгружаются все возможные авторы в нашей базе данных
     TagsSelectList, // Комопонет куда подгружаются все возможные теги 
+    SocialsInput, // По ссылке определяет соц сеть
   },
   data: () => ({
     reload: true, // FIXME: (возможно это мы скоро удалим) Нужна чтобы заставить дочерние компоненты пересоздаться

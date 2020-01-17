@@ -22,16 +22,23 @@ export default {
     async getAuthors({commit}) {
       const {data} = await axios.post('/api/get-authors-list')
 
-      commit('setAuthors', data)
+      commit('setAuthorsArray', data)
     }
   },
   mutations: {
     setAuthorInfo(state, data) {
       state.authorInfo = data
     },
+    // При закрытие окна автора мы чистим инфу из стейта
+    clearAuthorInfo(state) {
+      state.authorInfo = null
+    },
 
-    setAuthors(state, data) {
+    setAuthorsArray(state, data) {
       state.authorsArray = data
+    },
+    clearAuthorsArray(state) {
+      state.authorsArray = null
     },
 
     // Вычисляет локальное имя для автора
@@ -48,18 +55,11 @@ export default {
         }
       }
     },
-
     clearLocalNameAuthor(state) {
-      state.localNameAuthor = undefined
-    },
-
-    // При закрытие окна автора мы чистим инфу из стейта
-    clearAuthorInfo(state) {
-      state.authorInfo = undefined
+      state.localNameAuthor = null
     },
 
     
-
     // Этот метод нужен для удаления из массива возможных авторов, того автора, которого мы выбрали уже, чтобы лишний раз он не мешался нам
     clearSelectedAuthor(s, selectPermalink) {
       for (let i = 0; i < s.authorsArray.length; i++) {
@@ -76,9 +76,9 @@ export default {
     }
   },
   state: {
-    localNameAuthor: undefined, // Локальное название автора, для которого мы ищем релизы / видео (нужно в архивах в заголовке)
-    authorInfo: undefined, // Информация об авторе, котору мы выводим на страницу authorPage
-    authorsArray: undefined, // Массив всех авторов которых мы нашли, содержит в себе только название и пермалинки
+    localNameAuthor: null, // Локальное название автора, для которого мы ищем релизы / видео (нужно в архивах в заголовке)
+    authorInfo: null, // Информация об авторе, котору мы выводим на страницу authorPage
+    authorsArray: null, // Массив всех авторов которых мы нашли, содержит в себе только название и пермалинки
   },
   getters: {
     authorInfo(s) {
