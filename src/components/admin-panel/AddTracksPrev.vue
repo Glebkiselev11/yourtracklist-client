@@ -9,7 +9,7 @@
       <!-- Кнопка воспроизведение и паузы у трека -->
       <span class="btn-audio-play" @click="playAudio(index)">{{ track.isPlay ? 'Pause' : 'Play' }}</span>
       <!-- Нумер трека и название -->
-      {{`${index + 1}) ${track.name}`}}
+      {{`${track.number}) ${track.artist} - ${track.name}`}}
     </div>
 
     <input type="file" id="tracks" @change="sync" required accept=".mp3,audio/*">
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import jsmediatags from 'jsmediatags' // ! Для вытаскивания метатегов из аудио файлов
+
 export default {
   name: 'Add-tracks-prev',
   data: () => ({
@@ -29,30 +31,43 @@ export default {
   methods: {
     selectAudio(file) {
       // Отправляем в родительский компонент файл для отправки на бэк
-      console.log(file)
       this.$emit('track', file)
 
       let reader = new FileReader();
 
       reader.onload = this.onAudioLoad;
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file)
     },
     sync(e) {
       e.preventDefault()
 
+      const file = e.target.files[0]
 
-      // Добавляем информацию о треке 
-      this.tracksInfo.push({ 
-        name: e.target.files[0]['name'], // Название трека
-        isPlay: false, // Информация о том включен ли этот трек или нет
+      // Вытаскиваем мета теги из трека (используем для этого стороннюю библиотеку jsmediatags)
+      jsmediatags.read(file, {
+        onSuccess: (t) => {
+          
+          // Добавляем информацию о треке 
+          this.tracksInfo.push({ 
+            name: t.tags.title, // Название трека
+            artist: t.tags.artist, // Автора трека
+            number: t.tags.track, // Номер трека в альбоме
+            isPlay: false, // Информация о том включен ли этот трек или нет
+          })
+        },
+        onError: function (error) {
+          console.log(error);
+        }
       })
 
-      this.selectAudio(e.target.files[0])
+      this.selectAudio(file)
     },
     onAudioLoad(e) {
       this.content = e.target.result;
       // Добавляем аудио трек в массив
       this.tracks.push(new Audio(this.content))
+
+      console.log(this.tracks)
 
     },
 
