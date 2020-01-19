@@ -25,7 +25,7 @@
       <Chip
         v-for="(tag, index) in enterTags" 
         :key="index"
-        :chip="tag"
+        :chip="tag.name"
         :buttonTitleMessage="'Убрать тег'"
         @destroy="clearTag(index)"
       />

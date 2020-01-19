@@ -29,6 +29,7 @@ export default {
   methods: {
     selectAudio(file) {
       // Отправляем в родительский компонент файл для отправки на бэк
+      console.log(file)
       this.$emit('track', file)
 
       let reader = new FileReader();
@@ -38,6 +39,7 @@ export default {
     },
     sync(e) {
       e.preventDefault()
+
 
       // Добавляем информацию о треке 
       this.tracksInfo.push({ 

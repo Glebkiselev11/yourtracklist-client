@@ -31,7 +31,10 @@
         />
 
         <!-- Вводим соц сети -->
-        <SocialsInput/>
+        <SocialsInput
+          v-if="reload"
+          @selected="selectedSoc"
+        />
 
       </div>
 
@@ -71,6 +74,7 @@ export default {
     tracks: [], // Массив отправляемых треков
     authors: [],  // Массив авторов, так как их может быть несколько, указываем там уникальные ссылки авторов (permalink)
     tags: [], // Массив тегов, так как их может быть у релиза несколько
+    socials: [], // Массив соц сетей, так как их может быть у релиза несколько
   }),
   computed: {
     ...mapGetters(['statusForRelease']),
@@ -101,6 +105,12 @@ export default {
         formData.append('tracks', this.tracks[i])
       }
 
+      // Добавляем соц-сети
+      for(let i = 0; i < this.socials.length; i++) {
+        formData.append('socialsLinks', this.socials[i].link) // Ссылки
+        formData.append('socialsNames', this.socials[i].socialDefined) // Названия соц сетей
+      }
+
       // И отравляем на бэк все данные
       await this.addRelease(formData)
 
@@ -122,24 +132,30 @@ export default {
 
     },
 
-    // Получаем с дочернего компонента обложку
+    // Получаем с доч.компонента обложку
     setCover(c) {
       this.cover = c
     },
 
-    // Получаем с дочернего компонента трек 
+    // Получаем с доч.компонента трек 
     setTrack(t) {
       // И добавляем его в массив треков
       this.tracks.push(t)
     },
 
-    // Получаем выбранных авторов для релизов
-    selectedAuthors(a) {
+    // Получаем с доч.компонента выбранных авторов для релизов
+    selectedAuthors(a) { 
       this.authors = a
     },
 
+    // Получаем с доч.компонента выбранные теги релиза
     selectedTags(t) {
       this.tags = t
+    },
+
+    // Получаем с дочернего компонента выбранные соц сети релиза
+    selectedSoc(s) {
+      this.socials = s
     }
   },
 }

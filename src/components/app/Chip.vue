@@ -2,8 +2,9 @@
   <!-- Компонет чипса (одного, мы итерируем этот компонент) (выбор авторов, теги) -->
   <span
     class="chip-item"
-    :style="`flex-grow: ${chip.name.length < 5 ? 1 : chip.name.length < 10 ? 2 : chip.name.length < 15 ? 3 : 4}`"
-  >{{chip.name}}
+    :style="`flex-grow: ${chip.length < 5 ? 1 : chip.length < 10 ? 2 : chip.length < 15 ? 3 : 4}`"
+    :title="title ? title : chip"
+  >{{chip}}
     <button
       :title="buttonTitleMessage"
       @click.prevent="destroy"
@@ -18,9 +19,10 @@ export default {
   props: [
     'chip', // Объект который мы выводим
     'buttonTitleMessage', // Сообщение которое мы выводим при наведении на кнопку закрытия (Убрать автора / убрать тег и тд)
+    'title', // Сообщение которое мы выводим при наведении на саму чипсу
   ],
   methods: {
-    // Емитит, что этого автора нужно убрать
+    // Емитит, что этого автора(тег, ссылку) нужно убрать
     destroy() {
       this.$emit('destroy')
     }

@@ -28,7 +28,7 @@
       <Chip 
         v-for="(author, index) in enterAuthors"
         :key="index"
-        :chip="author"
+        :chip="author.name"
         :buttonTitleMessage="'Убрать автора'"
         @destroy="clearAuthor(index)"
       />
