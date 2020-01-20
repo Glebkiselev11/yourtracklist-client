@@ -19,7 +19,6 @@
       ></option>
     </datalist>
 
-    
     <div class="tags-chips-wrap">
       <!-- Сюда мы чипсами будем выводить выбранные теги -->
       <Chip
@@ -36,7 +35,6 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
 import Chip from '@/components/app/Chip.vue'
 
 export default {
@@ -44,18 +42,12 @@ export default {
   data: () => ({
     enterTags: [], // Массив выбранных тегов
     tag: '', // Выбранный тег
+    tags: null, // Возможные теги (которые у нас есть в базе)
   }),
   components: {
     Chip
   },
-  computed: {
-    ...mapGetters([
-      'tags', // Массив возможных тегов
-    ]),
-  },
   methods: {
-    ...mapMutations(['clearSelectedTag', 'returnSelectedTag']),
-
     // Вносим выбранный тег в массив выбранных тегов :)
     setTag() {
       // Находим в нашем массиве возможных тегов по названию
@@ -66,20 +58,27 @@ export default {
 
       this.enterTags.push(findTag) // И вносим результат в массив выбранных авторов
       
-      this.clearSelectedTag(this.tag) // Удаляем из массива возможных тегов, тот тег который выбрали
+      // Удаляем из массива возможных тегов, тот тег который выбрали
+      for (let i = 0; i < this.tags.length; i++) {
+        if (this.tags[i].name === this.tag) {
+          this.tags.splice(i, 1)
+          break;
+        }
+      }
+
       this.tag = '' // После очищаем выбранный тег
-      
     },
     // Удаляем выбранный тег
     clearTag(index) {
-      this.returnSelectedTag(this.enterTags[index]) // Сначала возвращаем в массив возможных тегов
+      this.tags.push(this.enterTags[index]) // Сначала возвращаем в массив возможных тегов
       this.enterTags.splice(index, 1) // А после удаляем из выбранных тегов
     }
   },
 
   // Получаем список возможных тегов
   async created() {
-    await this.$store.dispatch('getTags')
+    // И вношу их в локальную переменную
+    this.tags = await this.$store.dispatch('getTags')
   },
   watch: {
     // Передает родителю выбранные теги

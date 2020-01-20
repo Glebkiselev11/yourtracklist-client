@@ -42,10 +42,10 @@ export default {
 
     // Получает с бэкенда список всех доступных тегов
     // Используем этот метод при добавлении автора, релиза, видео, трека
-    async getTags({commit}) {
+    async getTags() {
       try {
         const {data : tags} = await axios.post('/api/get-tags')
-        commit('setTags', tags)
+        return tags // И возвращаю их сразу в компонент (TagsSelectList.vue)
       } catch (error) {
         console.log(error)
       }
@@ -54,37 +54,13 @@ export default {
 
   },
   mutations: {
-    setTags(s, tags) {
-      s.tags = tags
-    },
-    clearTags(s) {
-      s.tags = null
-    },
 
-    // Этот метод нужен для удаления из массива возможных тегов, тот тег, который мы выбрали уже, чтобы лишний раз он не мешался нам
-    clearSelectedTag(s, tag) {
-      for (let i = 0; i < s.tags.length; i++) {
-        if (s.tags[i].name === tag) {
-          s.tags.splice(i, 1)
-          break;
-        }
-      }
-    },
-    // А через этот метод мы возвращаем удаленный тег (если мы вдруг его выбрали случайно, 
-    // а потом удалили из выбранных(ведь в методе выше мы его очищаем из возможных тегов, а тут вовзращаем обратно))
-    returnSelectedTag(s, tag) {
-      s.tags.push(tag)
-    }
   },
   state: {
     statusForAuthor: null, // Статус о добавлении нового автора
-
-    tags: null, // Все возможные теги
   },
   getters: {
     statusForAuthor: s => s.statusForAuthor,
-    tags: s => s.tags,
-
   },
   modules: {
     admitVideo,
