@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
 import Chip from '@/components/app/Chip.vue'
 
 export default {
@@ -47,18 +46,13 @@ export default {
   data: () => ({
     enterAuthors: [], // Массив выбранных авторов
     author: '', // Выбранный автор
+    authorsArray: null, // Массив возможных авторов
   }),
   components: {
     Chip, // Чипса, которые мы итерируем
   },
-  computed: {
-    ...mapGetters([
-      'authorsArray', // Массив возможных авторов
-    ]),
-  },
-  methods: {
-    ...mapMutations(['clearSelectedAuthor', 'returnSelectedAuthor']),
 
+  methods: {
     // Вносим выбранного автора в массив выбранных авторов :)
     setAuthor() {
       // Находим в нашем массиве возможных авторов по пермалинку
@@ -69,20 +63,28 @@ export default {
 
       this.enterAuthors.push(findAuthor) // И вносим результат в массив выбранных авторов
       
-      this.clearSelectedAuthor(this.author) // Удаляем из массива возможных авторов, того автора которого выбрали
+      // Удаляем из массива возможных авторов, того автора которого выбрали
+      for (let i = 0; i < this.authorsArray.length; i++) {
+        if (this.authorsArray[i].permalink === this.author) {
+          this.authorsArray.splice(i, 1)
+          break;
+        }
+      }
+
       this.author = '' // После очищаем выбранного автора
-      
     },
+
     // Удаляем выбранного автора
     clearAuthor(index) {
-      this.returnSelectedAuthor(this.enterAuthors[index]) // Сначала возвращаем в массив возможных авторов
+      this.authorsArray.push(this.enterAuthors[index]) // Сначала возвращаем в массив возможных авторов
       this.enterAuthors.splice(index, 1) // А после удаляем из выбранных авторов
     }
   },
 
   // Получаем список возможных авторов
   async created() {
-    await this.$store.dispatch('getAuthors')
+    // И вносим их в локальную переменную
+    this.authorsArray = await this.$store.dispatch('getAuthors')
   },
   watch: {
     // Передает родителю выбранного автора
@@ -100,6 +102,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    width: 100%;
   }
 </style>
 

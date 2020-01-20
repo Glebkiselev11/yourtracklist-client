@@ -13,7 +13,12 @@
       <span class="track-inputs-wrap">
         <input type="text" class="track-input-number" v-model="track.number"/>
         )
-        <input type="text" v-model="track.artist" placeholder="Автор(ы) трека"/>
+        <!-- <input type="text" v-model="track.artist" placeholder="Автор(ы) трека"/> -->
+
+        <AuthorSelectList 
+
+        />
+
         —
         <input type="text" v-model="track.name" placeholder="Название трека"/>
         |
@@ -36,9 +41,13 @@
 
 <script>
 import jsmediatags from 'jsmediatags' // ! Для вытаскивания метатегов из аудио файлов
+import AuthorSelectList from '@/components/admin-panel/AuthorsSelectList.vue'
 
 export default {
   name: 'Add-tracks-prev',
+  components: {
+    AuthorSelectList, // Выбор возможных авторов для конкретного трека
+  },
   data: () => ({
     tracksInfo: [], // Информация о загруженных аудио
     tracks: [], // Треки который можно прослушать
@@ -132,13 +141,20 @@ export default {
   color: white;
 }
 
+
 .track-item {
   margin-bottom: 5px;
   height: 70px;
   border: 1px solid black;
   padding: 5px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+}
+
+/* Обертка под инпуты */
+.track-inputs-wrap {
+  display: flex;
+  align-items: flex-start;
 }
 
 /* Нумерация трека */

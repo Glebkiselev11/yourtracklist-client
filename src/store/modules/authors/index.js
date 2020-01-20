@@ -18,11 +18,14 @@ export default {
       commit('setVideosCountForAuthor', videosCount)
     },
 
-    // Получаем всех авторов (а именно их имена и пермалинки)
-    async getAuthors({commit}) {
-      const {data} = await axios.post('/api/get-authors-list')
-
-      commit('setAuthorsArray', data)
+    // Получаем всех возможных авторов из нашей базы (а именно их имена и пермалинки)
+    async getAuthors() {
+      try {
+        const {data} = await axios.post('/api/get-authors-list')
+        return data // И данные возвращаем в компонент (AuthorSelectList.vue)
+      } catch (error) {
+        console.log('Ошибка в запросе /api/get-authors-list', error)
+      }
     }
   },
   mutations: {
@@ -32,13 +35,6 @@ export default {
     // При закрытие окна автора мы чистим инфу из стейта
     clearAuthorInfo(state) {
       state.authorInfo = null
-    },
-
-    setAuthorsArray(state, data) {
-      state.authorsArray = data
-    },
-    clearAuthorsArray(state) {
-      state.authorsArray = null
     },
 
     // Вычисляет локальное имя для автора
@@ -60,34 +56,15 @@ export default {
     },
 
     
-    // Этот метод нужен для удаления из массива возможных авторов, того автора, которого мы выбрали уже, чтобы лишний раз он не мешался нам
-    clearSelectedAuthor(s, selectPermalink) {
-      for (let i = 0; i < s.authorsArray.length; i++) {
-        if (s.authorsArray[i].permalink === selectPermalink) {
-          s.authorsArray.splice(i, 1)
-          break;
-        }
-      }
-    },
-    // А через этот метод мы возвращаем удаленного автора (если мы вдруг его выбрали случайно, 
-    // а потом удалили из выбранных(ведь в методе выше мы его очищаем из возможных авторов, а тут вовзращаем обратно))
-    returnSelectedAuthor(s, authorObj) {
-      s.authorsArray.push(authorObj)
-    }
   },
   state: {
     localNameAuthor: null, // Локальное название автора, для которого мы ищем релизы / видео (нужно в архивах в заголовке)
     authorInfo: null, // Информация об авторе, котору мы выводим на страницу authorPage
-    authorsArray: null, // Массив всех авторов которых мы нашли, содержит в себе только название и пермалинки
   },
   getters: {
     authorInfo(s) {
       return s.authorInfo
     },
-    authorsArray(s) {
-      return s.authorsArray
-    },
-
     localNameAuthor: state => state.localNameAuthor
   },
 
