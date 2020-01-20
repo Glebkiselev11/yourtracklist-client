@@ -37,9 +37,6 @@ export default {
         console.log(error)
         console.log(commit)
       }
-      
-      
-      
     },
 
 
@@ -57,12 +54,8 @@ export default {
 
   },
   mutations: {
-
-
-
     setTags(s, tags) {
       s.tags = tags
-      console.log(tags)
     },
     clearTags(s) {
       s.tags = null

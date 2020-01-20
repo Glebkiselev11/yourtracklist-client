@@ -8,8 +8,23 @@
     > 
       <!-- Кнопка воспроизведение и паузы у трека -->
       <span class="btn-audio-play" @click="playAudio(index)">{{ track.isPlay ? 'Pause' : 'Play' }}</span>
-      <!-- Нумер трека и название -->
-      {{`${track.number}) ${track.artist} - ${track.name}`}}
+      
+      <!-- Обертка под инпуты -->
+      <span class="track-inputs-wrap">
+        <input type="text" class="track-input-number" v-model="track.number"/>
+        )
+        <input type="text" v-model="track.artist" placeholder="Автор(ы) трека"/>
+        —
+        <input type="text" v-model="track.name" placeholder="Название трека"/>
+        |
+        <input type="text" v-model="track.tags" placeholder="Теги трека"/>
+      
+      </span>
+
+      <!-- Полное название трека -->
+      <span class="track-full-name">{{track.fileName}}</span>
+      
+
     </div>
 
     <input type="file" id="tracks" @change="sync" required accept=".mp3,audio/*">
@@ -46,12 +61,13 @@ export default {
       // Вытаскиваем мета теги из трека (используем для этого стороннюю библиотеку jsmediatags)
       jsmediatags.read(file, {
         onSuccess: (t) => {
-          
+
           // Добавляем информацию о треке 
           this.tracksInfo.push({ 
             name: t.tags.title, // Название трека
             artist: t.tags.artist, // Автора трека
             number: t.tags.track, // Номер трека в альбоме
+            fileName: e.target.files[0]['name'],
             isPlay: false, // Информация о том включен ли этот трек или нет
           })
         },
@@ -88,10 +104,10 @@ export default {
 
 <style scoped>
 
-/* Главная обертка для треков */
+/* Главная обертка для треков
 .tracks-prev-wrap {
-  border: 1px solid black;
-}
+
+} */
 
 /* Нужно для скрытия инпута (вместо него мы загружаем через лейбл) */
 .tracks-prev-wrap #tracks {
@@ -106,17 +122,44 @@ export default {
 .btn-add-track {
   display: block;
   cursor: pointer;
-  margin: 10px;
+  margin-top: 10px;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.btn-add-track:hover {
+  background: black;
+  color: white;
 }
 
 .track-item {
-  margin: 5px;
-  
+  margin-bottom: 5px;
+  height: 70px;
+  border: 1px solid black;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+}
+
+/* Нумерация трека */
+.track-input-number  {
+  max-width: 20px;
+}
+
+/* Название аудио файла (полезно, когда у трека не заполнены метатеги) */
+.track-full-name {
+  font-size: .8rem;
+  margin-left: 5px;
+  max-width: 250px;
+  padding: 1px;
+  border: 1px dotted grey;
+
 }
 
 /* Воспроизведение аудио файла */
 .btn-audio-play {
   margin-right: 10px;
+  flex-shrink: 1;
   padding: 0 5px;
   border: 1px solid black;
   cursor: pointer;
