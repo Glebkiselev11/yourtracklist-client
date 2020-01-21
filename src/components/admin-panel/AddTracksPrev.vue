@@ -7,7 +7,8 @@
       v-for="(track, index) in tracks"
       :key="index"
       :track="track"
-    
+      :selected-authors="selectedAuthors"
+      :selected-tags="selectedTags"
     />
 
 
@@ -25,6 +26,10 @@ import TrackItem from '@/components/admin-panel/TrackItem.vue'
 
 export default {
   name: 'Add-tracks-prev',
+  props: [
+    'selectedAuthors', // Получаем с родителя выбранных авторов для релиза, и прокидываем их в следующим компонент отвечающий за трек
+    'selectedTags', // Тоже самое, но с тегами
+  ],
   components: {
     TrackItem, // Отвечает за 1 трека (мы их воспроизводим циклом в этом компоненте)
 
@@ -51,14 +56,13 @@ export default {
       // Вытаскиваем мета теги из трека (используем для этого стороннюю библиотеку jsmediatags)
       jsmediatags.read(file, {
         onSuccess: (t) => {
-            
+           
           // Добавляем информацию о треке 
           this.tracksInfo = { 
             name: t.tags.title, // Название трека
-            artist: t.tags.artist, // Автора трека
             number: t.tags.track, // Номер трека в альбоме
             isPlay: false, // Информация о том включен ли этот трек или нет
-            // ? пока не нужо fileName: e.target.files[0]['name'],
+            fileName: e.target.files[0]['name'], // Полное имя файла
             
           }
         },

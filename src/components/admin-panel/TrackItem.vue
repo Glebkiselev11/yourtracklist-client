@@ -1,7 +1,11 @@
 <template>
   <!-- Компонент 1 трека, используется для добавления релиза -->
   <div class="track-item" v-if="track">
-    <!-- Кнопка воспроизведение и паузы у трека -->
+      
+      <!-- Оригинальное название файла, нужно чтобы мы не упустили авторов трека -->
+      <small class="track-file-name">{{track.info.fileName}}</small>
+
+      <!-- Кнопка воспроизведение и паузы у трека -->
       <span class="btn-audio-play" @click="playAudio()">
 
         <!-- Play -->
@@ -23,6 +27,9 @@
 
       </span>
       
+
+      
+
       <!-- Обертка под инпуты -->
       <span class="track-inputs-wrap">
         <span class="track-number" >{{10 > track.info.number  ? '0' + track.info.number : track.info.number }} </span>
@@ -31,18 +38,18 @@
         <treeselect
           :multiple="true"
           :options="possibleAuthors"
-          placeholder="Выберите автора релиза"
+          placeholder="Выберите автора трека"
           v-model="authors"
         />
 
-        <input type="text" v-model="track.info.name" placeholder="Название трека"/>
+        <input class="input-name-track" type="text" v-model="track.info.name" placeholder="Название трека"/>
         
 
         <!-- Выбираем теги для трека -->
         <treeselect
           :multiple="true"
           :options="possibleTags"
-          placeholder="Выберите теги релиза"
+          placeholder="Выберите теги трека"
           v-model="tags"
         />
         
@@ -59,7 +66,9 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 export default {
   name: 'Track-item',
   props: [
-    'track' // Объект с file (Сам аудио файл) и info(информация о треке)
+    'track', // Объект с file (Сам аудио файл) и info(информация о треке)
+    'selectedAuthors', // Авторы выбранные для релиза, ставим их по умолчанию для треков
+    'selectedTags', // Теги выбранные для релиза, ставим их по умолчанию для треков
   ],
   components: {
     Treeselect // Библиотека для выбора возможных авторов и тегов трека
@@ -90,6 +99,16 @@ export default {
     // При создании подгружаю:
     this.possibleAuthors = await this.$store.dispatch('getAuthors') // Всех возможных авторов
     this.possibleTags = await this.$store.dispatch('getTags') // Все возможные теги
+
+    // Ставим сразу авторов кокотоыре выбраны для релиза (потому что скорей всего он(и) являются автором этого трека (за редким исключением))
+    if (this.selectedAuthors) {
+      this.authors = this.selectedAuthors
+    }
+
+    if (this.selectedTags) {
+      this.tags = this.selectedTags
+    }
+    
   },
 }
 </script>
@@ -98,33 +117,52 @@ export default {
 <style scoped>
 .track-item {
   margin-bottom: 5px;
-  height: 70px;
   border: 1px solid black;
   padding: 5px;
   display: inline-grid;
   grid-template-columns: 0.5fr 6fr;
+  grid-template-rows: 18px 1fr;
+  grid-template-areas: 
+    ". file"
+    "btn inputs";
+}
 
+/* Название файла (трека) */
+.track-file-name {
+  width: 100%;
+  grid-area: file;
+  font-size: .8rem;
 }
 
 /* Обертка под инпуты */
 .track-inputs-wrap {
   width: 100%;
   display: inline-grid;
-  grid-template-columns: 0.3fr 3fr 4fr 2fr;
+  grid-template-columns: 0.2fr 3fr 4fr 3fr;
   align-items: center;
   grid-gap: 10px;
+  grid-area: inputs;
 }
 
 .track-number {
   font-size: 1.5rem;
 }
 
+.input-name-track {
+  border: 1px solid rgba(128, 128, 128, 0.363);
+  padding: 3px;
+  border-radius: 5px;
+  font-size: 1rem;
+  height: 35px;
+}
+
 /* Воспроизведение аудио файла */
 .btn-audio-play {
-  margin-right: 10px;
-  flex-shrink: 1;
-  padding: 0 5px;
-  border: 1px solid black;
-  cursor: pointer;
+  display: flex;
+  grid-area: btn;
+}
+
+.btn-audio-play svg {
+  margin: auto;
 }
 </style>

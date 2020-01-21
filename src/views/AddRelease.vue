@@ -49,6 +49,8 @@
       <AddTracksPrev class="tracks-wrap" 
         v-if="reload"
         @track="setTrack"
+        :selected-authors="authors"
+        :selected-tags="tags"
       />
 
 
