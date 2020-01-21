@@ -20,10 +20,8 @@
           <input type="text" id="namevideo" v-model="videoName" required>
         </div>
 
-        <!-- Компоненты куда мы подгружаем всех возможных авторов с базы данных -->
-        <AuthorSelectList
-          @selected="selectedAuthors"
-        />
+        <!-- ! Компоненты куда мы подгружаем всех возможных авторов с базы данных -->
+
 
 
       </div>
@@ -53,7 +51,6 @@
 </template>
 
 <script>
-import AuthorSelectList from '@/components/admin-panel/AuthorsSelectList.vue'
 import { mapGetters } from 'vuex'
 export default {
   name: 'Add-new-vide',
@@ -62,7 +59,6 @@ export default {
     tags: []
   }),
   components: {
-    AuthorSelectList
   },
   computed: {
     ...mapGetters(['statusForVideo', 'releaseDateOfVideo', 'releaseTags']),

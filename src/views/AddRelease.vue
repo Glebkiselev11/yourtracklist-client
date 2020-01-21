@@ -19,15 +19,21 @@
 
 
         <!-- Компоненты куда мы подгружаем всех возможных авторов с базы данных -->
-        <AuthorSelectList
-          v-if="reload"
-          @selected="selectedAuthors"
+        <treeselect
+          :multiple="true"
+          :options="possibleAuthors"
+          placeholder="Выберите автора релиза"
+          v-model="authors"
         />
+        
+        <br>
 
         <!-- Выбираем теги для релиза -->
-        <TagsSelectList 
-          v-if="reload"
-          @selected="selectedTags"
+        <treeselect
+          :multiple="true"
+          :options="possibleTags"
+          placeholder="Выберите теги релиза"
+          v-model="tags"
         />
 
         <!-- Вводим соц сети -->
@@ -50,11 +56,16 @@
   </form>
 </template>
 
+
 <script>
+
+import Treeselect from '@riophae/vue-treeselect'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+
 import CoverPrev from '@/components/admin-panel/CoverPrev.vue'
 import AddTracksPrev from '@/components/admin-panel/AddTracksPrev.vue'
-import AuthorSelectList from '@/components/admin-panel/AuthorsSelectList.vue'
-import TagsSelectList from '@/components/admin-panel/TagsSelectList.vue'
+
+
 import SocialsInput from '@/components/admin-panel/SocialsInput.vue'
 import {mapActions, mapGetters} from 'vuex'
 
@@ -63,21 +74,33 @@ export default {
   components: {
     CoverPrev, // Компонент для предпросмотра обложки перед тем  как залить альбом
     AddTracksPrev, // Компонент для добавления аудио и отображения загруженных аудио перед загрузкой
-    AuthorSelectList, // Компонент куда подгружаются все возможные авторы в нашей базе данных
-    TagsSelectList, // Комопонет куда подгружаются все возможные теги 
     SocialsInput, // По ссылке определяет соц сеть
+    Treeselect, // Компонент через который мы выбираем несколько авторов / тегов
   },
   data: () => ({
     reload: true, // FIXME: (возможно это мы скоро удалим) Нужна чтобы заставить дочерние компоненты пересоздаться
     name: '', // Название релиза
     cover: null, // Сам файл обложки
     tracks: [], // Массив отправляемых треков
-    authors: [],  // Массив авторов, так как их может быть несколько, указываем там уникальные ссылки авторов (permalink)
+
+    possibleAuthors: [], // Массив возможных авторов
+    authors: [],  // Массив выбранных авторов для этого релиза
+
+    possibleTags: [], // Массив возможных тегов, которые мы получаем с бэка
     tags: [], // Массив тегов, так как их может быть у релиза несколько
+
     socials: [], // Массив соц сетей, так как их может быть у релиза несколько
   }),
   computed: {
     ...mapGetters(['statusForRelease']),
+  },
+  async created() {
+
+    // При создании подгружаю:
+    this.possibleAuthors = await this.$store.dispatch('getAuthors') // Всех возможных авторов
+    this.possibleTags = await this.$store.dispatch('getTags') // Все возможные теги
+    
+    console.log(this.possibleAuthors)
   },
   methods: {
     ...mapActions(['addRelease']),
@@ -92,12 +115,12 @@ export default {
 
       // Добавляем авторов релиза
       for (let i = 0; i < this.authors.length; i++) {
-        formData.append('authors', this.authors[i].permalink) // Автор(ы) релиза
+        formData.append('authors', this.authors[i]) // Автор(ы) релиза
       }
 
       // Добавляем теги релиза
       for (let i = 0; i < this.tags.length; i++) {
-        formData.append('tags', this.tags[i].name) // Автор(ы) релиза
+        formData.append('tags', this.tags[i]) // Автор(ы) релиза
       }
 
       // Добавляем треки
@@ -124,6 +147,7 @@ export default {
         this.cover = null
         this.tracks = []
         this.authors = []
+        this.tags = []
 
         // Cнова включаем
         setTimeout(() => { this.reload = true }, 0)
@@ -141,11 +165,6 @@ export default {
     setTrack(t) {
       // И добавляем его в массив треков
       this.tracks.push(t)
-    },
-
-    // Получаем с доч.компонента выбранных авторов для релизов
-    selectedAuthors(a) { 
-      this.authors = a
     },
 
     // Получаем с доч.компонента выбранные теги релиза
@@ -174,6 +193,7 @@ export default {
 
   .input-wrap {
     grid-area: input;
+    width: 200px;
   }
 
 

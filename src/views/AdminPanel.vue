@@ -8,7 +8,6 @@
 
     <hr>
 
-    <AddNewRelease />
 
     <hr>
 
@@ -21,12 +20,11 @@
 
 <script>
 import AddNewAuthor from '@/components/admin-panel/AddNewAuthor.vue'
-import AddNewRelease from '@/components/admin-panel/AddNewRelease.vue'
 import AddNewVideo from '@/components/admin-panel/AddNewVideo.vue'
 export default {
   name: 'Admin-panel',
   components: {
-    AddNewAuthor, AddNewRelease, AddNewVideo
+    AddNewAuthor, AddNewVideo
   },
   
 }
