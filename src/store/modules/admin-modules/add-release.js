@@ -30,12 +30,45 @@ export default {
     setStatusForRelease(state, statusMessage) {
       state.statusForRelease = statusMessage
     },
+
+
+    // Добавляет 1 трек в массив
+    pushTrack(s, track) {
+
+      // Если нету нумерации трека (теги не проставлены в альбоме, то ставим номер исходя из кол-ва значений в массиве)
+      if (track.number == 0) {
+        track.number = s.tracks.length + 1
+      }
+
+      s.tracks.push(track)
+    },
+
+    // ! Подменяет массив трек (! пока не знаю зачем мне этот метотд)
+    setTracks(s, tracks) {
+      s.tracks = tracks
+    },
+    clearTracks(s) {
+      s.tracks = []
+    },
+
+    // Синхронизирует новую информацию с треком по номеру в релизе
+    syncTracksOfNumber(s, track) {
+
+      console.log(track, 'трек')
+
+      for (let i = 0; i < s.tracks.length; i++) {
+        console.log(s.tracks, 'треки')
+      }
+    }
+
   },
 
   state: {
     statusForRelease: null, // Статус о добавление нового релиза
+    tracks: [], // ! Массив сформированных треков с информацией, которые отравляем уже на бэк
   },
   getters: {
     statusForRelease: s => s.statusForRelease,
+    tracks: s=> s.tracks,
   }
 }

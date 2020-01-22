@@ -67,7 +67,6 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import CoverPrev from '@/components/admin-panel/CoverPrev.vue'
 import AddTracksPrev from '@/components/admin-panel/AddTracksPrev.vue'
 
-
 import SocialsInput from '@/components/admin-panel/SocialsInput.vue'
 import {mapActions, mapGetters} from 'vuex'
 
@@ -166,12 +165,8 @@ export default {
     // Получаем с доч.компонента трек 
     setTrack(t) {
       // И добавляем его в массив треков
+      console.log(t)
       this.tracks.push(t)
-    },
-
-    // Получаем с доч.компонента выбранные теги релиза
-    selectedTags(t) {
-      this.tags = t
     },
 
     // Получаем с дочернего компонента выбранные соц сети релиза

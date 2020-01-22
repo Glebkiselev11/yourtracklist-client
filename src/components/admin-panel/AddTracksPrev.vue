@@ -11,6 +11,8 @@
       :selected-tags="selectedTags"
     />
 
+    
+
 
     <input type="file" id="tracks" @change="sync" required accept=".mp3,audio/*">
 
@@ -24,6 +26,8 @@ import jsmediatags from 'jsmediatags' // Для вытаскивания мет�
 
 import TrackItem from '@/components/admin-panel/TrackItem.vue'
 
+import {mapMutations, mapGetters} from 'vuex'
+
 export default {
   name: 'Add-tracks-prev',
   props: [
@@ -31,17 +35,25 @@ export default {
     'selectedTags', // Тоже самое, но с тегами
   ],
   components: {
-    TrackItem, // Отвечает за 1 трека (мы их воспроизводим циклом в этом компоненте)
+    TrackItem, // Отвечает за 1 трека (мы их итерируем циклом в этом компоненте)
 
   },
   data: () => ({
     trackInfo: null, // Промежуточная информация о загруженном треке
-    tracks: [], // Треки который можно прослушать
   }),
+  computed: {
+    ...mapGetters([
+      'tracks', // ! Массив сформированных треков с информацией, которые отравляем уже на бэк
+    ])
+  },
   methods: {
+    ...mapMutations([
+      'pushTrack', // ! Добавляет 1 трек в массив
+    ]),
+
     selectAudio(file) {
-      // Отправляем в родительский компонент файл для отправки на бэк
-      this.$emit('track', file)
+      // ! Отправляем в родительский компонент файл для отправки на бэк
+      // this.$emit('track', file)
 
       let reader = new FileReader();
 
@@ -52,18 +64,17 @@ export default {
       e.preventDefault()
 
       const file = e.target.files[0]
-
+      
       // Вытаскиваем мета теги из трека (используем для этого стороннюю библиотеку jsmediatags)
       jsmediatags.read(file, {
+        
         onSuccess: (t) => {
-           
           // Добавляем информацию о треке 
           this.tracksInfo = { 
-            name: t.tags.title, // Название трека
-            number: t.tags.track, // Номер трека в альбоме
+            name: t.tags.title || null, // Название трека
+            number: t.tags.track || 0, // Номер трека в альбоме
             isPlay: false, // Информация о том включен ли этот трек или нет
-            fileName: e.target.files[0]['name'], // Полное имя файла
-            
+            fileName: file['name'], // Полное имя файла
           }
         },
         onError: function (error) {
@@ -75,12 +86,17 @@ export default {
     },
     onAudioLoad(e) {
       this.content = e.target.result;
-      
-      // Добавляем аудио файл и информацию о нем в массив
-      this.tracks.push({file: new Audio(this.content), info: this.tracksInfo})
 
-      console.log(this.tracks)
-
+      // Добавляем аудио файл и информацию о нем в массив стейта
+      this.pushTrack({
+        file: new Audio(this.content), // Сам файл трека
+        name: this.tracksInfo.name, // Название релиза
+        isPlay: false, // Информация о том включен ли этот трек или нет
+        fileName: this.tracksInfo.fileName, // Полное имя файла
+        number: this.tracksInfo.number, // Номер трека в альбоме
+        tags: [], // Теги релиза
+        authors: [], // Авторы трека
+      })
     },
 
   },

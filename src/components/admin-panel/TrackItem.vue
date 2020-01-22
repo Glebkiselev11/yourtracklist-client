@@ -3,13 +3,13 @@
   <div class="track-item" v-if="track">
       
       <!-- Оригинальное название файла, нужно чтобы мы не упустили авторов трека -->
-      <small class="track-file-name">{{track.info.fileName}}</small>
+      <small class="track-file-name">{{track.fileName}}</small>
 
       <!-- Кнопка воспроизведение и паузы у трека -->
       <span class="btn-audio-play" @click="playAudio()">
 
         <!-- Play -->
-        <svg v-show="track.info.isPlay"
+        <svg v-show="track.isPlay"
           version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 512 512">
           <g>
           </g>
@@ -18,7 +18,7 @@
         </svg>
 
         <!-- Pause -->  
-        <svg v-show="!track.info.isPlay"
+        <svg v-show="!track.isPlay"
           version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 512 512">
           <g>
           </g>
@@ -27,12 +27,9 @@
 
       </span>
       
-
-      
-
       <!-- Обертка под инпуты -->
       <span class="track-inputs-wrap">
-        <span class="track-number" >{{10 > track.info.number  ? '0' + track.info.number : track.info.number }} </span>
+        <span class="track-number" >{{10 > track.number  ? '0' + track.number : track.number }} </span>
 
         <!-- Выбираем авторов для трека -->
         <treeselect
@@ -42,9 +39,8 @@
           v-model="authors"
         />
 
-        <input class="input-name-track" type="text" v-model="track.info.name" placeholder="Название трека"/>
+        <input class="input-name-track" type="text" v-model="track.name" placeholder="Название трека"/>
         
-
         <!-- Выбираем теги для трека -->
         <treeselect
           :multiple="true"
@@ -62,6 +58,8 @@
 <script>
 import Treeselect from '@riophae/vue-treeselect' // Библиотека для выбора возможных авторов / тегов
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+
+import {mapMutations} from 'vuex'
 
 export default {
   name: 'Track-item',
@@ -82,17 +80,38 @@ export default {
   }),
 
   methods: {
+    ...mapMutations([
+      'syncTracksOfNumber', // Синхронизирует новую информацию с треком по номеру в релизе
+    ]),
+
     // Воспроизводит аудио файл
     playAudio() {
-      if (this.track.info.isPlay == false) {
-        this.track.info.isPlay = true // Указываем что мы включили аудио
+      if (this.track.isPlay == false) {
+        this.track.isPlay = true // Указываем что мы включили аудио
         this.track.file.play()  // Включаем аудио файл
       } else {
-        this.track.info.isPlay = false // Указываем что мы выключили аудио
+        this.track.isPlay = false // Указываем что мы выключили аудио
         this.track.file.pause() // Ставим на паузу аудио файл
       }
     },
+
+    // ! По команде с родителя, мы отправляем данные которые ввели в родителя, а потом и в саму форму
+    emitData() {
+
+      // Синхронизируем данные по номеру трека с массивом треков в сторе
+      this.syncTracksOfNumber({ 
+        authors: this.authors,
+        tags: this.tags,
+        name: this.track.name,
+        number: this.track.number,
+        file: this.track.file
+      })
+    }
   },
+
+
+  
+
 
   async created() {
      
@@ -117,6 +136,7 @@ export default {
 <style scoped>
 .track-item {
   margin-bottom: 5px;
+  border-radius: 4px;
   border: 1px solid black;
   padding: 5px;
   display: inline-grid;
