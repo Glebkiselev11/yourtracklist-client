@@ -48,7 +48,6 @@
       <!-- Для добавления треков -->
       <AddTracksPrev class="tracks-wrap" 
         v-if="reload"
-        @track="setTrack"
         :selected-authors="authors"
         :selected-tags="tags"
       />
@@ -68,7 +67,7 @@ import CoverPrev from '@/components/admin-panel/CoverPrev.vue'
 import AddTracksPrev from '@/components/admin-panel/AddTracksPrev.vue'
 
 import SocialsInput from '@/components/admin-panel/SocialsInput.vue'
-import {mapActions, mapGetters} from 'vuex'
+import {mapActions, mapGetters, mapMutations} from 'vuex'
 
 export default {
   name: 'Add-release',
@@ -82,8 +81,6 @@ export default {
     reload: true, // FIXME: (возможно это мы скоро удалим) Нужна чтобы заставить дочерние компоненты пересоздаться
     name: '', // Название релиза
     cover: null, // Сам файл обложки
-    tracks: [], // Массив отправляемых треков
-
     possibleAuthors: [], // Массив возможных авторов
     authors: [],  // Массив выбранных авторов для этого релиза
 
@@ -93,7 +90,10 @@ export default {
     socials: [], // Массив соц сетей, так как их может быть у релиза несколько
   }),
   computed: {
-    ...mapGetters(['statusForRelease']),
+    ...mapGetters([
+      'statusForRelease',
+      'tracks', // Массив отправляемых треков мы храним в сторе
+    ]),
   },
   async created() {
 
@@ -105,6 +105,7 @@ export default {
   },
   methods: {
     ...mapActions(['addRelease']),
+    ...mapMutations(['clearTracks']),
 
     // Добавляем новый релиз в базу данных
     async addNewRelease() {
@@ -126,7 +127,18 @@ export default {
 
       // Добавляем треки
       for (let i = 0; i < this.tracks.length; i++) {
-        formData.append('tracks', this.tracks[i])
+        formData.append('tracks', this.tracks[i].file) // Отдельно отправляем сам файл
+
+        // formData.append('tracksInfo', { // И отдельно данные о треках (в том же порядке что и файлы самих треков)
+        //   authors: this.tracks[i].authors,
+        //   tags: this.tracks[i].tags,
+        //   name: this.tracks[i].name,
+        //   number: this.tracks[i].number
+        // })
+
+        formData.append('tracksNames', this.tracks[i].name)
+        formData.append('tracksNumbers', this.tracks[i].number)
+
       }
 
       // Добавляем соц-сети
@@ -146,7 +158,7 @@ export default {
 
         this.name = ''
         this.cover = null
-        this.tracks = []
+        this.clearTracks() // Очищает треки из стора
         this.authors = []
         this.tags = []
 
@@ -160,13 +172,6 @@ export default {
     // Получаем с доч.компонента обложку
     setCover(c) {
       this.cover = c
-    },
-
-    // Получаем с доч.компонента трек 
-    setTrack(t) {
-      // И добавляем его в массив треков
-      console.log(t)
-      this.tracks.push(t)
     },
 
     // Получаем с дочернего компонента выбранные соц сети релиза

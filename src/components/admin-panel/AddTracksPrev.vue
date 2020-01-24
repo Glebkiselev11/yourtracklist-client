@@ -52,9 +52,6 @@ export default {
     ]),
 
     selectAudio(file) {
-      // ! Отправляем в родительский компонент файл для отправки на бэк
-      // this.$emit('track', file)
-
       let reader = new FileReader();
 
       reader.onload = this.onAudioLoad;
@@ -106,10 +103,6 @@ export default {
 
 <style scoped>
 
-/* Главная обертка для треков
-.tracks-prev-wrap {
-
-} */
 
 /* Нужно для скрытия инпута (вместо него мы загружаем через лейбл) */
 .tracks-prev-wrap #tracks {
@@ -133,8 +126,5 @@ export default {
   background: black;
   color: white;
 }
-
-
-
 
 </style>

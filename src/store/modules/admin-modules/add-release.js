@@ -43,29 +43,29 @@ export default {
       s.tracks.push(track)
     },
 
-    // ! Подменяет массив трек (! пока не знаю зачем мне этот метотд)
-    setTracks(s, tracks) {
-      s.tracks = tracks
+
+    
+
+    // Синхронизирует новую информацию с треком по номеру в релизе
+    // ! В будущем надо будет поработать над оптимизиацией
+    syncTracksOfNumber(s, track) {
+      for (let i = 0; i < s.tracks.length; i++) {
+        if (track.number === s.tracks[i].number) {
+          console.log('aga')
+          s.tracks[i] = track
+        }
+      }
     },
+
     clearTracks(s) {
       s.tracks = []
     },
-
-    // Синхронизирует новую информацию с треком по номеру в релизе
-    syncTracksOfNumber(s, track) {
-
-      console.log(track, 'трек')
-
-      for (let i = 0; i < s.tracks.length; i++) {
-        console.log(s.tracks, 'треки')
-      }
-    }
 
   },
 
   state: {
     statusForRelease: null, // Статус о добавление нового релиза
-    tracks: [], // ! Массив сформированных треков с информацией, которые отравляем уже на бэк
+    tracks: [], // Массив сформированных треков с информацией, которые отравляем уже на бэк
   },
   getters: {
     statusForRelease: s => s.statusForRelease,

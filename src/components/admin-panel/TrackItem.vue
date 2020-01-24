@@ -39,7 +39,7 @@
           v-model="authors"
         />
 
-        <input class="input-name-track" type="text" v-model="track.name" placeholder="Название трека"/>
+        <input class="input-name-track" type="text" v-model="trackName" placeholder="Название трека"/>
         
         <!-- Выбираем теги для трека -->
         <treeselect
@@ -75,9 +75,11 @@ export default {
     possibleAuthors: [], // Массив возможных авторов
     authors: [],  // Массив выбранных авторов для этого релиза
 
+    trackName: null, // Название трека
     possibleTags: [], // Массив возможных тегов, которые мы получаем с бэка
     tags: [], // Массив тегов, так как их может быть у релиза несколько
   }),
+
 
   methods: {
     ...mapMutations([
@@ -94,18 +96,23 @@ export default {
         this.track.file.pause() // Ставим на паузу аудио файл
       }
     },
-
-    // ! По команде с родителя, мы отправляем данные которые ввели в родителя, а потом и в саму форму
-    emitData() {
-
-      // Синхронизируем данные по номеру трека с массивом треков в сторе
-      this.syncTracksOfNumber({ 
-        authors: this.authors,
-        tags: this.tags,
-        name: this.track.name,
-        number: this.track.number,
-        file: this.track.file
-      })
+    
+  },
+  watch: {
+    $data: {
+      // Если что то поменяли в треке, то синхронизируем это с нашим стором
+      handler: function() {
+        this.syncTracksOfNumber({ 
+          authors: this.authors,
+          tags: this.tags,
+          name: this.trackName,
+          number: this.track.number,
+          file: this.track.file,
+          isPlay: this.track.isPlay,
+          fileName: this.track.fileName
+        })
+      },
+      deep: true
     }
   },
 
@@ -126,6 +133,10 @@ export default {
 
     if (this.selectedTags) {
       this.tags = this.selectedTags
+    }
+
+    if (this.track) {
+      this.trackName = this.track.name
     }
     
   },

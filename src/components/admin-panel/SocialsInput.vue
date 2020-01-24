@@ -42,8 +42,6 @@ export default {
         // Вносит в массив выбранных соц сетей
         this.socials.push(await this.checkSocialLink(link.target.value))
 
-        console.log(this.socials)
-
         link.target.value = ''; // Очищает поле (чтобы можно было внести еще одно)
       }
     },
