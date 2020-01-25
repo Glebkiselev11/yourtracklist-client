@@ -129,6 +129,8 @@ export default {
       for (let i = 0; i < this.tracks.length; i++) {
         formData.append('tracks', this.tracks[i].file) // Отдельно отправляем сам файл
 
+        console.log(this.tracks[i].file)
+        
         // formData.append('tracksInfo', { // И отдельно данные о треках (в том же порядке что и файлы самих треков)
         //   authors: this.tracks[i].authors,
         //   tags: this.tracks[i].tags,

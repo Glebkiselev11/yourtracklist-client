@@ -12,10 +12,7 @@
     />
 
     
-
-
     <input type="file" id="tracks" @change="sync" required accept=".mp3,audio/*">
-
     <label class="btn-add-track" for="tracks">Добавить трек</label>
 
   </div>
@@ -40,18 +37,22 @@ export default {
   },
   data: () => ({
     trackInfo: null, // Промежуточная информация о загруженном треке
+    file: null, // Промежуточный аудио файл
   }),
   computed: {
     ...mapGetters([
-      'tracks', // ! Массив сформированных треков с информацией, которые отравляем уже на бэк
+      'tracks', // Массив сформированных треков с информацией, которые отравляем уже на бэк
     ])
   },
   methods: {
     ...mapMutations([
-      'pushTrack', // ! Добавляет 1 трек в массив
+      'pushTrack', // Добавляет 1 трек в массив
     ]),
 
     selectAudio(file) {
+
+      this.file = file // Добавляем именно аудио файл
+
       let reader = new FileReader();
 
       reader.onload = this.onAudioLoad;
@@ -74,8 +75,8 @@ export default {
             fileName: file['name'], // Полное имя файла
           }
         },
-        onError: function (error) {
-          console.log(error);
+        onError: (error) => {
+          console.log(error)
         }
       })
 
@@ -86,7 +87,8 @@ export default {
 
       // Добавляем аудио файл и информацию о нем в массив стейта
       this.pushTrack({
-        file: new Audio(this.content), // Сам файл трека
+        file: this.file,  // Сам файл трека (который мы отправим на бэк)
+        audio: new Audio(this.content), // Делаем из него трек, который можно послушать (для предпросмотра)
         name: this.tracksInfo.name, // Название релиза
         isPlay: false, // Информация о том включен ли этот трек или нет
         fileName: this.tracksInfo.fileName, // Полное имя файла

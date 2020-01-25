@@ -90,10 +90,10 @@ export default {
     playAudio() {
       if (this.track.isPlay == false) {
         this.track.isPlay = true // Указываем что мы включили аудио
-        this.track.file.play()  // Включаем аудио файл
+        this.track.audio.play()  // Включаем аудио файл
       } else {
         this.track.isPlay = false // Указываем что мы выключили аудио
-        this.track.file.pause() // Ставим на паузу аудио файл
+        this.track.audio.pause() // Ставим на паузу аудио файл
       }
     },
     
@@ -108,6 +108,7 @@ export default {
           name: this.trackName,
           number: this.track.number,
           file: this.track.file,
+          audio: this.track.audio,
           isPlay: this.track.isPlay,
           fileName: this.track.fileName
         })
