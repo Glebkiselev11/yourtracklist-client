@@ -68,20 +68,23 @@ export default {
         
         onSuccess: (t) => {
           // Добавляем информацию о треке 
-
           this.tracksInfo = { 
             name: t.tags.title || null, // Название трека
             ordinalNumber: t.tags.track || 0, // Номер трека в альбоме
             isPlay: false, // Информация о том включен ли этот трек или нет
             fileName: file['name'], // Полное имя файла
           }
+
+          this.selectAudio(file) // Отправляем на создание аудио файла из этого трека
         },
         onError: (error) => {
           console.log(error)
         }
+
+        
       })
 
-      this.selectAudio(file)
+      
     },
     onAudioLoad(e) {
       this.content = e.target.result;
