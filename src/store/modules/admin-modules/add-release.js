@@ -36,6 +36,7 @@ export default {
       if (track.ordinalNumber == 0) {
         track.ordinalNumber = s.tracks.length + 1
       }
+      
       s.tracks.push(track)
     },
 

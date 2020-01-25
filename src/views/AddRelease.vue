@@ -125,9 +125,10 @@ export default {
 
         // И отдельно информацию о треках
         formData.append('tracksNames', this.tracks[i].name)
-        formData.append('trackOrdinalNumbers', this.tracks[i].ordinalNumber)
-        formData.append('trackTags', this.tracks[i].tags)
-        formData.append('trackAuthors', this.tracks[i].authors )
+        formData.append('tracksOrdinalNumbers', this.tracks[i].ordinalNumber)
+        formData.append('tracksTags', this.tracks[i].tags)
+        formData.append('tracksAuthors', this.tracks[i].authors )
+        formData.append('tracksDuratons', this.tracks[i].audio.duration )
       }
 
       // Добавляем соц-сети
