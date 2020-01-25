@@ -42,6 +42,10 @@
           @selected="selectedSoc"
         />
 
+        <div class="input-item">
+          <input type="date" id="date" v-model="releaseDate" required placeholder="Дата выхода релиза">
+        </div>
+
       </div>
 
     
@@ -82,6 +86,7 @@ export default {
     possibleTags: [], // Массив возможных тегов, которые мы получаем с бэка
     tags: [], // Массив тегов, так как их может быть у релиза несколько
     socials: [], // Массив соц сетей, так как их может быть у релиза несколько
+    releaseDate: null, // Дата выхода релиза
   }),
   computed: {
     ...mapGetters([
@@ -108,6 +113,8 @@ export default {
 
       formData.append('name', this.name) // Название релиза
       formData.append('cover', this.cover) // Обложка релиза
+      formData.append('releaseDate', this.releaseDate) // Дата выхода релиза
+      
 
       // Добавляем авторов релиза
       for (let i = 0; i < this.authors.length; i++) {

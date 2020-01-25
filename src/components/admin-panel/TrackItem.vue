@@ -9,7 +9,7 @@
       <span class="btn-audio-play" @click="playAudio()">
 
         <!-- Play -->
-        <svg v-show="track.isPlay"
+        <svg v-if="track.isPlay === true"
           version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 512 512">
           <g>
           </g>
@@ -18,7 +18,7 @@
         </svg>
 
         <!-- Pause -->  
-        <svg v-show="!track.isPlay"
+        <svg v-if="track.isPlay === false"
           version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 512 512">
           <g>
           </g>
@@ -90,6 +90,7 @@ export default {
 
     // Воспроизводит аудио файл
     playAudio() {
+      
       if (this.track.isPlay == false) {
         this.track.isPlay = true // Указываем что мы включили аудио
         this.track.audio.play()  // Включаем аудио файл
