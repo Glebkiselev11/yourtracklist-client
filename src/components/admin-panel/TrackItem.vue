@@ -29,7 +29,7 @@
       
       <!-- Обертка под инпуты -->
       <span class="track-inputs-wrap">
-        <span class="track-number" >{{10 > track.number  ? '0' + track.number : track.number }} </span>
+        <span class="track-number" >{{10 > track.ordinalNumber  ? '0' + track.ordinalNumber : track.ordinalNumber }} </span>
 
         <!-- Выбираем авторов для трека -->
         <treeselect
@@ -108,7 +108,7 @@ export default {
           authors: this.authors,
           tags: this.tags,
           name: this.trackName,
-          number: this.track.number,
+          ordinalNumber: this.track.ordinalNumber,
           file: this.track.file,
           audio: this.track.audio,
           isPlay: this.track.isPlay,

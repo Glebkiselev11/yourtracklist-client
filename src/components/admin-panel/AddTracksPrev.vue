@@ -70,7 +70,7 @@ export default {
           // Добавляем информацию о треке 
           this.tracksInfo = { 
             name: t.tags.title || null, // Название трека
-            number: t.tags.track || 0, // Номер трека в альбоме
+            ordinalNumber: t.tags.track || 0, // Номер трека в альбоме
             isPlay: false, // Информация о том включен ли этот трек или нет
             fileName: file['name'], // Полное имя файла
           }
@@ -92,7 +92,7 @@ export default {
         name: this.tracksInfo.name, // Название релиза
         isPlay: false, // Информация о том включен ли этот трек или нет
         fileName: this.tracksInfo.fileName, // Полное имя файла
-        number: this.tracksInfo.number, // Номер трека в альбоме
+        ordinalNumber: this.tracksInfo.ordinalNumber, // Номер трека в альбоме
         tags: [], // Теги релиза
         authors: [], // Авторы трека
       })

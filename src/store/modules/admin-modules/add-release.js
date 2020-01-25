@@ -33,8 +33,8 @@ export default {
     // Добавляет 1 трек в массив
     pushTrack(s, track) {
       // Если нету нумерации трека (теги не проставлены в альбоме, то ставим номер исходя из кол-ва значений в массиве)
-      if (track.number == 0) {
-        track.number = s.tracks.length + 1
+      if (track.ordinalNumber == 0) {
+        track.ordinalNumber = s.tracks.length + 1
       }
       s.tracks.push(track)
     },
@@ -42,7 +42,7 @@ export default {
     // Синхронизирует новую информацию с треком по номеру в релизе
     syncTracksOfNumber(s, track) {
       for (let i = 0; i < s.tracks.length; i++) {
-        if (track.number === s.tracks[i].number) {
+        if (track.ordinalNumber === s.tracks[i].ordinalNumber) {
           s.tracks[i] = track
         }
       }

@@ -89,16 +89,17 @@ export default {
     ]),
   },
   async created() {
-
     // При создании подгружаю:
     this.possibleAuthors = await this.$store.dispatch('getAuthors') // Всех возможных авторов
     this.possibleTags = await this.$store.dispatch('getTags') // Все возможные теги
-    
-    console.log(this.possibleAuthors)
   },
   methods: {
-    ...mapActions(['addRelease']),
-    ...mapMutations(['clearTracks']),
+    ...mapActions([
+      'addRelease', // Через него отравляем релиз в телеграм (а потом в базу данных)
+    ]),
+    ...mapMutations([
+      'clearTracks', // Нужен для удаления массива треков (после того как успешно загрузили альбом)
+    ]),
 
     // Добавляем новый релиз в базу данных
     async addNewRelease() {
@@ -115,24 +116,18 @@ export default {
 
       // Добавляем теги релиза
       for (let i = 0; i < this.tags.length; i++) {
-        formData.append('tags', this.tags[i]) // Автор(ы) релиза
+        formData.append('tags', this.tags[i]) // Теги релиза
       }
 
       // Добавляем треки
       for (let i = 0; i < this.tracks.length; i++) {
-        formData.append('tracks', this.tracks[i].file) // Отдельно отправляем сам файл
+        formData.append('tracks', this.tracks[i].file) // Отдельно отправляем сам файл трека
 
-
-        // formData.append('tracksInfo', { // И отдельно данные о треках (в том же порядке что и файлы самих треков)
-        //   authors: this.tracks[i].authors,
-        //   tags: this.tracks[i].tags,
-        //   name: this.tracks[i].name,
-        //   number: this.tracks[i].number
-        // })
-
+        // И отдельно информацию о треках
         formData.append('tracksNames', this.tracks[i].name)
-        formData.append('tracksNumbers', this.tracks[i].number)
-
+        formData.append('trackOrdinalNumbers', this.tracks[i].ordinalNumber)
+        formData.append('trackTags', this.tracks[i].tags)
+        formData.append('trackAuthors', this.tracks[i].authors )
       }
 
       // Добавляем соц-сети
