@@ -10,20 +10,19 @@
         <CoverPrev
           @cover="setCover"
           v-if="reload"
-        
         />
 
         <div class="input-item">
           <input type="text" placeholder="Название релиза" v-model="name" required>
         </div>
 
-
-        <!-- Компоненты куда мы подгружаем всех возможных авторов с базы данных -->
+        <!-- Компонент куда мы подгружаем всех возможных авторов с базы данных -->
         <treeselect
           :multiple="true"
           :options="possibleAuthors"
           placeholder="Выберите автора релиза"
           v-model="authors"
+          :required="true"
         />
         
         <br>
@@ -34,6 +33,7 @@
           :options="possibleTags"
           placeholder="Выберите теги релиза"
           v-model="tags"
+          :required="true"
         />
 
         <!-- Вводим соц сети -->
@@ -45,13 +45,12 @@
       </div>
 
     
-      <!-- Для добавления треков -->
+      <!-- Обертка под добавление треков -->
       <AddTracksPrev class="tracks-wrap" 
         v-if="reload"
         :selected-authors="authors"
         :selected-tags="tags"
       />
-
 
     <button type="submit">Добавить</button>
   </form>
@@ -59,13 +58,10 @@
 
 
 <script>
-
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-
 import CoverPrev from '@/components/admin-panel/CoverPrev.vue'
 import AddTracksPrev from '@/components/admin-panel/AddTracksPrev.vue'
-
 import SocialsInput from '@/components/admin-panel/SocialsInput.vue'
 import {mapActions, mapGetters, mapMutations} from 'vuex'
 
@@ -83,15 +79,12 @@ export default {
     cover: null, // Сам файл обложки
     possibleAuthors: [], // Массив возможных авторов
     authors: [],  // Массив выбранных авторов для этого релиза
-
     possibleTags: [], // Массив возможных тегов, которые мы получаем с бэка
     tags: [], // Массив тегов, так как их может быть у релиза несколько
-
     socials: [], // Массив соц сетей, так как их может быть у релиза несколько
   }),
   computed: {
     ...mapGetters([
-      'statusForRelease',
       'tracks', // Массив отправляемых треков мы храним в сторе
     ]),
   },
@@ -129,8 +122,7 @@ export default {
       for (let i = 0; i < this.tracks.length; i++) {
         formData.append('tracks', this.tracks[i].file) // Отдельно отправляем сам файл
 
-        console.log(this.tracks[i].file)
-        
+
         // formData.append('tracksInfo', { // И отдельно данные о треках (в том же порядке что и файлы самих треков)
         //   authors: this.tracks[i].authors,
         //   tags: this.tracks[i].tags,
@@ -150,23 +142,23 @@ export default {
       }
 
       // И отравляем на бэк все данные
-      await this.addRelease(formData)
+      const response = await this.addRelease(formData)
 
-      // TODOS: После добавления нового автора очищаем инпуты, если нету ошибки
-      if (this.statusForRelease.status === 'ok') {
+      // После добавления нового автора очищаем инпуты, если нету TODO: ошибки
+      if (response.status === 'ok') {
 
         // Откючаем дополнительные комопненты (чтобы вызвать их перерисовку)
         this.reload = false
 
+        // Задаем изначальные параметры, чтобы добавить следующий релиз
         this.name = ''
         this.cover = null
-        this.clearTracks() // Очищает треки из стора
         this.authors = []
         this.tags = []
+        this.clearTracks() // Очищает треки из стора
 
         // Cнова включаем
         setTimeout(() => { this.reload = true }, 0)
-        
       }
 
     },

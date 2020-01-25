@@ -37,9 +37,10 @@
           :options="possibleAuthors"
           placeholder="Выберите автора трека"
           v-model="authors"
+          :required="true"
         />
 
-        <input class="input-name-track" type="text" v-model="trackName" placeholder="Название трека"/>
+        <input class="input-name-track" type="text" v-model="trackName" placeholder="Название трека" required/>
         
         <!-- Выбираем теги для трека -->
         <treeselect
@@ -47,6 +48,7 @@
           :options="possibleTags"
           placeholder="Выберите теги трека"
           v-model="tags"
+          :required="true"
         />
         
       
@@ -137,7 +139,7 @@ export default {
     }
 
     if (this.track) {
-      this.trackName = this.track.name
+      this.trackName = this.track.name || null
     }
     
   },
