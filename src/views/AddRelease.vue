@@ -135,7 +135,7 @@ export default {
         formData.append('tracksOrdinalNumbers', this.tracks[i].ordinalNumber)
         formData.append('tracksTags', this.tracks[i].tags)
         formData.append('tracksAuthors', this.tracks[i].authors )
-        formData.append('tracksDuratons', this.tracks[i].audio.duration )
+        formData.append('tracksDuratons', Math.round(this.tracks[i].audio.duration)) // Сразу обрезаем плавующую точку
       }
 
       // Добавляем соц-сети
