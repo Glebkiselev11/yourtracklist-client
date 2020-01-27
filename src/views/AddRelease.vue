@@ -56,7 +56,13 @@
         :selected-tags="tags"
       />
 
-    <button type="submit">Добавить</button>
+
+    <!-- Показываем этот лоадер когда релиз добавляется (вместо кнопки) -->
+    <Loader v-if="loading"/>
+
+    <!-- Кнопка отправки релиза на сервер -->
+    <button v-else type="submit">Добавить</button>
+
   </form>
 </template>
 
@@ -64,6 +70,7 @@
 <script>
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+
 import CoverPrev from '@/components/admin-panel/CoverPrev.vue'
 import AddTracksPrev from '@/components/admin-panel/AddTracksPrev.vue'
 import SocialsInput from '@/components/admin-panel/SocialsInput.vue'
@@ -78,6 +85,7 @@ export default {
     Treeselect, // Компонент через который мы выбираем несколько авторов / тегов
   },
   data: () => ({
+    loading: false, // Нужна для отображения загрузки вместо кнопки( когда мы отправляем релиз)
     reload: true, // FIXME: (возможно это мы скоро удалим) Нужна чтобы заставить дочерние компоненты пересоздаться
     name: '', // Название релиза
     cover: null, // Сам файл обложки
@@ -144,8 +152,13 @@ export default {
         formData.append('socialsNames', this.socials[i].socialDefined) // Названия соц сетей
       }
 
+      this.loading = true // Включаем загрузку (вместо кнопки отправки)
+      
       // И отравляем на бэк все данные
       const response = await this.addRelease(formData)
+
+      this.loading = false // Получив ответ, мы выключаем загрузку
+
 
       // После добавления нового автора очищаем инпуты, если нету TODO: ошибки
       if (response.status === 'ok') {
