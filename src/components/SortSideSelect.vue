@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'Select-sort',
+  name: 'SortSideSelect',
   props: ['sorting'],
   computed: {
     sort: {

@@ -3,13 +3,13 @@
   <div class="sort-side-bar-wrap">
     
     <!-- Выбираем тип сортировки -->
-    <SelectSort 
+    <SortSideSelect 
       :sorting="this.sortingVideo"
       @sorting="setSorting"
     />
 
     <!-- Выбираем Теги -->
-    <CheckTags 
+    <SortSideCheckTags 
       :tags="videosTags"
       :select-tags="selectTagsForVideo"
       @tags="setTags"
@@ -22,12 +22,12 @@
 <script>
 import {mapGetters} from 'vuex'
 
-import SelectSort from '@/components/side-sort-bar/SelectSort.vue'
-import CheckTags from '@/components/side-sort-bar/CheckTags.vue'
+import SortSideSelect from '@/components/SortSideSelect.vue'
+import SortSideCheckTags from '@/components/SortSideCheckTags.vue'
 
 export default {
-  name: 'Sort-side-bar',
-  components: {SelectSort, CheckTags},
+  name: 'SortSideVideoArchive',
+  components: {SortSideSelect, SortSideCheckTags},
   computed: {
     ...mapGetters([
       'videosTags', // Доступные теги видео записей

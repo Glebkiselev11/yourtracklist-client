@@ -44,7 +44,7 @@
 
 
 <script>
-import SearchResult from '@/components/search/Search-result.vue'
+import SearchResult from '@/components/SearchResult.vue'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {

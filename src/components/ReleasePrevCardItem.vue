@@ -1,8 +1,8 @@
 <template>
-  <!-- Компонент одного итема предпросмотра карточки релиза, он много где используется и наверное будет общий и для миксов -->
+  <!-- Компонент одного итема предпросмотра карточки релиза -->
   <div class="release-item">
     <!-- Передаем в компонент отвечающий за отображание тегов - массив с тегами -->
-    <PrevTagsHeader
+    <TagsPrevHeader
       link-to="/releases-archive/"
       @close="$emit('close')"
       :tags-array="release.tags"
@@ -22,13 +22,13 @@
 
 <script>
 import PrevInfo from '@/components/app/PrevInfo.vue'
-import PrevTagsHeader from '@/components/app/tags/PrevTagsHeader.vue'
+import TagsPrevHeader from '@/components/TagsPrevHeader.vue'
 
 export default {
-  name: 'Release-prev-card-item',
+  name: 'ReleasePrevCardItem',
   props: ['release'],
   components: {
-    PrevInfo, PrevTagsHeader
+    PrevInfo, TagsPrevHeader
   },
   methods: {
     // Открывает релиз (по клику на обложку)

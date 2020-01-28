@@ -11,9 +11,6 @@
       <li class="navbar-link-item"> 
         <router-link to="/video-archive">Видео</router-link> 
       </li>
-      <li class="navbar-link-item"> 
-        <router-link to="#">Миксы</router-link> 
-      </li>
     </ul>
 
     <!-- Поиск по сайту -->
@@ -38,7 +35,7 @@
 </template>
 
 <script>
-import Search from '@/components/search/Search.vue'
+import Search from '@/components/Search.vue'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -64,7 +61,6 @@ export default {
 
 <style scoped>
   
-
   .navbar-wrap {
     max-width: 1200px;
     margin: 0 auto 20px auto;
@@ -82,11 +78,11 @@ export default {
   .navbar-link-list {
     display: flex;
     margin-left: 175px;
-    width: 380px;
+    width: 230px;
     justify-content: space-between;
   }
   .navbar-link-item a {
-    font-size: 25px;
+    font-size: 1.55rem;
   }
 
   .navbar-link-item a:hover {

@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: 'Min-max-tracks',
+  name: 'SortSideReleasesArchiveMinMaxTracks',
   props: [
     'minTracks', // Минимальное кол-во треков в релизах
     'maxTracks', // Максимальное кол-во треков в релизах

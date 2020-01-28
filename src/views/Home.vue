@@ -5,7 +5,7 @@
     <Hero />
 
     <!-- Промо блок с архивом релизов, где выводим 4 последних релиза -->
-    <ReleaseArchivePrev 
+    <ReleasePrevArchive 
       :four-latest-releases="this.fourLatestReleases"
       :count="5" 
     />
@@ -17,27 +17,22 @@
       :count="5"
     />
 
-    <!-- Промо блок с миксами, где выводим 4 рандомных микса -->
-    <MixesHome />
 
-    <!-- Промо блок с лейблом, где выводим 4 рандомных релиза лейбла -->
-    <!-- <LabelHome /> -->
   </div>
 </template>
 
 <script>
-import Hero from '@/components/home/Hero.vue'
-import ReleaseArchivePrev from '@/components/app/music/ReleaseArchivePrev.vue'
+import Hero from '@/components/Hero.vue'
+import ReleasePrevArchive from '@/components/ReleasePrevArchive.vue'
 import VideoArchivePrev from '@/components/app/video/VideoArchivePrev.vue'
-import MixesHome from '@/components/home/MixesHome.vue'
-// import LabelHome from '@/components/home/LabelHome.vue'
+
 import {mapGetters} from 'vuex'
 
 export default {
   name: 'Home',
   components: {
-    // LabelHome,
-    ReleaseArchivePrev, VideoArchivePrev, MixesHome, Hero
+
+    ReleasePrevArchive, VideoArchivePrev, Hero
   },
   async mounted() {
     // При загрузке компонента вызываем релизы, видео для главной страницы

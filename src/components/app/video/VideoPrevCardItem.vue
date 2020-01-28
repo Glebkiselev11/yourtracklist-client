@@ -2,7 +2,7 @@
   <!-- Компонент итема видео, который мы используем на странице автора, в архиве видео. -->
   <div class="video-item">
     <!-- Передаем в компонент отвечающий за отображание тегов - массив с тегами -->
-    <PrevTagsHeader
+    <TagsPrevHeader
       link-to="/video-archive/"
       :tags-array="video.tags"
       @close="$emit('close')"
@@ -22,7 +22,7 @@
 
 
         <!-- Компонент который отображает длительность видео -->
-        <PrevVideoInfo 
+        <VideoPrevInfo 
           :duration="video.duration"
         />
       </a>
@@ -42,15 +42,15 @@
 </template>
 
 <script>
-import PrevVideoInfo from '@/components/app/video/PrevVideoInfo.vue'
-import PrevTagsHeader from '@/components/app/tags/PrevTagsHeader.vue'
+import VideoPrevInfo from '@/components/app/video/VideoPrevInfo.vue'
+import TagsPrevHeader from '@/components/TagsPrevHeader.vue'
 import PrevInfo from '@/components/app/PrevInfo.vue'
 import VideoPlayButton from '@/components/app/video/VideoPlayButton.vue'
 export default {
   name: 'video-prev-card-item',
   props: ['video'],
   components: {
-    PrevVideoInfo, PrevInfo, VideoPlayButton, PrevTagsHeader
+    VideoPrevInfo, PrevInfo, VideoPlayButton, TagsPrevHeader
   },
   methods: {
     // Открывает видео

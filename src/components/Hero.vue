@@ -16,11 +16,7 @@
 
 <script>
 export default {
-  name: 'Hero',
-
-  components: {
-  },
-  computed: {},
+  name: 'Hero'
   
 }
 </script>

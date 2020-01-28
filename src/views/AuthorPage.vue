@@ -44,7 +44,7 @@
       
 
     <!-- Здесь показываем 4 релиза автора -->
-    <ReleaseArchivePrev
+    <ReleasePrevArchive
       v-show="this.fourLastReleasesForAuthor.length" 
       :author-permalink="authorInfo.permalink"
       :four-latest-releases="this.fourLastReleasesForAuthor"
@@ -66,7 +66,7 @@
 
 <script>
 import VideoArchivePrev from '@/components/app/video/VideoArchivePrev.vue'
-import ReleaseArchivePrev from '@/components/app/music/ReleaseArchivePrev.vue'
+import ReleasePrevArchive from '@/components/ReleasePrevArchive.vue'
 import {mapGetters} from 'vuex'
 export default {
   name: 'Author-page',
@@ -75,7 +75,7 @@ export default {
     fakeLastFourRel: []
   }),
   components: {
-    ReleaseArchivePrev, VideoArchivePrev
+    ReleasePrevArchive, VideoArchivePrev
   },
   async created() {
     await this.$store.dispatch('getAuthorById', this.$route.params.permalink)

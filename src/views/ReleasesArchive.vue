@@ -22,7 +22,7 @@
     <div class="container">
 
       <!-- Боковая сортировка -->
-      <SideBarForReleases />
+      <SortSideReleasesArchive />
       
       <!-- Прелоадер -->
       <Loader v-if="loading"/>
@@ -33,11 +33,11 @@
         <!-- Количество найденых релизов -->
         <span class="number-of-releases" v-if="count > 0">{{countText}}</span>
 
-        <!-- Сюда итерируем сами релизы / миксы -->
+        <!-- Сюда итерируем сами релизы -->
         <div class="archive-wrap">
 
-          <!-- Итерируемый итем -->
-          <ReleaseItem 
+          <!-- Итерируемый итем карточки релиза -->
+          <ReleasePrevCardItem 
             v-for="(release, index) of releases"
             :key="index"
             :release="release"
@@ -65,8 +65,8 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import SideBarForReleases from '@/components/side-sort-bar/SideBarForReleases.vue'
-import ReleaseItem from '@/components/app/music/ReleasePrevCardItem.vue'
+import SortSideReleasesArchive from '@/components/SortSideReleasesArchive.vue'
+import ReleasePrevCardItem from '@/components/ReleasePrevCardItem.vue'
 import paginationMixin from '@/mixins/pagination.mixin.js'
 
 export default {
@@ -76,8 +76,8 @@ export default {
   }),
   mixins: [ paginationMixin ], // Тут мы инициализируем миксин который нужен для пагинации
   components: {
-    SideBarForReleases, // Боковая панель с фильтрами и сортировками
-    ReleaseItem, // Итем релиза
+    SortSideReleasesArchive, // Боковая панель с фильтрами и сортировками
+    ReleasePrevCardItem, // Итем релиза
   },
   computed: {
     ...mapGetters([

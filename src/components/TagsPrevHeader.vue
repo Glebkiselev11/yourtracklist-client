@@ -1,6 +1,6 @@
 <template>
   <!-- Компонент для шапки тегов, которая отображается над обложкой релиза, 
-  микса в предпросмотрева, то есть на главной, или же в поиске  -->
+  видео в предпросмотрева, то есть на главной, или же в поиске  -->
   <div class="release-tags">
     <span 
       v-for="(tag, index) in this.tagsArray"
@@ -17,7 +17,7 @@
 <script>
 
   export default {
-    name: 'Prev-tags-header',
+    name: 'TagsPrevHeader',
     props: ['tagsArray', 'linkTo'],
     methods: {
       // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)

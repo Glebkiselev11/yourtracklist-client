@@ -14,7 +14,7 @@
     <div class="releases-wrap">
       
       <!-- Итерируем карточку релиза -->
-      <ReleaseItem 
+      <ReleasePrevCardItem 
         v-for="(release, index) of fourLatestReleases"
         :key="index"
         :release="release"
@@ -27,7 +27,7 @@
 
 <script>
 import TopBar from '@/components/app/TopBar.vue'
-import ReleaseItem from '@/components/app/music/ReleasePrevCardItem.vue'
+import ReleasePrevCardItem from '@/components/ReleasePrevCardItem.vue'
 
 export default {
   name: 'ReleaseArchivePrev',
@@ -38,7 +38,7 @@ export default {
     'count', // Сколько релизов всего у автора
   ],
   components: {
-    TopBar, ReleaseItem
+    TopBar, ReleasePrevCardItem
   },
   
   methods: {

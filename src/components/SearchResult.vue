@@ -36,7 +36,7 @@
           :title="'Показать все результаты'"
         />
 
-        <ReleaseItem
+        <ReleasePrevCardItem
           v-for="(release, index) of searchReleases"
           :key="index"
           :release="release"
@@ -78,7 +78,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import ReleaseItem from '@/components/app/music/ReleasePrevCardItem.vue'
+import ReleasePrevCardItem from '@/components/ReleasePrevCardItem.vue'
 import VideoItem from '@/components/app/video/VideoPrevCardItem.vue'
 import AnimationButton from '@/components/app/AnimationButton'
 
@@ -88,7 +88,7 @@ export default {
     'searchQuery', // Поисковой запрос по которому мы нашли релизы / авторов / видео
   ],
   components: {
-    ReleaseItem, // Карточка релиза
+    ReleasePrevCardItem, // Карточка релиза
     VideoItem, // Карточка видео
     AnimationButton, // Кнопка 'показать больше'
   },
@@ -209,10 +209,6 @@ export default {
     padding-bottom: 5em; 
   }
 
-  /* Боковая панель результатов (пока для авторов используется) */
-  .search-sidebar-result {
-    /* Здесь стили не нужны */
-  }
 
   /* Для вывода авторов */
   .search-authors-list {

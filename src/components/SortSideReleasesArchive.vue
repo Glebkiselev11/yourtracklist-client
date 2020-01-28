@@ -3,13 +3,13 @@
   <div class="sort-side-bar-wrap">
     
     <!-- Выбираем тип сортировки -->
-    <SelectSort 
+    <SortSideSelect 
       :sorting="this.sortingReleases"
       @sorting="setSorting"
     />
 
     <!-- Вибираем количество треков в релизе -->
-    <MinMaxTracks 
+    <SortSideReleasesArchiveMinMaxTracks 
       :min-tracks="this.minTracksOfReleases"
       :max-tracks="this.maxTracksOfReleases"
       :range-number-of-tracks="this.rangeNumberOfTracks"
@@ -18,7 +18,7 @@
     />
 
     <!-- Выбираем Теги -->
-    <CheckTags 
+    <SortSideCheckTags 
       :tags="releasesTags"
       :select-tags="selectTagsForReleases"
       @tags="setTags"
@@ -31,16 +31,16 @@
 <script>
 import {mapGetters} from 'vuex'
 
-import SelectSort from '@/components/side-sort-bar/SelectSort.vue'
-import CheckTags from '@/components/side-sort-bar/CheckTags.vue'
-import MinMaxTracks from '@/components/side-sort-bar/MinMaxTracks.vue'
+import SortSideSelect from '@/components/SortSideSelect.vue'
+import SortSideCheckTags from '@/components/SortSideCheckTags.vue'
+import SortSideReleasesArchiveMinMaxTracks from '@/components/SortSideReleasesArchiveMinMaxTracks.vue'
 
 export default {
-  name: 'Sort-side-bar',
+  name: 'SortSideReleasesArchive',
   components: { 
-    SelectSort, 
-    CheckTags, 
-    MinMaxTracks,
+    SortSideSelect, 
+    SortSideCheckTags, 
+    SortSideReleasesArchiveMinMaxTracks,
   },
   computed: {
     ...mapGetters([

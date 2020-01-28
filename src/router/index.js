@@ -60,20 +60,12 @@ const router = new Router({
       meta: {layout: 'main', auth: true},
       component: () => import('@/views/AdminPanel.vue')
     },
-    // ! Новая тестовая страница, через которую мы тестируем добавление релеза в телеграм
     {
       path: '/add-release',
       name: 'Add-release',
       meta: {layout: 'main', auth: true},
       component: () => import('@/views/AddRelease.vue')
     }
-
-    // {
-    //   path: '/authorization',
-    //   name: 'Authorization',
-    //   meta: {layout: 'empty'},
-    //   component: () => import('./views/Authorization.vue')
-    // }, 
 
   ]
 })

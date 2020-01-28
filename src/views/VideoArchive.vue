@@ -22,7 +22,7 @@
     <div class="container">
 
       <!-- Боковая панель с сортировкой -->
-      <SideBarForVideo />
+      <SortSideVideoArchive />
       
       <!-- Прелоадер -->
       <Loader v-if="loading"/>
@@ -66,7 +66,7 @@
 
 <script> 
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import SideBarForVideo from '@/components/side-sort-bar/SideBarForVideo.vue'
+import SortSideVideoArchive from '@/components/SortSideVideoArchive.vue'
 import paginationMixin from '@/mixins/pagination.mixin.js'
 import VideoItem from '@/components/app/video/VideoPrevCardItem.vue'
 
@@ -76,7 +76,7 @@ export default {
     loading: true, // Визуальное отображение загрузки
   }),
   components: {
-    SideBarForVideo,
+    SortSideVideoArchive,
     VideoItem 
   },
   mixins: [ paginationMixin ], // Тут мы инициализируем миксин который нужен для пагинации
