@@ -8,7 +8,7 @@
       :tags-array="release.tags"
     />
 
-    <img class="release-image" :src="release.cover" alt="cover" @click="openRelease(release.authors, release.permalink)">
+    <img class="release-image" :src="release.prev_cover" alt="cover" @click="openRelease(release.authors, release.permalink)">
     <PrevInfo 
       @close="$emit('close')"
       :date="release.date"

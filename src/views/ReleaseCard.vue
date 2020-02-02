@@ -8,7 +8,7 @@
     <!-- Обертка под сам релиз (обложка и информация) -->
     <div v-else class="release-wrap">
       <!-- Обложка -->
-      <img class="release-cover" :src="releaseInfo.cover" alt="cover">
+      <img class="release-cover" :src="releaseInfo.original_cover" alt="cover">
 
       <!-- Информация о релизе, которая располагается справа от обложки -->
       <div class="release-info-wrap">
@@ -48,11 +48,11 @@
           <div class="duration-item">
             <p>Продолжительность</p>
             <div class="duration-value">
-              <span v-if="releaseInfo.duration.hours">{{releaseInfo.duration.hours + ':' + releaseInfo.duration.minutes + ':' + releaseInfo.duration.seconds}}</span>
-              <span v-else>{{releaseInfo.duration.minutes + ':' + releaseInfo.duration.seconds}}</span>
+              <span>{{ computedDuration }}</span>
             </div>  
-            
+          
           </div>
+          
           
           
         </div>
@@ -123,7 +123,25 @@ export default {
   },
   computed: {
     // Тут мы его получаем
-    ...mapGetters(['releaseInfo'])
+    ...mapGetters([
+      'releaseInfo' // Информация о релизе
+    ]),
+
+    // Через этот метод превращаем секунды например 90 в 01:30
+    computedDuration() {
+      let duration = this.releaseInfo.duration
+
+      let minute = Math.floor(duration / 60)
+      let sec = duration % 60
+      
+      let hour = null
+      if (minute > 60) {
+        hour = Math.floor(minute / 60)
+        minute = minute % 60
+      }
+
+      return `${hour ? hour + ':': ''}${minute < 10 ? '0' + minute : minute}:${sec < 10 ? '0' + sec : sec}`
+    }
   },
   methods: {
     // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)
@@ -139,6 +157,7 @@ export default {
 </script>
 
 <style scoped>
+  
 
   .wrap {
     width: 100%;

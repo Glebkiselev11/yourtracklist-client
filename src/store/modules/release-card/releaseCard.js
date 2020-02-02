@@ -21,11 +21,11 @@ export default {
     },
 
     clearReleaseInfo(state) {
-      state.releaseInfo = undefined
+      state.releaseInfo = null
     }
   },
   state: {
-    releaseInfo: undefined, // Текущая информация о релизе
+    releaseInfo: null, // Текущая информация о релизе
   },
 
   getters: {
