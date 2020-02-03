@@ -8,7 +8,12 @@
     <!-- Обертка под сам релиз (обложка и информация) -->
     <div v-else class="release-wrap">
       <!-- Обложка -->
-      <img class="release-cover" :src="releaseInfo.original_cover" alt="cover">
+      <img 
+        v-show="releaseInfo"
+        class="release-cover" 
+        :src="releaseInfo.original_cover" 
+        alt="cover"
+      >
 
       <!-- Информация о релизе, которая располагается справа от обложки -->
       <div class="release-info-wrap">
@@ -164,22 +169,21 @@ export default {
     min-height: 550px;
     margin-top: 110px;
     margin-bottom: 200px;
-    display: flex;
     box-sizing: content-box;
   }
 
  
   .release-wrap {
     margin-top: 82px;
-    margin-left: 130px;
     width: 100%;
     display: flex;
     
   }
 
   .release-cover {
-    width: 348px;
+    min-width: 348px;
     height: 348px;
+    background: grey;
   }
 
 
