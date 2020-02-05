@@ -53,7 +53,7 @@
           <div class="duration-item">
             <p>Продолжительность</p>
             <div class="duration-value">
-              <span>{{ computedDuration }}</span>
+              <span>{{ computedDuration(releaseInfo.duration) }}</span>
             </div>  
           
           </div>
@@ -90,6 +90,32 @@
           </div>
         </div>
         
+        <!-- Треки для релиза -->
+        <div class="release-tracks-wrap">
+          <span
+            v-for="(track, i) of releaseTracks"
+            :key="i"
+            class="release-track-item"
+          >
+            <!-- Название трека -->
+            <div>
+              <span 
+              v-for="(author, y) of track.authors_name"
+              :key="y"
+              >
+                {{author}}
+              </span>
+               —
+              <span>{{track.name}}</span>
+
+            </div>
+
+            <!-- Длительность трека -->
+            <span>{{computedDuration(track.duration)}}</span>
+
+          </span>
+        </div>
+        
 
 
       </div>
@@ -107,10 +133,10 @@ export default {
   async created() {
     // При загрузке карточки релиза, мы из адресной строки вытаскиваем ссылку автора и ссылку релиза
     const author = this.$route.params.author_permalink
-    const release = this.$route.params.release_permalink
+    const releasePermalink = this.$route.params.release_permalink
 
     // и по ним запрашиваем с бэкенда нужный релиз
-    await this.$store.dispatch('getReleaseInfo', {author, release})
+    await this.$store.dispatch('getReleaseInfo', {author, releasePermalink})
   },
   watch: {
     // Следит за изменениями роутера (нужно если ссылка изменилась (из поиска) открыть новый альбом)
@@ -120,21 +146,29 @@ export default {
 
       // После вытаскиваем из роутера данные, по которым получим релиз
       const author = this.$route.params.author_permalink
-      const release = this.$route.params.release_permalink
+      const releasePermalink = this.$route.params.release_permalink
 
       // и по ним запрашиваем с бэкенда нужный релиз
-      await this.$store.dispatch('getReleaseInfo', {author, release})
+      await this.$store.dispatch('getReleaseInfo', {author, releasePermalink})
     }
   },
   computed: {
     // Тут мы его получаем
     ...mapGetters([
-      'releaseInfo' // Информация о релизе
+      'releaseInfo', // Информация о релизе
+      'releaseTracks', // Треки релиза (пока только информация о треках, без файлов)
     ]),
 
-    // Через этот метод превращаем секунды например 90 в 01:30
-    computedDuration() {
-      let duration = this.releaseInfo.duration
+   
+  },
+  methods: {
+    // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)
+    routerTo(linkTo, tag) {
+      this.$router.push({ path: linkTo , query: { ...this.$route.query, tag }})
+    },
+
+     // Через этот метод превращаем секунды например 90 в 01:30
+    computedDuration(duration) {
 
       let minute = Math.floor(duration / 60)
       let sec = duration % 60
@@ -146,12 +180,6 @@ export default {
       }
 
       return `${hour ? hour + ':': ''}${minute < 10 ? '0' + minute : minute}:${sec < 10 ? '0' + sec : sec}`
-    }
-  },
-  methods: {
-    // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)
-    routerTo(linkTo, tag) {
-      this.$router.push({ path: linkTo , query: { ...this.$route.query, tag }})
     }
   },
   beforeDestroy() {
@@ -271,5 +299,22 @@ export default {
     margin-left: 65px;
   }
 
+
+
+  /* Обертка под треки релиза */
+  .release-tracks-wrap {
+    margin-top: 50px;
+    border-top: 1px solid black;
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .release-track-item {
+    line-height: 2em;
+    display: flex;
+    justify-content: space-between;
+
+  }
 
 </style>
