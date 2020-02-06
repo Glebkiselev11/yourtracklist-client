@@ -26,17 +26,18 @@ import VideoItem from '@/components/app/video/VideoPrevCardItem.vue'
 
 export default {
   name: 'Video-prev-author',
+  components: {
+    TopBar, VideoItem
+  },
+
   props: [
     'fourLatestVideo', // Четыре видео (их может быть меньше, если например тут видео для определенного автора а у автора всего их 3 например)
     // * Нижние пропсы нужны только в том случае когда мы этот компонент используем на странице автора
     'authorPermalink', // Ссылка на автора
     'count', // Сколько видео всего у автора
   ],
-  components: {
-    TopBar, VideoItem
-  },
-  methods: {
 
+  methods: {
     // Переходит к видео
     routerTo() {
       // Если в компонент был переданана ссылка на автора, то переходим к видео записям определенного автора
@@ -46,8 +47,8 @@ export default {
         // Иначе просто переходим к видео
         this.$router.push({ path: '/video-archive'})
       }
-      
     }
+    
   },
 }
 </script>

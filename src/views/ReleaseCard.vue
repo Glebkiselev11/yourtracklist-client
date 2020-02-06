@@ -130,14 +130,15 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'Release-card',
 
-  async created() {
-    // При загрузке карточки релиза, мы из адресной строки вытаскиваем ссылку автора и ссылку релиза
-    const author = this.$route.params.author_permalink
-    const releasePermalink = this.$route.params.release_permalink
-
-    // и по ним запрашиваем с бэкенда нужный релиз
-    await this.$store.dispatch('getReleaseInfo', {author, releasePermalink})
+  computed: {
+    // Тут мы его получаем
+    ...mapGetters([
+      'releaseInfo', // Информация о релизе
+      'releaseTracks', // Треки релиза (пока только информация о треках, без файлов)
+    ]),
   },
+
+  
   watch: {
     // Следит за изменениями роутера (нужно если ссылка изменилась (из поиска) открыть новый альбом)
     async '$route' () {
@@ -152,15 +153,21 @@ export default {
       await this.$store.dispatch('getReleaseInfo', {author, releasePermalink})
     }
   },
-  computed: {
-    // Тут мы его получаем
-    ...mapGetters([
-      'releaseInfo', // Информация о релизе
-      'releaseTracks', // Треки релиза (пока только информация о треках, без файлов)
-    ]),
 
-   
+  async created() {
+    // При загрузке карточки релиза, мы из адресной строки вытаскиваем ссылку автора и ссылку релиза
+    const author = this.$route.params.author_permalink
+    const releasePermalink = this.$route.params.release_permalink
+
+    // и по ним запрашиваем с бэкенда нужный релиз
+    await this.$store.dispatch('getReleaseInfo', {author, releasePermalink})
   },
+
+  beforeDestroy() {
+    // После закрытия мы очищаем стор от загруженного релиза
+    this.$store.commit('clearReleaseInfo') // Релиз
+  },
+
   methods: {
     // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)
     routerTo(linkTo, tag) {
@@ -169,7 +176,6 @@ export default {
 
      // Через этот метод превращаем секунды например 90 в 01:30
     computedDuration(duration) {
-
       let minute = Math.floor(duration / 60)
       let sec = duration % 60
       
@@ -182,10 +188,7 @@ export default {
       return `${hour ? hour + ':': ''}${minute < 10 ? '0' + minute : minute}:${sec < 10 ? '0' + sec : sec}`
     }
   },
-  beforeDestroy() {
-    // После закрытия мы очищаем стор от загруженного релиза
-    this.$store.commit('clearReleaseInfo') // Релиз
-  }
+  
 }
 </script>
 

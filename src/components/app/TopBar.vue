@@ -16,13 +16,16 @@
 import AnimationButton from '@/components/app/AnimationButton'
 export default {
   name: 'TopBar',
+
+  components: {
+    AnimationButton
+  },
+
   props: [
     'title', // Заголовок
     'count', // Количество всего релизов / видео (от этого зависит показываем ли мы кнопку или нет)
   ],
-  components: {
-    AnimationButton
-  },
+
   methods: {
     // Отправляем родительскому компоненту сигнал, что кнопка нажата
     click() {

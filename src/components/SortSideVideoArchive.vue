@@ -28,6 +28,7 @@ import SortSideCheckTags from '@/components/SortSideCheckTags.vue'
 export default {
   name: 'SortSideVideoArchive',
   components: {SortSideSelect, SortSideCheckTags},
+
   computed: {
     ...mapGetters([
       'videosTags', // Доступные теги видео записей
@@ -35,6 +36,7 @@ export default {
       'selectTagsForVideo', // Выбранные теги для поиска видео (где стоят галки)
     ])
   },
+
   methods: {
     // Прослушиваем с дочернего компонента способ сортировки
     setSorting(sorting) {

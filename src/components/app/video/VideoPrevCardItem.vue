@@ -48,10 +48,13 @@ import PrevInfo from '@/components/app/PrevInfo.vue'
 import VideoPlayButton from '@/components/app/video/VideoPlayButton.vue'
 export default {
   name: 'video-prev-card-item',
-  props: ['video'],
+  
   components: {
     VideoPrevInfo, PrevInfo, VideoPlayButton, TagsPrevHeader
   },
+
+  props: ['video'],
+  
   methods: {
     // Открывает видео
     openVideo(authors, permalink) {

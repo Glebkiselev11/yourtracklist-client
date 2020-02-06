@@ -35,9 +35,11 @@
 <script>
 export default {
   name: 'Cover-prev',
+
   data: () => ({
     coverPrev: '', // Предпросмотр картинки
   }),
+
   methods: {
     // Нужно для предпросмотра обложки
     selectImage (file) {
@@ -64,6 +66,7 @@ export default {
       this.$emit('cover', null)
     }
   },
+  
 }
 </script>
 

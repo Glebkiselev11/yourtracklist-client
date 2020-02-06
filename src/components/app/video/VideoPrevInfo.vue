@@ -7,13 +7,15 @@
 
 <script>
 export default {
+  name: 'VideoPrevInfo',
+  
   props: {
     duration: {
       type: String,
       required: true
     }
   },
-  name: 'VideoPrevInfo'
+  
 }
 </script>
 

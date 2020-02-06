@@ -26,16 +26,17 @@
 import AnimationButton from '@/components/app/AnimationButton'
 export default {
   name: 'Call-back',
+
   components: {
     AnimationButton
   },
+
   data: () => ({
     comment: '',
     name: ''
   }),
 
   methods: {
-
     // Отправляем в базу комментарий
     async onSubmitComment() {
       console.log(this.name)

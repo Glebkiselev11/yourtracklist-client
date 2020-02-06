@@ -71,14 +71,18 @@ import paginationMixin from '@/mixins/pagination.mixin.js'
 
 export default {
   name: 'Releases-archive',
-  data: () => ({
-    loading: true, // Визуальное отображение загрузки
-  }),
-  mixins: [ paginationMixin ], // Тут мы инициализируем миксин который нужен для пагинации
+
   components: {
     SortSideReleasesArchive, // Боковая панель с фильтрами и сортировками
     ReleasePrevCardItem, // Итем релиза
   },
+
+  mixins: [ paginationMixin ], // Тут мы инициализируем миксин который нужен для пагинации
+
+  data: () => ({
+    loading: true, // Визуальное отображение загрузки
+  }),
+
   computed: {
     ...mapGetters([
       'releases', // Карточки релизов
@@ -113,73 +117,7 @@ export default {
       return `Релизы`
     }
   },
-  methods: {
-    ...mapMutations([
-      'setAuthorPermalinkForReleases', // Устанавливает в стор пермалинк автора, если мы ищем релизы для автора
-      'clearAuthorPermalinkForReleases', // Очищает пермалинк для автора
-      'setSortingReleases', // Устанавливает тип сортировки для релизов
-      'clearSortingReleases', // Очищает тип сортировки релизов из стора
-      'setSelectTagsForReleases', // Устанавливает выбранные теги для релизов
-      'clearSelectTagsForReleases',
-      'setPageNum', // Устанавливает номер страницы пагинации
-      'setSearchQueryForReleases', // Устанавливает поисковой запрос для релизов
-      'clearSearchQueryForReleases', // Очищает поисковой запрос для релизов из стора
-      'setMinTracksOfReleases', // Уст мин значение треков
-      'clearMinTracksOfReleases', // Очищает мин кол-во треков
-      'setMaxTracksOfReleases', // Уст макс значение треков
-      'clearMaxTracksOfReleases', // Очищает макс кол-во треков
-      'clearLocalNameAuthor', // Очищает локальное имя для автора
-      'clearReleases', // Очищает загруженные релизы
-    ]),
-    ...mapActions([
-      'getReleases', // Для получения релизов
-    ]),
 
-    // Отправляет к видео записям автора
-    goToVideosAuthor() {
-      this.$router.push({ path: '/video-archive', query: {author: this.$route.query.author}})
-    }
-  },
-
-  async created() {
-
-    // При открытие в первый раз сортировки, мы смотрим что у нас есть в роуторе
-    // Нужно чтобы селектор, где мы выбираем тип сортировки - синхронизировался с адресной строкой
-    switch(this.$route.query.sorting) {
-      case 'old' : 
-        this.setSortingReleases('old')
-        break
-      case 'random' :
-        this.setSortingReleases('random')
-        break
-      case 'artist' :
-        this.setSortingReleases('artist')
-        break
-      // По-умолчанию в сторе у нас стоит сортировка "new"
-    }
-
-    // Если есть артист в query параметрах, то этого личная дискография и мы загружаем все релизы только этого автора
-    if (this.$route.query.author) this.setAuthorPermalinkForReleases(this.$route.query.author)
-    
-    // Устанавлием в store теги релизов которые выбраны (если они есть)
-    if (this.$route.query.tag) this.setSelectTagsForReleases(this.$route.query.tag)
-
-    // Устанавливаем в стор номер текущей страницы из роутера
-    this.setPageNum(+this.$route.query.page || 1)
-
-    // Устанавливаем поисковой запрос (если он есть)
-    if (this.$route.query.search) this.setSearchQueryForReleases(this.$route.query.search)
-
-    // Вносим в стор инфу из квери параметра о диапазоне треков (нужно для того, чтобы если ты выбрал диапазон треков, перезапустил страницу и все сохранилось)
-    this.setMinTracksOfReleases(this.$route.query.min)
-    this.setMaxTracksOfReleases(this.$route.query.max)
-
-    // Подгружаем с бэкенда на основе фильтров нужные релизы
-    await this.getReleases()
-    
-    // Как только загрузили все, мы выключаем лоадер
-    this.loading = false
-  },
   watch: {
     // Следит за изменениями роутера
     async '$route' (to) {
@@ -219,6 +157,46 @@ export default {
       this.loading = false
     }
   },
+
+  async created() {
+    // При открытие в первый раз сортировки, мы смотрим что у нас есть в роуторе
+    // Нужно чтобы селектор, где мы выбираем тип сортировки - синхронизировался с адресной строкой
+    switch(this.$route.query.sorting) {
+      case 'old' : 
+        this.setSortingReleases('old')
+        break
+      case 'random' :
+        this.setSortingReleases('random')
+        break
+      case 'artist' :
+        this.setSortingReleases('artist')
+        break
+      // По-умолчанию в сторе у нас стоит сортировка "new"
+    }
+
+    // Если есть артист в query параметрах, то этого личная дискография и мы загружаем все релизы только этого автора
+    if (this.$route.query.author) this.setAuthorPermalinkForReleases(this.$route.query.author)
+    
+    // Устанавлием в store теги релизов которые выбраны (если они есть)
+    if (this.$route.query.tag) this.setSelectTagsForReleases(this.$route.query.tag)
+
+    // Устанавливаем в стор номер текущей страницы из роутера
+    this.setPageNum(+this.$route.query.page || 1)
+
+    // Устанавливаем поисковой запрос (если он есть)
+    if (this.$route.query.search) this.setSearchQueryForReleases(this.$route.query.search)
+
+    // Вносим в стор инфу из квери параметра о диапазоне треков (нужно для того, чтобы если ты выбрал диапазон треков, перезапустил страницу и все сохранилось)
+    this.setMinTracksOfReleases(this.$route.query.min)
+    this.setMaxTracksOfReleases(this.$route.query.max)
+
+    // Подгружаем с бэкенда на основе фильтров нужные релизы
+    await this.getReleases()
+    
+    // Как только загрузили все, мы выключаем лоадер
+    this.loading = false
+  },
+
   // Как только мы закрываем этот раздел, мы подчищаем страницу от тегов сортировки
   beforeDestroy() {
     this.clearSortingReleases()
@@ -229,6 +207,35 @@ export default {
     this.clearMinTracksOfReleases()
     this.clearMaxTracksOfReleases()
     this.clearSearchQueryForReleases()
+  },
+
+  methods: {
+    ...mapMutations([
+      'setAuthorPermalinkForReleases', // Устанавливает в стор пермалинк автора, если мы ищем релизы для автора
+      'clearAuthorPermalinkForReleases', // Очищает пермалинк для автора
+      'setSortingReleases', // Устанавливает тип сортировки для релизов
+      'clearSortingReleases', // Очищает тип сортировки релизов из стора
+      'setSelectTagsForReleases', // Устанавливает выбранные теги для релизов
+      'clearSelectTagsForReleases',
+      'setPageNum', // Устанавливает номер страницы пагинации
+      'setSearchQueryForReleases', // Устанавливает поисковой запрос для релизов
+      'clearSearchQueryForReleases', // Очищает поисковой запрос для релизов из стора
+      'setMinTracksOfReleases', // Уст мин значение треков
+      'clearMinTracksOfReleases', // Очищает мин кол-во треков
+      'setMaxTracksOfReleases', // Уст макс значение треков
+      'clearMaxTracksOfReleases', // Очищает макс кол-во треков
+      'clearLocalNameAuthor', // Очищает локальное имя для автора
+      'clearReleases', // Очищает загруженные релизы
+    ]),
+
+    ...mapActions([
+      'getReleases', // Для получения релизов
+    ]),
+
+    // Отправляет к видео записям автора
+    goToVideosAuthor() {
+      this.$router.push({ path: '/video-archive', query: {author: this.$route.query.author}})
+    }
   },
 
 }

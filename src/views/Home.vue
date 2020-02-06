@@ -31,18 +31,20 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'Home',
   components: {
-
     ReleasePrevArchive, VideoArchivePrev, Hero
   },
+
+  computed: {
+    // Забираем значения из стора
+    ...mapGetters(['fourLatestReleases', 'fourLatestVideos'])
+  },
+
   async mounted() {
     // При загрузке компонента вызываем релизы, видео для главной страницы
     await this.$store.dispatch('getFourLatesReleases')
     await this.$store.dispatch('getFourLatesVideos')
   },
-  computed: {
-    // Забираем значения из стора
-    ...mapGetters(['fourLatestReleases', 'fourLatestVideos'])
-  },
+
   beforeDestroy() {
     // После закрытия главной страницы мы очищаем из стора загруженные данные, чтобы избежать утечки памяти
     this.$store.commit('clearFourLatesReleases') // Релизы

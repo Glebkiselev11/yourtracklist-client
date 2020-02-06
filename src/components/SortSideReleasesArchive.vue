@@ -42,6 +42,7 @@ export default {
     SortSideCheckTags, 
     SortSideReleasesArchiveMinMaxTracks,
   },
+
   computed: {
     ...mapGetters([
       'minTracksOfReleases', // Минимальное количество треков в релизах
@@ -53,6 +54,7 @@ export default {
       'releasesTags', // Доступные теги релизов
     ])
   },
+  
   methods: {
     // Прослушиваем с дочернего компонента способ сортировки
     setSorting(sorting) {

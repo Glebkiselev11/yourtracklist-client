@@ -52,14 +52,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'Add-new-vide',
   data: () => ({
     authors: [],
     tags: []
   }),
-  components: {
-  },
+
   computed: {
     ...mapGetters(['statusForVideo', 'releaseDateOfVideo', 'releaseTags']),
 
@@ -89,6 +89,7 @@ export default {
       }
     }
   },
+
   methods: {
     // Обрабатываем выбранных авторов из дочернего комопнента (AuthorSelectList)
     selectedAuthors(authors) {

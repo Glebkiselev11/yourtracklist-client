@@ -11,7 +11,9 @@
 <script>
 export default {
   name: 'SortSideSelect',
+
   props: ['sorting'],
+  
   computed: {
     sort: {
       get() {

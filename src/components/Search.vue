@@ -49,20 +49,27 @@ import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'search',
-  data: () => ({
-    searchQuery: '', // Поисковой запрос по которому мы в базе ищем нужные данные
-  }),
   components: {
     SearchResult
   },
+
+  data: () => ({
+    searchQuery: '', // Поисковой запрос по которому мы в базе ищем нужные данные
+  }),
+
   computed: {
     ...mapGetters(['searchResult'])
   },
+
   created() {
     // Как тольк открываем поиск - сразу ставим фокус на поле ввода
     setTimeout(() => this.$refs.search.focus(), 200);
-    
   },
+
+  beforeDestroy() {
+    this.clearSearchResult()
+  },
+
   methods: {
     ...mapActions(['submitSearchQuery']),
     ...mapMutations(['clearSearchResult']),
@@ -93,10 +100,6 @@ export default {
     }
   },
 
-  beforeDestroy() {
-    this.clearSearchResult()
-  },
-  
 }
 </script>
 

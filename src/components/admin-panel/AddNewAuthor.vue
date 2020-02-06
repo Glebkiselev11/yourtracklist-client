@@ -63,6 +63,15 @@ export default {
     tags: [], // Теги автора
     socialsNameListObj: {},
   }),
+
+  computed: {
+    ...mapGetters(['releaseTags', 'socialsNameList', 'statusForAuthor'])
+  },
+
+  async mounted() {
+    await this.$store.dispatch('getReleaseTags')
+  },
+  
   methods: {
     async addNewAuthor() {
 
@@ -94,12 +103,7 @@ export default {
       }
     }
   },
-  async mounted() {
-    await this.$store.dispatch('getReleaseTags')
-  },
-  computed: {
-    ...mapGetters(['releaseTags', 'socialsNameList', 'statusForAuthor'])
-  },
+  
 }
 </script>
 

@@ -26,10 +26,13 @@ import TagsPrevHeader from '@/components/TagsPrevHeader.vue'
 
 export default {
   name: 'ReleasePrevCardItem',
-  props: ['release'],
+  
   components: {
     PrevInfo, TagsPrevHeader
   },
+
+  props: ['release'],
+  
   methods: {
     // Открывает релиз (по клику на обложку)
     openRelease(authors, release) {

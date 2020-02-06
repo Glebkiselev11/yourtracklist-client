@@ -26,12 +26,22 @@ import Chip from '@/components/app/Chip.vue'
 
 export default {
   name: 'Socials-input',
-  data: () => ({
-    socials: [], // Массив введенных соц сетей
-  }),
+
   components: {
     Chip, // Чипса, которые мы итерируем
   },
+
+  data: () => ({
+    socials: [], // Массив введенных соц сетей
+  }),
+
+  watch: {
+    // Передает родителю выбранные соц сети
+    socials(socials) {
+      this.$emit('selected', socials)
+    }
+  },
+  
   methods: {
     ...mapActions(['checkSocialLink']),
 
@@ -46,18 +56,12 @@ export default {
       }
     },
 
-
     // Удаляем выбранную соц сеть
     clearSoc(index) {
       this.socials.splice(index, 1) // Удаляем из массива введенных соц сетей
     }
   },
-  watch: {
-    // Передает родителю выбранные соц сети
-    socials(socials) {
-      this.$emit('selected', socials)
-    }
-  },
+  
 
   
 

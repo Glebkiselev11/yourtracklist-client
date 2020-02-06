@@ -15,23 +15,23 @@
 </template>
 
 <script>
+export default {
+  name: 'TagsPrevHeader',
+  
+  props: ['tagsArray', 'linkTo'],
 
-  export default {
-    name: 'TagsPrevHeader',
-    props: ['tagsArray', 'linkTo'],
-    methods: {
-      // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)
-      routerTo(linkTo, tag) {
-        // И перед этим сбрасываем номер текущей страницы, чтобы не было лишних ошибок
-        this.$store.commit('setPageNum', 1)
-        this.$router.push({ query: { ...this.$route.query, page: 1 } })
-        this.$emit('close')
+  methods: {
+    // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)
+    routerTo(linkTo, tag) {
+      // И перед этим сбрасываем номер текущей страницы, чтобы не было лишних ошибок
+      this.$store.commit('setPageNum', 1)
+      this.$router.push({ query: { ...this.$route.query, page: 1 } })
+      this.$emit('close')
 
-
-        this.$router.push({ path: linkTo , query: { ...this.$route.query, tag }})
-      }
-    },
-  }
+      this.$router.push({ path: linkTo , query: { ...this.$route.query, tag }})
+    }
+  },
+}
 </script>
 
 <style scoped>

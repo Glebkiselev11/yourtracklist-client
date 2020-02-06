@@ -60,47 +60,29 @@
 <script>
 import Treeselect from '@riophae/vue-treeselect' // Библиотека для выбора возможных авторов / тегов
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-
 import {mapMutations} from 'vuex'
 
 export default {
   name: 'Track-item',
+
+  components: {
+    Treeselect // Библиотека для выбора возможных авторов и тегов трека
+  },
+
   props: [
     'track', // Объект с file (Сам аудио файл) и info(информация о треке)
     'selectedAuthors', // Авторы выбранные для релиза, ставим их по умолчанию для треков
     'selectedTags', // Теги выбранные для релиза, ставим их по умолчанию для треков
   ],
-  components: {
-    Treeselect // Библиотека для выбора возможных авторов и тегов трека
-  },
+
   data: () => ({
     possibleAuthors: [], // Массив возможных авторов
     authors: [],  // Массив выбранных авторов для этого релиза
-
     trackName: null, // Название трека
     possibleTags: [], // Массив возможных тегов, которые мы получаем с бэка
     tags: [], // Массив тегов, так как их может быть у релиза несколько
   }),
 
-
-  methods: {
-    ...mapMutations([
-      'syncTracksOfNumber', // Синхронизирует новую информацию с треком по номеру в релизе
-    ]),
-
-    // Воспроизводит аудио файл
-    playAudio() {
-      
-      if (this.track.isPlay == false) {
-        this.track.isPlay = true // Указываем что мы включили аудио
-        this.track.audio.play()  // Включаем аудио файл
-      } else {
-        this.track.isPlay = false // Указываем что мы выключили аудио
-        this.track.audio.pause() // Ставим на паузу аудио файл
-      }
-    },
-    
-  },
   watch: {
     $data: {
       // Если что то поменяли в треке, то синхронизируем это с нашим стором
@@ -120,12 +102,7 @@ export default {
     }
   },
 
-
-  
-
-
   async created() {
-     
     // При создании подгружаю:
     this.possibleAuthors = await this.$store.dispatch('getAuthors') // Всех возможных авторов
     this.possibleTags = await this.$store.dispatch('getTags') // Все возможные теги
@@ -142,8 +119,33 @@ export default {
     if (this.track) {
       this.trackName = this.track.name || null
     }
+  },
+
+  methods: {
+    ...mapMutations([
+      'syncTracksOfNumber', // Синхронизирует новую информацию с треком по номеру в релизе
+    ]),
+
+    // Воспроизводит аудио файл
+    playAudio() {
+      
+      if (this.track.isPlay == false) {
+        this.track.isPlay = true // Указываем что мы включили аудио
+        this.track.audio.play()  // Включаем аудио файл
+      } else {
+        this.track.isPlay = false // Указываем что мы выключили аудио
+        this.track.audio.pause() // Ставим на паузу аудио файл
+      }
+    },
     
   },
+  
+
+
+  
+
+
+  
 }
 </script>
 

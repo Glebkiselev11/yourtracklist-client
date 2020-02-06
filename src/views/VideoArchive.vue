@@ -72,14 +72,18 @@ import VideoItem from '@/components/app/video/VideoPrevCardItem.vue'
 
 export default {
   name: 'Video-archive',
-  data: () => ({
-    loading: true, // Визуальное отображение загрузки
-  }),
+
   components: {
     SortSideVideoArchive,
     VideoItem 
   },
+
   mixins: [ paginationMixin ], // Тут мы инициализируем миксин который нужен для пагинации
+
+  data: () => ({
+    loading: true, // Визуальное отображение загрузки
+  }),
+
   computed: {
     ...mapGetters([
       'videos', // Карточки превьюх видео
@@ -99,76 +103,13 @@ export default {
       if (this.searchQueryForVideo) {
         return `Видео по запросу <mark>${this.searchQueryForVideo}</mark>`
       } 
-        
       return `Видео`
     }
-
-  },
-  methods: {
-    ...mapMutations([
-      'setSortingVideo', // Устанавливает сортировку для видео
-      'clearSortingVideo', // Очищает сортировку
-      'setAuthorPermalinkForVideos', // Устанавливает пермалинк для автора в стор (если он есть в квери параметрах)
-      'clearAuthorPermalinkForVideos', // Очищает пермалинк
-      'setSelectTagsForVideo', // Устанавливает выбранные теги в стор
-      'clearSelectTagsForVideo', // Очищает теги
-      'setPageNum', // Устанавливает номер страницы (пагинация)
-      'setSearchQueryForVideo', // Устанавливает поисковой запрос для видео
-      'clearSearchQueryForVideo', // Очищает поисковой запрос для видео
-      'clearLocalNameAuthor', // Очищает локальное имя автора
-      'clearVideos', // Очищает видео
-
-    ]),
-    ...mapActions([
-      'getVideo', // Получает видео
-    ]),
-
-    // Метод для стрелки в самом верху, который перекидывает к релизам автора
-    goToReleasesAuthor() {
-      this.$router.push({ path: '/releases-archive', query: {author: this.$route.query.author}})
-    }
-  },
-  async created() {
-    // При открытие в раз , мы смотрим что у нас есть в роуторе
-    // Нужно чтобы селектор, где мы выбираем тип сортировки - синхронизировался с адресной строкой
-    switch(this.$route.query.sorting) {
-      case 'old' : 
-        this.setSortingVideo('old')
-        break
-      case 'random' :
-        this.setSortingVideo('random')
-        break
-      case 'artist' :
-        this.setSortingVideo('artist')
-        break
-      // По-умолчанию в сторе у нас стоит сортировка "new"
-
-    }
-
-    // Если есть артист в query параметрах, то этого личная дискография и мы загружаем все релизы только этого автора
-    if (this.$route.query.author) this.setAuthorPermalinkForVideos(this.$route.query.author)
- 
-    
-    // Устанавлием в store теги релизов которые выбраны
-    if (this.$route.query.tag) this.setSelectTagsForVideo(this.$route.query.tag)
-
-    // Устанавливаем в стор номер текущей страницы из роутера
-    this.setPageNum(+this.$route.query.page || 1)
-
-    // Устанавливаем поисковой запрос (если он есть)
-    if (this.$route.query.search) this.setSearchQueryForVideo(this.$route.query.search)
-
-    // Подгружаем с бэкенда на основе фильтров нужные видео
-    await this.getVideo()
-    
-    // Как только загрузили все, мы выключаем лоадер
-    this.loading = false
   },
 
   watch: {
     // Следит за изменениями роутера
     async '$route' (to) {
-      
       // Перед сменой роутера, чистим стор от хлама на всякий случай
       this.clearSortingVideo()
       this.clearSelectTagsForVideo()
@@ -205,6 +146,42 @@ export default {
       this.loading = false
     }
   },
+
+  async created() {
+    // При открытие в раз , мы смотрим что у нас есть в роуторе
+    // Нужно чтобы селектор, где мы выбираем тип сортировки - синхронизировался с адресной строкой
+    switch(this.$route.query.sorting) {
+      case 'old' : 
+        this.setSortingVideo('old')
+        break
+      case 'random' :
+        this.setSortingVideo('random')
+        break
+      case 'artist' :
+        this.setSortingVideo('artist')
+        break
+      // По-умолчанию в сторе у нас стоит сортировка "new"
+    }
+
+    // Если есть артист в query параметрах, то этого личная дискография и мы загружаем все релизы только этого автора
+    if (this.$route.query.author) this.setAuthorPermalinkForVideos(this.$route.query.author)
+ 
+    // Устанавлием в store теги релизов которые выбраны
+    if (this.$route.query.tag) this.setSelectTagsForVideo(this.$route.query.tag)
+
+    // Устанавливаем в стор номер текущей страницы из роутера
+    this.setPageNum(+this.$route.query.page || 1)
+
+    // Устанавливаем поисковой запрос (если он есть)
+    if (this.$route.query.search) this.setSearchQueryForVideo(this.$route.query.search)
+
+    // Подгружаем с бэкенда на основе фильтров нужные видео
+    await this.getVideo()
+    
+    // Как только загрузили все, мы выключаем лоадер
+    this.loading = false
+  },
+
   // Как только мы закрываем этот раздел, мы подчищаем страницу от тегов сортировки
   beforeDestroy() {
     this.clearSortingVideo()
@@ -214,6 +191,32 @@ export default {
     this.clearLocalNameAuthor()
     this.clearSearchQueryForVideo()
   },
+
+  methods: {
+    ...mapMutations([
+      'setSortingVideo', // Устанавливает сортировку для видео
+      'clearSortingVideo', // Очищает сортировку
+      'setAuthorPermalinkForVideos', // Устанавливает пермалинк для автора в стор (если он есть в квери параметрах)
+      'clearAuthorPermalinkForVideos', // Очищает пермалинк
+      'setSelectTagsForVideo', // Устанавливает выбранные теги в стор
+      'clearSelectTagsForVideo', // Очищает теги
+      'setPageNum', // Устанавливает номер страницы (пагинация)
+      'setSearchQueryForVideo', // Устанавливает поисковой запрос для видео
+      'clearSearchQueryForVideo', // Очищает поисковой запрос для видео
+      'clearLocalNameAuthor', // Очищает локальное имя автора
+      'clearVideos', // Очищает видео
+    ]),
+
+    ...mapActions([
+      'getVideo', // Получает видео
+    ]),
+
+    // Метод для стрелки в самом верху, который перекидывает к релизам автора
+    goToReleasesAuthor() {
+      this.$router.push({ path: '/releases-archive', query: {author: this.$route.query.author}})
+    }
+  },
+
 }
 </script>
 

@@ -78,12 +78,14 @@ import {mapActions, mapGetters, mapMutations} from 'vuex'
 
 export default {
   name: 'Add-release',
+
   components: {
     CoverPrev, // Компонент для предпросмотра обложки перед тем  как залить альбом
     AddTracksPrev, // Компонент для добавления аудио и отображения загруженных аудио перед загрузкой
     SocialsInput, // По ссылке определяет соц сеть
     Treeselect, // Компонент через который мы выбираем несколько авторов / тегов
   },
+
   data: () => ({
     loading: false, // Нужна для отображения загрузки вместо кнопки( когда мы отправляем релиз)
     reload: true, // FIXME: (возможно это мы скоро удалим) Нужна чтобы заставить дочерние компоненты пересоздаться
@@ -96,16 +98,19 @@ export default {
     socials: [], // Массив соц сетей, так как их может быть у релиза несколько
     releaseDate: null, // Дата выхода релиза
   }),
+
   computed: {
     ...mapGetters([
       'tracks', // Массив отправляемых треков мы храним в сторе
     ]),
   },
+
   async created() {
     // При создании подгружаю:
     this.possibleAuthors = await this.$store.dispatch('getAuthors') // Всех возможных авторов
     this.possibleTags = await this.$store.dispatch('getTags') // Все возможные теги
   },
+  
   methods: {
     ...mapActions([
       'addRelease', // Через него отравляем релиз в телеграм (а потом в базу данных)

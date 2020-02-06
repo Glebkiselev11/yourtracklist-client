@@ -40,14 +40,17 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'navbar',
+
+  components: {
+    Search
+  },
+  
   computed: {
     ...mapGetters([
       'searchWindow', // Отвечает за отбражение модального окна поиска
     ])
   },
-  components: {
-    Search
-  },
+  
   methods: {
     // По нажатию на логотип переходит на главную страницу
     goToHomePage() {

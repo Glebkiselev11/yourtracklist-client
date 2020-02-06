@@ -84,14 +84,17 @@ import AnimationButton from '@/components/app/AnimationButton'
 
 export default {
   name: 'search-result',
-  props: [
-    'searchQuery', // Поисковой запрос по которому мы нашли релизы / авторов / видео
-  ],
+  
   components: {
     ReleasePrevCardItem, // Карточка релиза
     VideoItem, // Карточка видео
     AnimationButton, // Кнопка 'показать больше'
   },
+
+  props: [
+    'searchQuery', // Поисковой запрос по которому мы нашли релизы / авторов / видео
+  ],
+
   computed: {
     ...mapGetters([
       'searchReleases', // Найденые три релиза по поиску
@@ -145,6 +148,16 @@ export default {
       }
     }
   },
+
+  // Когда закрываем компонент - чистим мусор в сторе
+  beforeDestroy() {
+    this.clearSearchReleases()
+    this.clearSearchReleasesCount()
+    this.clearSearchVideos()
+    this.clearSearchVideosCount()
+    this.clearSearchAuthors()
+  },
+
   methods: {
     ...mapMutations([
       'clearSearchReleases', 
@@ -176,14 +189,7 @@ export default {
 
     }
   },
-  // Когда закрываем компонент - чистим мусор в сторе
-  beforeDestroy() {
-    this.clearSearchReleases()
-    this.clearSearchReleasesCount()
-    this.clearSearchVideos()
-    this.clearSearchVideosCount()
-    this.clearSearchAuthors()
-  },
+  
 }
 </script>
 

@@ -31,18 +31,19 @@ import ReleasePrevCardItem from '@/components/ReleasePrevCardItem.vue'
 
 export default {
   name: 'ReleaseArchivePrev',
+
+  components: {
+    TopBar, ReleasePrevCardItem
+  },
+
   props: [
     'fourLatestReleases', // Четыре релиза (их может быть меньше, если например тут релизы для определенного автора а у автора всего их 3 например)
     // * Нижние пропсы нужны только в том случае когда мы этот компонент используем на странице автора
     'authorPermalink', // Ссылка на автора
     'count', // Сколько релизов всего у автора
   ],
-  components: {
-    TopBar, ReleasePrevCardItem
-  },
   
   methods: {
-
     // Переходит к релизам
     routerTo() {
       // Если в компонент был переданана ссылка на автора, то переходим к релизам определенного автора
@@ -52,8 +53,8 @@ export default {
         // Иначе просто переходим к релизам
         this.$router.push({ path: '/releases-archive'})
       }
-      
     }
+    
   },
 }
 </script>

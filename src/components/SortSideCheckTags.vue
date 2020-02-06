@@ -19,17 +19,19 @@
 <script>
 export default {
   name: 'Check-tags',
+
   props: ['tags', 'selectTags'],
+
   computed: {
     changeTags: {
       set(tags) {
         this.$emit('tags', tags)
       },
-
       get() {
         return this.selectTags
       }
     }
+    
   },
 }
 </script>

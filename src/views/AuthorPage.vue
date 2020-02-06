@@ -70,18 +70,16 @@ import ReleasePrevArchive from '@/components/ReleasePrevArchive.vue'
 import {mapGetters} from 'vuex'
 export default {
   name: 'Author-page',
+
+  components: {
+    ReleasePrevArchive, VideoArchivePrev
+  },
+
   data: () => ({
     loading: true,
     fakeLastFourRel: []
   }),
-  components: {
-    ReleasePrevArchive, VideoArchivePrev
-  },
-  async created() {
-    await this.$store.dispatch('getAuthorById', this.$route.params.permalink)
 
-    this.loading = false
-  },
   computed: {
     ...mapGetters([
       'authorInfo', // Информация о авторе, теги, ссылки
@@ -91,16 +89,14 @@ export default {
       'videosCountForAuthor', // Количество сколько всего видео у автора
     ])
   },
-  beforeDestroy() {
-    // ! После закрытия страницы автора, мы очищаем инфу о нем из стейта
-    this.$store.commit('clearAuthorInfo') // Инфа об авторе
-    this.$store.commit('clearFourLastReleasesForAuthor') // Чистим из стора инфу о релизах
-    this.$store.commit('clearFourLastVideosForAuthor') // Чистим инфу из стора о видео
+
+  async created() {
+    await this.$store.dispatch('getAuthorById', this.$route.params.permalink)
+    this.loading = false
   },
 
   // Вызывается когда маршрут, что рендерит этот компонент изменился
   async beforeRouteUpdate(to, from, next) {
-    
     // Вот эти все манипуляции в этом хуке нужны для того чтобы, если ты находясь на странице автора, выбрал из релизов другого
     // совместного автора и корректно к нему перешел, там был некий баг, но благодаря этой штуке все окич
     this.loading = true
@@ -117,6 +113,14 @@ export default {
     // И пускаем на страницу
     next()
   },
+  
+  beforeDestroy() {
+    // После закрытия страницы автора, мы очищаем инфу о нем из стейта
+    this.$store.commit('clearAuthorInfo') // Инфа об авторе
+    this.$store.commit('clearFourLastReleasesForAuthor') // Чистим из стора инфу о релизах
+    this.$store.commit('clearFourLastVideosForAuthor') // Чистим инфу из стора о видео
+  },
+
   methods: {
     // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)
     routerTo(linkTo, tag) {
@@ -124,8 +128,8 @@ export default {
     }
   },
 
-
 }
+
 </script>
 
 <style scoped>

@@ -32,6 +32,7 @@
 <script>
 export default {
   name: 'Prev-info',
+
   props: [
     'date', // Дата выпуска
     'name', // Название релиза / видео
@@ -41,6 +42,7 @@ export default {
     'url', // ссылка на внешний ресурс
     'type', // тип для которого мы используем этот компонент  (release / video)
   ],
+
   methods: {
     // Через этот метод мы переходим к карточке релиза / видео
     routerGo() {
@@ -59,8 +61,8 @@ export default {
 
       // И отправляем результат в роутер (на выходе получиться так: '/release/cat-soup+drip-133/loss-prevention')
       this.$router.push(`${pushString}/${this.permalink}`)
-      
     }
+    
   }
 }
 </script>
