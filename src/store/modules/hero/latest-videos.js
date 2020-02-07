@@ -6,7 +6,6 @@ export default {
     async getFourLatesVideos({commit}) {
       try {
         const {data} = await axios.post('/api/get-four-lates-videos')
-        console.log(data)
         commit('setFourLatesVideos', data)
       } catch(error) {
         console.log(error)

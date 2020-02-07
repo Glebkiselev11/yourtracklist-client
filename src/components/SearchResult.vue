@@ -91,9 +91,9 @@ export default {
     AnimationButton, // Кнопка 'показать больше'
   },
 
-  props: [
-    'searchQuery', // Поисковой запрос по которому мы нашли релизы / авторов / видео
-  ],
+  props: {
+    searchQuery: String, // Поисковой запрос по которому мы нашли релизы / авторов / видео
+  },
 
   computed: {
     ...mapGetters([

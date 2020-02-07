@@ -18,7 +18,10 @@
 export default {
   name: 'TagsPrevHeader',
   
-  props: ['tagsArray', 'linkTo'],
+  props: {
+    tagsArray: Array,
+    linkTo: String
+  },
 
   methods: {
     // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)

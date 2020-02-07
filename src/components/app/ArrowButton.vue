@@ -9,7 +9,7 @@
     >{{title}}</button>
 
     <!-- Если нам пришло значение forward из родительского компонента в true, то мы показываем стрелку направленную вправо  -->
-    <span class="arrow" v-if="forward">
+    <span class="arrow" v-if="forward" key="right-arrow">
       <svg width="51" height="30" viewBox="0 0 51 30" fill="none" xmlns="http://www.w3.org/2000/svg">
         <line x1="4.37114e-08" y1="15.5" x2="50" y2="15.5" :stroke="this.arrowColor"/>
         <line x1="36.3609" y1="0.653994" x2="50.2012" y2="15.0917" :stroke="this.arrowColor"/>
@@ -18,7 +18,7 @@
     </span>
 
     <!-- А иначе влево -->
-    <span class="arrow-back" v-else>
+    <span class="arrow-back" v-else key="left-arrow">
       <svg width="50" height="31" viewBox="0 0 50 31" fill="none" xmlns="http://www.w3.org/2000/svg">
         <line x1="50" y1="14.8969" x2="0.652355" y2="14.8968" :stroke="this.arrowColor"/>
         <line y1="-0.5" x2="20.3011" y2="-0.5" transform="matrix(-0.672854 -0.739775 0.703458 -0.710736 14.4697 30)" :stroke="this.arrowColor"/>
@@ -33,7 +33,17 @@
 <script>
 export default {
   name: 'Arrow-button',
-  props: ['title', 'styles', 'forward', 'arrowColor'],
+
+  props: {
+    title: String, // Текст кнопки
+    styles: String, // Сss стиль
+    forward: { // Направление стрелки 
+      type: Boolean,
+      default: true,
+    }, 
+    arrowColor: String, // Цвет стрелки
+  },
+
   methods: {
     buttonClick() {
       this.$emit('click')

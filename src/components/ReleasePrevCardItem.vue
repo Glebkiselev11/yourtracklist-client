@@ -31,7 +31,9 @@ export default {
     PrevInfo, TagsPrevHeader
   },
 
-  props: ['release'],
+  props: {
+    release: Object, 
+  },
   
   methods: {
     // Открывает релиз (по клику на обложку)

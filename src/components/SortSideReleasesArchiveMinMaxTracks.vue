@@ -43,11 +43,11 @@
 export default {
   name: 'SortSideReleasesArchiveMinMaxTracks',
 
-  props: [
-    'minTracks', // Минимальное кол-во треков в релизах
-    'maxTracks', // Максимальное кол-во треков в релизах
-    'rangeNumberOfTracks', // Диапазон доступного кол-ва треков в релизах
-  ],
+  props: {
+    minTracks: Number, // Минимальное кол-во треков в релизах
+    maxTracks: Number, // Максимальное кол-во треков в релизах
+    rangeNumberOfTracks: Array, // Диапазон доступного кол-ва треков в релизах
+  },
 
   computed: {
     // Минимальное возможное кол-во треков, мы этот показатель вытаскиваем из rangeNumberOfTracks
@@ -63,7 +63,6 @@ export default {
   methods: {
     // Методы для управления плюсом и минусом
     plusMinTracks() {
-      
       // Тут мы просто проходимся циклом по массиву и ищем первое ближайшее кол-во треков
       for(let i = 0; i < this.rangeNumberOfTracks.length; i++) {
         if (this.rangeNumberOfTracks[i] == this.minTracks) { 
@@ -71,8 +70,8 @@ export default {
           break
         }
       }
-
     },
+    
     minusMinTracks() {
       for(let i = this.rangeNumberOfTracks.length; i > 0; i--) {
         if (this.rangeNumberOfTracks[i] == this.minTracks) { 

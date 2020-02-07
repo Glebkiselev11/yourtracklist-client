@@ -14,7 +14,6 @@ export default {
           videosCount, // кол-во всего найденых видеозаписей
         }} = await axios.post('/api/search-query', {searchQuery})
 
-
         commit('setSearchReleasesCount', releasesCount)
         commit('setSearchVideosCount', videosCount)
 

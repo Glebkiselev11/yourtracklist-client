@@ -9,6 +9,9 @@
 <script>
 export default {
   name: 'Video-play-button',
-  props: ['size']
+
+  props: {
+    size: Number
+  }
 }
 </script>

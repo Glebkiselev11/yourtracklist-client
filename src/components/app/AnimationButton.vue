@@ -8,7 +8,11 @@
 <script>
 export default {
   name: 'Animation-button',
-  props: ['title'],
+
+  props: {
+    title: String
+  },
+
   methods: {
     click() {
       this.$emit('click')

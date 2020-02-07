@@ -12,7 +12,9 @@
 export default {
   name: 'SortSideSelect',
 
-  props: ['sorting'],
+  props: {
+    sorting: String,
+  },
   
   computed: {
     sort: {

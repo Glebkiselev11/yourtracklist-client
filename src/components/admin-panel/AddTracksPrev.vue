@@ -29,13 +29,12 @@ export default {
   name: 'Add-tracks-prev',
   components: {
     TrackItem, // Отвечает за 1 трека (мы их итерируем циклом в этом компоненте)
-
   },
 
-  props: [
-    'selectedAuthors', // Получаем с родителя выбранных авторов для релиза, и прокидываем их в следующим компонент отвечающий за трек
-    'selectedTags', // Тоже самое, но с тегами
-  ],
+  props: {
+    selectedAuthors: Array, // Получаем с родителя выбранных авторов для релиза, и прокидываем их в следующим компонент отвечающий за трек
+    selectedTags: Array // Тоже самое, но с тегами
+  },
 
   data: () => ({
     trackInfo: null, // Промежуточная информация о загруженном треке
@@ -54,7 +53,6 @@ export default {
     ]),
 
     selectAudio(file) {
-
       this.file = file // Добавляем именно аудио файл
 
       let reader = new FileReader();
@@ -62,6 +60,7 @@ export default {
       reader.onload = this.onAudioLoad;
       reader.readAsDataURL(file)
     },
+
     sync(e) {
       e.preventDefault()
 
@@ -85,11 +84,10 @@ export default {
           console.log(error)
         }
 
-        
       })
 
-      
     },
+
     onAudioLoad(e) {
       this.content = e.target.result;
 

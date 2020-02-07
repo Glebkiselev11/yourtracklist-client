@@ -129,8 +129,8 @@ export default {
       // либо жмем по тегам в карточках - мы дополняем эти теги в store)
       this.setSelectTagsForReleases(to.query.tag)
       this.setSortingReleases(to.query.sorting)
-      this.setMinTracksOfReleases(to.query.min)
-      this.setMaxTracksOfReleases(to.query.max)
+      this.setMinTracksOfReleases(+to.query.min)
+      this.setMaxTracksOfReleases(+to.query.max)
 
       // Устанавливаем поисковой запрос (если он есть)
       if (to.query.search) {
@@ -187,8 +187,8 @@ export default {
     if (this.$route.query.search) this.setSearchQueryForReleases(this.$route.query.search)
 
     // Вносим в стор инфу из квери параметра о диапазоне треков (нужно для того, чтобы если ты выбрал диапазон треков, перезапустил страницу и все сохранилось)
-    this.setMinTracksOfReleases(this.$route.query.min)
-    this.setMaxTracksOfReleases(this.$route.query.max)
+    this.setMinTracksOfReleases(+this.$route.query.min)
+    this.setMaxTracksOfReleases(+this.$route.query.max)
 
     // Подгружаем с бэкенда на основе фильтров нужные релизы
     await this.getReleases()

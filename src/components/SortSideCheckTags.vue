@@ -20,7 +20,10 @@
 export default {
   name: 'Check-tags',
 
-  props: ['tags', 'selectTags'],
+  props: {
+    tags: Array,
+    selectTags: Array,
+  },
 
   computed: {
     changeTags: {

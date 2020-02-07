@@ -53,7 +53,9 @@ export default {
     VideoPrevInfo, PrevInfo, VideoPlayButton, TagsPrevHeader
   },
 
-  props: ['video'],
+  props: {
+    video: Object
+  },
   
   methods: {
     // Открывает видео
