@@ -74,7 +74,6 @@ export default {
           this.tracksInfo = { 
             name: t.tags.title || null, // Название трека
             ordinalNumber: t.tags.track || 0, // Номер трека в альбоме
-            isPlay: false, // Информация о том включен ли этот трек или нет
             fileName: file['name'], // Полное имя файла
           }
 
@@ -96,7 +95,6 @@ export default {
         file: this.file,  // Сам файл трека (который мы отправим на бэк)
         audio: new Audio(this.content), // Делаем из него трек, который можно послушать (для предпросмотра)
         name: this.tracksInfo.name, // Название релиза
-        isPlay: false, // Информация о том включен ли этот трек или нет
         fileName: this.tracksInfo.fileName, // Полное имя файла
         ordinalNumber: this.tracksInfo.ordinalNumber, // Номер трека в альбоме
         tags: [], // Теги релиза

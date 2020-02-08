@@ -6,27 +6,11 @@
       <small class="track-file-name">{{track.fileName}}</small>
 
       <!-- Кнопка воспроизведение и паузы у трека -->
-      <span class="btn-audio-play" @click="playAudio()">
+      <AppPlayPauseBtn 
+        :isPlay="isPlay"
+        @playAudio="playAudio"
+      />
 
-        <!-- Play -->
-        <svg v-if="track.isPlay === true"
-          version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 512 512">
-          <g>
-          </g>
-          <path d="M162.642 148.337h56.034v215.317h-56.034v-215.316z" fill="#000000" />
-          <path d="M293.356 148.337h56.002v215.317h-56.002v-215.316z" fill="#000000" />
-        </svg>
-
-        <!-- Pause -->  
-        <svg v-if="track.isPlay === false"
-          version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 512 512">
-          <g>
-          </g>
-          <path d="M152.443 136.417l207.114 119.573-207.114 119.593z" fill="#000000" />
-        </svg>
-
-      </span>
-      
       <!-- Обертка под инпуты -->
       <span class="track-inputs-wrap">
         <span class="track-number" >{{10 > track.ordinalNumber  ? '0' + track.ordinalNumber : track.ordinalNumber }} </span>
@@ -61,12 +45,14 @@
 import Treeselect from '@riophae/vue-treeselect' // Библиотека для выбора возможных авторов / тегов
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import {mapMutations} from 'vuex'
+import AppPlayPauseBtn from '@/components/AppPlayPauseBtn'
 
 export default {
   name: 'AdminTrackItem',
 
   components: {
-    Treeselect // Библиотека для выбора возможных авторов и тегов трека
+    Treeselect, // Библиотека для выбора возможных авторов и тегов трека
+    AppPlayPauseBtn, // Кнопка которая отвечает за проигрывание трека
   },
 
   props: {
@@ -75,14 +61,13 @@ export default {
     selectedTags: Array // Тоже самое, но с тегами
   },
 
-
-
   data: () => ({
     possibleAuthors: [], // Массив возможных авторов
     authors: [],  // Массив выбранных авторов для этого релиза
     trackName: null, // Название трека
     possibleTags: [], // Массив возможных тегов, которые мы получаем с бэка
     tags: [], // Массив тегов, так как их может быть у релиза несколько
+    isPlay: false, // Инфа о том включен трек или нет
   }),
 
   watch: {
@@ -96,7 +81,6 @@ export default {
           ordinalNumber: this.track.ordinalNumber,
           file: this.track.file,
           audio: this.track.audio,
-          isPlay: this.track.isPlay,
           fileName: this.track.fileName
         })
       },
@@ -130,23 +114,17 @@ export default {
 
     // Воспроизводит аудио файл
     playAudio() {
-      
-      if (this.track.isPlay == false) {
-        this.track.isPlay = true // Указываем что мы включили аудио
+
+      if (this.isPlay == false) {
+        this.isPlay = true // Указываем что мы включили аудио
         this.track.audio.play()  // Включаем аудио файл
       } else {
-        this.track.isPlay = false // Указываем что мы выключили аудио
+        this.isPlay = false // Указываем что мы выключили аудио
         this.track.audio.pause() // Ставим на паузу аудио файл
       }
     },
     
   },
-  
-
-
-  
-
-
   
 }
 </script>
@@ -196,12 +174,12 @@ export default {
 }
 
 /* Воспроизведение аудио файла */
-.btn-audio-play {
+/* .btn-audio-play {
   display: flex;
   grid-area: btn;
 }
 
 .btn-audio-play svg {
   margin: auto;
-}
+} */
 </style>

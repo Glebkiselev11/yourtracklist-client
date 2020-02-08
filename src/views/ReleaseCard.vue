@@ -118,7 +118,7 @@ import AppTrackItem from '@/components/AppTrackItem'
 import duration from '@/mixins/duration.mixin.js'
 
 export default {
-  name: 'Release-card',
+  name: 'ReleaseCard',
 
   components: {
     AppTrackItem, // Циклом передаем туда информацию о 1 треке
@@ -178,7 +178,6 @@ export default {
 
 <style scoped>
   
-
   .wrap {
     width: 100%;
     min-height: 550px;

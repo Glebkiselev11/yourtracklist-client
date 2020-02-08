@@ -3,6 +3,8 @@
     <div>
       <!-- Название трека -->
       <div>
+        
+
         <span 
         v-for="(author, y) of track.authors_name"
         :key="y"
