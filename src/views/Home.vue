@@ -9,10 +9,10 @@
       :four-latest-releases="this.fourLatestReleases"
       :count="5" 
     />
-    <!-- :count="5" потому что мы знаем что всего релизов всегда больше 4 (и 5 нам повзоляет принудительно включить кнопку "показать больше") -->
+    <!-- :count="5" потому что мы знаем что всего релизов всегда больше 4 (и 5 нам позволяет принудительно включить кнопку "показать больше") -->
 
     <!-- Промо блок с видео записями, где выводим 3 последних видоса -->
-    <VideoArchivePrev 
+    <VideoPrevArchive 
       :fourLatestVideo="this.fourLatestVideos"
       :count="5"
     />
@@ -24,14 +24,14 @@
 <script>
 import Hero from '@/components/Hero.vue'
 import ReleasePrevArchive from '@/components/ReleasePrevArchive.vue'
-import VideoArchivePrev from '@/components/app/video/VideoArchivePrev.vue'
+import VideoPrevArchive from '@/components/VideoPrevArchive.vue'
 
 import {mapGetters} from 'vuex'
 
 export default {
   name: 'Home',
   components: {
-    ReleasePrevArchive, VideoArchivePrev, Hero
+    ReleasePrevArchive, VideoPrevArchive, Hero
   },
 
   computed: {

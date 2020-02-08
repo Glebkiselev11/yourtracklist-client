@@ -42,10 +42,10 @@
 </template>
 
 <script>
-import VideoPrevInfo from '@/components/app/video/VideoPrevInfo.vue'
+import VideoPrevInfo from '@/components/VideoPrevInfo.vue'
 import TagsPrevHeader from '@/components/TagsPrevHeader.vue'
 import PrevInfo from '@/components/app/PrevInfo.vue'
-import VideoPlayButton from '@/components/app/video/VideoPlayButton.vue'
+import VideoPlayButton from '@/components/VideoPlayButton.vue'
 export default {
   name: 'video-prev-card-item',
   

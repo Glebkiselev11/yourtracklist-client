@@ -52,7 +52,7 @@
     />
 
     <!-- А тут 4 последних видео автора -->
-    <VideoArchivePrev 
+    <VideoPrevArchive 
       v-show="this.fourLastVideosForAuthor.length" 
       :author-permalink="authorInfo.permalink"
       :fourLatestVideo="this.fourLastVideosForAuthor"
@@ -65,14 +65,14 @@
 </template>
 
 <script>
-import VideoArchivePrev from '@/components/app/video/VideoArchivePrev.vue'
+import VideoPrevArchive from '@/components/VideoPrevArchive.vue'
 import ReleasePrevArchive from '@/components/ReleasePrevArchive.vue'
 import {mapGetters} from 'vuex'
 export default {
   name: 'Author-page',
 
   components: {
-    ReleasePrevArchive, VideoArchivePrev
+    ReleasePrevArchive, VideoPrevArchive
   },
 
   data: () => ({

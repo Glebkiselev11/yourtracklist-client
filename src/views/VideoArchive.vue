@@ -68,7 +68,7 @@
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import SortSideVideoArchive from '@/components/SortSideVideoArchive.vue'
 import paginationMixin from '@/mixins/pagination.mixin.js'
-import VideoItem from '@/components/app/video/VideoPrevCardItem.vue'
+import VideoItem from '@/components/VideoPrevCardItem.vue'
 
 export default {
   name: 'Video-archive',

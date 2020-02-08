@@ -22,10 +22,10 @@
 
 <script>
 import TopBar from '@/components/app/TopBar.vue'
-import VideoItem from '@/components/app/video/VideoPrevCardItem.vue'
+import VideoItem from '@/components/VideoPrevCardItem.vue'
 
 export default {
-  name: 'Video-prev-author',
+  name: 'VideoPrevArchive',
   components: {
     TopBar, VideoItem
   },

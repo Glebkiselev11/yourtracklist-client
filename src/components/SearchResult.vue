@@ -59,7 +59,7 @@
         />
 
         <!-- Итерируемый итем -->
-        <VideoItem 
+        <VideoPrevCardItem 
           v-for="(video, index) in searchVideos"
           :key="index"
           :video="video"
@@ -79,7 +79,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import ReleasePrevCardItem from '@/components/ReleasePrevCardItem.vue'
-import VideoItem from '@/components/app/video/VideoPrevCardItem.vue'
+import VideoPrevCardItem from '@/components/VideoPrevCardItem.vue'
 import AnimationButton from '@/components/app/AnimationButton'
 
 export default {
@@ -87,7 +87,7 @@ export default {
   
   components: {
     ReleasePrevCardItem, // Карточка релиза
-    VideoItem, // Карточка видео
+    VideoPrevCardItem, // Карточка видео
     AnimationButton, // Кнопка 'показать больше'
   },
 
