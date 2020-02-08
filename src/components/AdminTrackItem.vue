@@ -63,7 +63,7 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import {mapMutations} from 'vuex'
 
 export default {
-  name: 'Track-item',
+  name: 'AdminTrackItem',
 
   components: {
     Treeselect // Библиотека для выбора возможных авторов и тегов трека

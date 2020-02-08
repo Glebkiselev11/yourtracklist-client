@@ -34,7 +34,7 @@
 
 <script>
 export default {
-  name: 'Cover-prev',
+  name: 'AdminCoverPrev',
 
   data: () => ({
     coverPrev: '', // Предпросмотр картинки

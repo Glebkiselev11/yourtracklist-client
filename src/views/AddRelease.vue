@@ -7,7 +7,7 @@
       <div class="input-wrap">
 
         <!-- Для добавления обложки -->
-        <CoverPrev
+        <AdminCoverPrev
           @cover="setCover"
           v-if="reload"
         />
@@ -37,7 +37,7 @@
         />
 
         <!-- Вводим соц сети -->
-        <SocialsInput
+        <AdminSocialsInput
           v-if="reload"
           @selected="selectedSoc"
         />
@@ -50,7 +50,7 @@
 
     
       <!-- Обертка под добавление треков -->
-      <AddTracksPrev class="tracks-wrap" 
+      <AdminAddTracksPrev class="tracks-wrap" 
         v-if="reload"
         :selected-authors="authors"
         :selected-tags="tags"
@@ -71,18 +71,18 @@
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
-import CoverPrev from '@/components/admin-panel/CoverPrev.vue'
-import AddTracksPrev from '@/components/admin-panel/AddTracksPrev.vue'
-import SocialsInput from '@/components/admin-panel/SocialsInput.vue'
+import AdminCoverPrev from '@/components/AdminCoverPrev.vue'
+import AdminAddTracksPrev from '@/components/AdminAddTracksPrev.vue'
+import AdminSocialsInput from '@/components/AdminSocialsInput.vue'
 import {mapActions, mapGetters, mapMutations} from 'vuex'
 
 export default {
   name: 'Add-release',
 
   components: {
-    CoverPrev, // Компонент для предпросмотра обложки перед тем  как залить альбом
-    AddTracksPrev, // Компонент для добавления аудио и отображения загруженных аудио перед загрузкой
-    SocialsInput, // По ссылке определяет соц сеть
+    AdminCoverPrev, // Компонент для предпросмотра обложки перед тем  как залить альбом
+    AdminAddTracksPrev, // Компонент для добавления аудио и отображения загруженных аудио перед загрузкой
+    AdminSocialsInput, // По ссылке определяет соц сеть
     Treeselect, // Компонент через который мы выбираем несколько авторов / тегов
   },
 

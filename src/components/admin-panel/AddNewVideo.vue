@@ -1,5 +1,6 @@
 <template>
   <form class="form-wrap" @submit.prevent="addNewVideo">
+    <!-- TODO: Компонент нужно будет отрефакторить -->
     <h3>Добавить видео</h3>
 
     <div class="input-wrap">

@@ -3,7 +3,7 @@
   <div class="tracks-prev-wrap">
 
     <!-- Итерируем добавленные треки -->
-    <TrackItem 
+    <AdminTrackItem 
       v-for="(track, index) in tracks"
       :key="index"
       :track="track"
@@ -21,14 +21,14 @@
 <script>
 import jsmediatags from 'jsmediatags' // Для вытаскивания метатегов из аудио файлов
 
-import TrackItem from '@/components/admin-panel/TrackItem.vue'
+import AdminTrackItem from '@/components/AdminTrackItem.vue'
 
 import {mapMutations, mapGetters} from 'vuex'
 
 export default {
-  name: 'Add-tracks-prev',
+  name: 'AdminAddTracksPrev',
   components: {
-    TrackItem, // Отвечает за 1 трека (мы их итерируем циклом в этом компоненте)
+    AdminTrackItem, // Отвечает за 1 трека (мы их итерируем циклом в этом компоненте)
   },
 
   props: {

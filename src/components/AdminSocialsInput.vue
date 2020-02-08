@@ -25,7 +25,7 @@ import {mapActions} from 'vuex'
 import Chip from '@/components/app/Chip.vue'
 
 export default {
-  name: 'Socials-input',
+  name: 'AdminSocialsInput',
 
   components: {
     Chip, // Чипса, которые мы итерируем
