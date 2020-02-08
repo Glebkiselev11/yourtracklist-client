@@ -92,28 +92,15 @@
         
         <!-- Треки для релиза -->
         <div class="release-tracks-wrap">
-          <span
+
+          <!-- Компонент 1 трека -->
+          <AppTrackItem 
             v-for="(track, i) of releaseTracks"
             :key="i"
+            :track="track"
             class="release-track-item"
-          >
-            <!-- Название трека -->
-            <div>
-              <span 
-              v-for="(author, y) of track.authors_name"
-              :key="y"
-              >
-                {{author}}
-              </span>
-               —
-              <span>{{track.name}}</span>
-
-            </div>
-
-            <!-- Длительность трека -->
-            <span>{{computedDuration(track.duration)}}</span>
-
-          </span>
+          />
+          
         </div>
         
 
@@ -127,8 +114,19 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import AppTrackItem from '@/components/AppTrackItem'
+import duration from '@/mixins/duration.mixin.js'
+
 export default {
   name: 'Release-card',
+
+  components: {
+    AppTrackItem, // Циклом передаем туда информацию о 1 треке
+  },
+
+  mixins: [
+    duration, // Внутри computedDuration он превращает секунды например 90 в 01:30
+  ],
 
   computed: {
     // Тут мы его получаем
@@ -173,20 +171,6 @@ export default {
     routerTo(linkTo, tag) {
       this.$router.push({ path: linkTo , query: { ...this.$route.query, tag }})
     },
-
-     // Через этот метод превращаем секунды например 90 в 01:30
-    computedDuration(duration) {
-      let minute = Math.floor(duration / 60)
-      let sec = duration % 60
-      
-      let hour = null
-      if (minute > 60) {
-        hour = Math.floor(minute / 60)
-        minute = minute % 60
-      }
-
-      return `${hour ? hour + ':': ''}${minute < 10 ? '0' + minute : minute}:${sec < 10 ? '0' + sec : sec}`
-    }
   },
   
 }
