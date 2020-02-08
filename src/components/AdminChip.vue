@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'Chip',
+  name: 'AdminChip',
   
   props: {
     chip: String, // Строку которую мы выводим

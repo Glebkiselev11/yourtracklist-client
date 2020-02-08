@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import AnimationButton from '@/components/app/AnimationButton'
+import AnimationButton from '@/components/AppAnimationButton'
 export default {
   name: 'Call-back',
 

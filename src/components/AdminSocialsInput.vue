@@ -22,7 +22,7 @@
 
 <script>
 import {mapActions} from 'vuex'
-import Chip from '@/components/app/Chip.vue'
+import Chip from '@/components/AdminChip.vue'
 
 export default {
   name: 'AdminSocialsInput',

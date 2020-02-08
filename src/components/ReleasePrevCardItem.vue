@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import PrevInfo from '@/components/app/PrevInfo.vue'
+import PrevInfo from '@/components/AppPrevInfo.vue'
 import TagsPrevHeader from '@/components/TagsPrevHeader.vue'
 
 export default {

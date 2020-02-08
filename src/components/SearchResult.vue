@@ -80,7 +80,7 @@
 import { mapGetters, mapMutations } from 'vuex'
 import ReleasePrevCardItem from '@/components/ReleasePrevCardItem.vue'
 import VideoPrevCardItem from '@/components/VideoPrevCardItem.vue'
-import AnimationButton from '@/components/app/AnimationButton'
+import AnimationButton from '@/components/AppAnimationButton'
 
 export default {
   name: 'search-result',

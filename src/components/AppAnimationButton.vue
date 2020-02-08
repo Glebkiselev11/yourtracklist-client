@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'Animation-button',
+  name: 'AppAnimationButton',
 
   props: {
     title: String

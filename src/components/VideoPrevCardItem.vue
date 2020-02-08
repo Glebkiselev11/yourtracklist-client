@@ -44,7 +44,7 @@
 <script>
 import VideoPrevInfo from '@/components/VideoPrevInfo.vue'
 import TagsPrevHeader from '@/components/TagsPrevHeader.vue'
-import PrevInfo from '@/components/app/PrevInfo.vue'
+import PrevInfo from '@/components/AppPrevInfo.vue'
 import VideoPlayButton from '@/components/VideoPlayButton.vue'
 export default {
   name: 'video-prev-card-item',

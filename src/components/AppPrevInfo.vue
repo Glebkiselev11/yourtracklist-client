@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: 'Prev-info',
+  name: 'AppPrefInfo',
 
   props: {
     date: String, // Дата выпуска

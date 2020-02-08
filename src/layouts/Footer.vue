@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import CallBack from '@/components/app/CallBack.vue'
+import CallBack from '@/components/CallBack.vue'
 export default {
   name: 'Footer',
   components: {

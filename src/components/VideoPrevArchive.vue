@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import TopBar from '@/components/app/TopBar.vue'
+import TopBar from '@/components/AppTopBar.vue'
 import VideoItem from '@/components/VideoPrevCardItem.vue'
 
 export default {

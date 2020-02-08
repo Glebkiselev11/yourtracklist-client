@@ -6,8 +6,8 @@ import Paginate from 'vuejs-paginate'
 
 import youtube from '@justinribeiro/lite-youtube'
 import { directive as onClickaway } from 'vue-clickaway' // Нужен для клика вне компонента
-import Loader from '@/components/app/Loader'
-import ArrowButton from '@/components/app/ArrowButton'
+import Loader from '@/components/AppLoader'
+import ArrowButton from '@/components/AppArrowButton'
 import './registerServiceWorker'
 
 Vue.config.productionTip = false

@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import TopBar from '@/components/app/TopBar.vue'
+import TopBar from '@/components/AppTopBar.vue'
 import ReleasePrevCardItem from '@/components/ReleasePrevCardItem.vue'
 
 export default {

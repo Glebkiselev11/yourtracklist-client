@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: 'Arrow-button',
+  name: 'AppArrowButton',
 
   props: {
     title: String, // Текст кнопки
