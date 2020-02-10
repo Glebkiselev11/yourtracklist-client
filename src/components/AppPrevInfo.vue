@@ -1,29 +1,39 @@
 <template>
   <!-- Компонент информации о релизе / видео которая распологается в предпросмотре (дата/ название и автор )-->
   <div class="prev-info-wrap">
-    <!-- Здесь преобразуем формат времени в ISO в более привлекательный формат -->
-    <span v-if="date" class="date">{{new Date(date).toLocaleDateString('ru-RU', {month: 'long', day: 'numeric', year: 'numeric'})}}</span>
     
-    <!-- FIXME: Если есть permalink то показываем его, это переход по приложению -->
-    <a  v-if="permalink" @click.prevent="routerGo" class="name" v-html="name"></a>
+    <!-- Дата выхода релиза / видео -->
+    <span 
+      v-if="date" 
+      class="date"
+    >{{date | ConvertedDate}}
+    </span>
     
-    <!-- А если нету, то тогда должен быть url это уже внешний переход -->
-    <a v-else :href="url" class="name" target="_blank" v-html="name"></a>
+    <!-- Название релиза / видео -->
+    <a 
+      v-html="name"
+      @click.prevent="routerGo" 
+      class="name" 
+    ></a>
+    
 
     <!-- Здесь выводим ссылку на дискографию артиста, если он не один, то через цикл -->
     <div class="author-name-wrap">
-      <p class="author"
+      
+      <span 
         v-for="(author, index) in this.authors"
         :key="index"
+        class="author"
       >
-      
-      <router-link class="active-link"
-        :to="'/author/' + author.permalink"
-      >{{author.name}}</router-link>
-      
-      <!-- Добавляем & знак между артистами если их несколько -->
-      <span v-if="authors.length > 1 && (index !== authors.length - 1)">&</span>
-    </p>
+        <router-link 
+          :to="'/author/' + author.permalink"
+          class="active-link"
+        >{{author.name}}
+        </router-link>{{authors.length > 1 && (index !== authors.length - 1) ? ' & ' : ''}}
+        <!-- Добавляем & знак между артистами если их несколько -->
+        <!-- TODO: в будущем надо будет создать универсальный метод для подобных нужд -->
+
+      </span >
     </div>
     
   </div>
@@ -38,10 +48,7 @@ export default {
     name: String, // Название релиза / видео
     authors: Array, // Массив авторов
     type: String, // Тип для которого мы используем этот компонент  (release / video)
-
-    // * Нижние два пропса не могут быть два сразу, поэтому либо один либо другой
     permalink: String, // Cсылка внутри приложения
-    url: String, // ссылка на внешний ресурс
   },
 
   methods: {

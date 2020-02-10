@@ -12,8 +12,19 @@
     />
 
     
-    <input type="file" id="tracks" @change="sync" required accept=".mp3,audio/*">
-    <label class="btn-add-track" for="tracks">Добавить трек</label>
+    <input 
+      id="tracks" 
+      type="file" 
+      required 
+      accept=".mp3,audio/*"
+      @change="sync"
+    >
+
+    <label
+      for="tracks" 
+      class="btn-add-track" 
+    >Добавить трек
+    </label>
 
   </div>
 </template>

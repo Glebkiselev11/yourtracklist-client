@@ -1,22 +1,42 @@
 <template>
   <!-- Компонент обратной связи, который пока используется только в футере -->
-  <form @submit.prevent class="call-back-wrap">
+  <form 
+    class="call-back-wrap"
+    @submit.prevent 
+  >
     <h3>Оставить отзыв</h3>
 
     <div class="input-item">
-      <input class="input" type="text" placeholder="Ваше имя" v-model="name">
+      <input 
+        v-model="name"
+        type="text" 
+        placeholder="Ваше имя"
+        class="input" 
+      >
     </div>
 
     <div class="input-item">
       
-      <textarea class="input" placeholder="Комментарий" v-model="comment" maxlength="214" required></textarea>
-      <span class="text-area-length" v-if="comment.length">{{comment.length}} / 214</span>
+      <textarea 
+        v-model="comment" 
+        placeholder="Комментарий" 
+        maxlength="214"
+        class="input"  
+        required
+      ></textarea>
+
+      <span 
+        v-if="comment.length"
+        class="text-area-length" 
+      >{{comment.length}} / 214
+      </span>
+
     </div>
     
     
     <AnimationButton
-      @click="onSubmitComment"
       :title="'Отправить'"
+      @click="onSubmitComment"
     />
 
   </form>

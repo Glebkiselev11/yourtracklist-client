@@ -4,11 +4,17 @@
     <h3 class="sorting-title" >Сортировать по тегам</h3>
 
     <!-- Итерируем с базы данных теги -->
-    <div class="checkbox-tag-item" 
+    <div  
       v-for="(tag, index) of tags"
       :key="index"
+      class="checkbox-tag-item"
     > 
-      <input type="checkbox" :id="tag.name" :value="tag.name" v-model="changeTags">
+      <input 
+        v-model="changeTags"
+        :id="tag.name" 
+        type="checkbox"
+        :value="tag.name" 
+      >
       <label :for="tag.name">{{tag.name}}</label>
       
     </div>

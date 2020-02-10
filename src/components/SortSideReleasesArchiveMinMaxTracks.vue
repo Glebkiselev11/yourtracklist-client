@@ -5,17 +5,26 @@
 
     <!-- Кнопки плюс и минус блокируем так, чтобы нельзя было выбрать заранее неправильное кол-во треков в релизах -->
     <div class="min-max-item">
-      <button class="count-button"
-        :class="minPossible >= minTracks ? 'count-button--disable' : ''" 
+      <button 
+        :class="minPossible >= minTracks ? 'count-button--disable' : ''"
+        class="count-button" 
         @click="minusMinTracks"
-      >—</button>
+      >—
+      </button>
       
-      <input type="text" v-model="minTracks" id="minTracks" readonly>
+      <input
+        id="minTracks" 
+        v-model="minTracks" 
+        type="text" 
+        readonly
+      >
       
-      <button class="count-button" 
+      <button  
         :class="maxPossible <= minTracks || minTracks === maxTracks ? 'count-button--disable' : ''"
+        class="count-button"
         @click="plusMinTracks"
-      >+</button>
+      >+
+      </button>
       
       <label for="minTracks">Минимум</label>
     </div>
@@ -26,12 +35,19 @@
         @click="minusMaxTracks"
       >—</button>
       
-      <input type="text" v-model="maxTracks" id="maxTracks" readonly>
+      <input
+        id="maxTracks"
+        v-model="maxTracks"
+        type="text" 
+        readonly
+      >
       
-      <button class="count-button"
+      <button 
         :class="maxPossible <= maxTracks ? 'count-button--disable' : ''" 
+        class="count-button"
         @click="plusMaxTracks"
-      >+</button>
+      >+
+      </button>
 
       <label for="maxTracks">Максимум</label>
     </div>
@@ -44,8 +60,14 @@ export default {
   name: 'SortSideReleasesArchiveMinMaxTracks',
 
   props: {
-    minTracks: Number, // Минимальное кол-во треков в релизах
-    maxTracks: Number, // Максимальное кол-во треков в релизах
+    minTracks: { // Минимальное кол-во треков в релизах
+      type: Number,
+      default: 0,
+    }, 
+    maxTracks: {
+      type: Number,
+      default: 5
+    }, // Максимальное кол-во треков в релизах
     rangeNumberOfTracks: Array, // Диапазон доступного кол-ва треков в релизах
   },
 

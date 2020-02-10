@@ -6,13 +6,16 @@
     <Loader v-if="!releaseInfo" />
 
     <!-- Обертка под сам релиз (обложка и информация) -->
-    <div v-else class="release-wrap">
+    <div 
+      v-else 
+      class="release-wrap"
+    >
       <!-- Обложка -->
       <img 
         v-show="releaseInfo"
-        class="release-cover" 
-        :src="releaseInfo.original_cover" 
+        :src="releaseInfo.original_cover"
         alt="cover"
+        class="release-cover" 
       >
 
       <!-- Информация о релизе, которая располагается справа от обложки -->
@@ -23,22 +26,26 @@
           <h1>{{releaseInfo.name}}</h1>
 
           <!-- Здесь выводим ссылку на дискографию артиста, если он не один, то через цикл -->
-          <h2 class="author"  
+          <h2   
             v-for="(author, index) in this.releaseInfo.authors"
             :key="index"
+            class="author"
           >
             
-            <router-link class="active-link"
+            <router-link 
               :to="'/author/' + author.permalink"
-            >{{author.name}}</router-link>
-            
+              class="active-link"
+            >{{author.name}}
+            </router-link>{{releaseInfo.authors.length > 1 && (index !== releaseInfo.authors.length - 1) ? " & " : ""}}
             <!-- Добавляем & знак между артистами если их несколько -->
-            <span class="author" v-if="releaseInfo.authors.length > 1 && (index !== releaseInfo.authors.length - 1)">&</span>
+            <!-- FIXME: Создать отдельный метод для добавления амперсанта между авторами -->
+
           </h2>
 
 
           <!-- Здесь преобразуем формат времени в ISO в более привлекательный формат -->
-          <span class="release-info--date">{{new Date(releaseInfo.date).toLocaleDateString('ru-RU', {month: 'long', day: 'numeric', year: 'numeric'})}}</span>
+          <span class="release-info--date">{{releaseInfo.date | ConvertedDate}}</span>
+
         </div>
 
         <!-- Здесь отображаем длительность релиза и сколько треков -->
@@ -67,10 +74,19 @@
           <div class="release-listen-wrap">
             <h3 class="link-and-tags-title">Послушать релиз</h3>
             <ul>
-              <li class="link-and-tags-item"
+
+              <li 
                 v-for="(link, name) of releaseInfo.socials_links" 
                 :key="name"
-              ><a target="_blank" :href="link">{{name}}</a></li>
+                class="link-and-tags-item"
+              >
+                <a 
+                  :href="link"
+                  target="_blank" 
+                >{{name}}
+                </a>
+              </li>
+
             </ul>
             
 
@@ -80,11 +96,16 @@
           <div class="release-tags">
             <h4 class="link-and-tags-title">Теги</h4>
             <ul>
-              <li class="link-and-tags-item"
+              <li 
                 v-for="(tag, index) of releaseInfo.tags"
                 :key="index"
-            
-              ><a @click.prevent="routerTo('/releases-archive', tag)">{{tag}}</a></li>
+                class="link-and-tags-item"
+              >
+                <a 
+                  @click.prevent="routerTo('/releases-archive', tag)"
+                >{{tag}}
+                </a>
+              </li>
             
             </ul>
           </div>
@@ -103,8 +124,6 @@
           
         </div>
         
-
-
       </div>
 
     </div>

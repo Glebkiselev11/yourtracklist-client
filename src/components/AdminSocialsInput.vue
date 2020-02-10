@@ -1,8 +1,13 @@
 <template>
   <!-- Умный компонет, который по введенной сcылке понимает, что перед ним ссылка на конкретную соц сеть -->
   <div class="input-item">
-    <input id="link" type="text" @change="link" placeholder="Введите ссылку на соц-сеть">
-
+    <input 
+      id="link" 
+      type="text"
+      placeholder="Введите ссылку на соц-сеть" 
+      @change="link" 
+    >
+    
     <!-- Сюда итерируем выбранные соц сети -->
     <div class="soc-chips-wrap">
       <!-- Сюда мы чипсами будем выводить введенные соц сети -->

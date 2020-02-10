@@ -6,8 +6,8 @@
     <!-- Верхняя шапка с заголовком и кнопкой -->
     <TopBar 
       title="Релизы"
+      :count="count"
       @click="routerTo"
-      :count="this.count"
     />
 
     <!-- Обертка под релизы, который мы будем итерировать циклом -->
@@ -20,7 +20,6 @@
         :release="release"
       />
       
-
     </div>
   </div>
 </template>
@@ -33,7 +32,8 @@ export default {
   name: 'ReleaseArchivePrev',
 
   components: {
-    TopBar, ReleasePrevCardItem
+    TopBar, 
+    ReleasePrevCardItem,
   },
 
   props: {

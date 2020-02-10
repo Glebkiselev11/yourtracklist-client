@@ -4,18 +4,24 @@
     <!-- Передаем в компонент отвечающий за отображание тегов - массив с тегами -->
     <TagsPrevHeader
       link-to="/releases-archive/"
-      @close="$emit('close')"
       :tags-array="release.tags"
+      @close="$emit('close')"
     />
 
-    <img class="release-image" :src="release.prev_cover" alt="cover" @click="openRelease(release.authors, release.permalink)">
+    <img 
+      :src="release.prev_cover" 
+      alt="cover"
+      class="release-image"  
+      @click="openRelease(release.authors, release.permalink)"
+    >
+
     <PrevInfo 
-      @close="$emit('close')"
       :date="release.date"
       :name="release.name"
       :permalink="release.permalink"
       :authors="release.authors"
       :type="'release'"
+      @close="$emit('close')"
     />
   </div>
 </template>
@@ -28,7 +34,8 @@ export default {
   name: 'ReleasePrevCardItem',
   
   components: {
-    PrevInfo, TagsPrevHeader
+    PrevInfo, 
+    TagsPrevHeader,
   },
 
   props: {

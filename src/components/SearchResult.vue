@@ -7,16 +7,21 @@
       
       <!-- Сюда выводим найденых авторов -->
       <h5 class="search-result-title">{{authorsTitleText}}</h5>
-      <ul class="search-authors-list" v-if="searchAuthors.length">
+      
+      <ul 
+        v-if="searchAuthors.length"
+        class="search-authors-list" 
+      >
         <li 
           v-for="(author, index) of searchAuthors"
           :key="index"
           class="search-author-item"
         > 
           <a 
-            @click.prevent="goToAuthorPage(author.permalink)"
             v-html="author.name"
+            @click.prevent="goToAuthorPage(author.permalink)"
           ></a>
+
         </li>
       </ul>
     </div>  <!-- Боковая панель: конец -->
@@ -30,10 +35,10 @@
         <h5 class="search-result-title">{{releasesTitleText}}</h5>
 
         <AnimationButton
-          class="anim-button"
           v-if="searchReleasesCount > 3"
-          @click="goToReleasesArchive"
+          class="anim-button"
           :title="'Показать все результаты'"
+          @click="goToReleasesArchive"
         />
 
         <ReleasePrevCardItem
@@ -52,18 +57,18 @@
         <h5 class="search-result-title">{{videosTitleText}}</h5>
 
         <AnimationButton
-          class="anim-button"
           v-if="searchVideosCount > 3"
-          @click="goToVideosArchive"
+          class="anim-button"
           :title="'Показать все результаты'"
+          @click="goToVideosArchive"
         />
 
         <!-- Итерируемый итем -->
         <VideoPrevCardItem 
           v-for="(video, index) in searchVideos"
           :key="index"
-          :video="video"
           :id="'video-item' + index"
+          :video="video"
           @close="$emit('close')"
         />
       </div>

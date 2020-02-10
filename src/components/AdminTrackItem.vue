@@ -1,6 +1,9 @@
 <template>
   <!-- Компонент 1 трека, используется для добавления релиза -->
-  <div class="track-item" v-if="track">
+  <div
+    v-if="track" 
+    class="track-item" 
+  >
       
       <!-- Оригинальное название файла, нужно чтобы мы не упустили авторов трека -->
       <small class="track-file-name">{{track.fileName}}</small>
@@ -13,26 +16,32 @@
 
       <!-- Обертка под инпуты -->
       <span class="track-inputs-wrap">
-        <span class="track-number" >{{10 > track.ordinalNumber  ? '0' + track.ordinalNumber : track.ordinalNumber }} </span>
+        <span class="track-number">{{ordinalNumber}}</span>
 
         <!-- Выбираем авторов для трека -->
         <treeselect
+          v-model="authors"
           :multiple="true"
           :options="possibleAuthors"
-          placeholder="Выберите автора трека"
-          v-model="authors"
           :required="true"
+          placeholder="Выберите автора трека"
         />
 
-        <input class="input-name-track" type="text" v-model="trackName" placeholder="Название трека" required/>
+        <input 
+          v-model="trackName"
+          type="text"
+          class="input-name-track" 
+          placeholder="Название трека" 
+          required
+        />
         
         <!-- Выбираем теги для трека -->
         <treeselect
+          v-model="tags"
           :multiple="true"
           :options="possibleTags"
-          placeholder="Выберите теги трека"
-          v-model="tags"
           :required="true"
+          placeholder="Выберите теги трека"
         />
         
       
@@ -69,6 +78,12 @@ export default {
     tags: [], // Массив тегов, так как их может быть у релиза несколько
     isPlay: false, // Инфа о том включен трек или нет
   }),
+
+  computed: {
+    ordinalNumber() { // Добавляет ноль вначале если меньше 10
+      return 10 > this.track.ordinalNumber  ? '0' + this.track.ordinalNumber : this.track.ordinalNumber
+    }
+  },
 
   watch: {
     $data: {

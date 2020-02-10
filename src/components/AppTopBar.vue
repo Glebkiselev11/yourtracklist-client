@@ -3,12 +3,12 @@
   <div class="top-bar">
     <h2>{{title}}</h2>
     
-
     <AnimationButton
       v-if="count > 4"
-      @click="click"
       :title="'Показать больше'"
+      @click="click"
     />
+
   </div>
 </template>
 

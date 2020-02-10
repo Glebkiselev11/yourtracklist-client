@@ -2,7 +2,10 @@
   <!-- Страница куда выводим видео запись с ютуба -->
   <div class="wrap">
     <div class="video-container">
-      <lite-youtube autoload :videoid="videoPermalink"></lite-youtube>
+      <lite-youtube 
+        autoload 
+        :videoid="videoPermalink"
+      ></lite-youtube>
     </div>
   </div>
 </template>

@@ -2,7 +2,7 @@
   <div class="home-wrap">
 
     <!-- Промо блок в самом верху сайта, там мы показываем новости -->
-    <Hero />
+    <TheHero />
 
     <!-- Промо блок с архивом релизов, где выводим 4 последних релиза -->
     <ReleasePrevArchive 
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Hero from '@/components/Hero.vue'
+import TheHero from '@/components/TheHero.vue'
 import ReleasePrevArchive from '@/components/ReleasePrevArchive.vue'
 import VideoPrevArchive from '@/components/VideoPrevArchive.vue'
 
@@ -31,7 +31,7 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'Home',
   components: {
-    ReleasePrevArchive, VideoPrevArchive, Hero
+    ReleasePrevArchive, VideoPrevArchive, TheHero
   },
 
   computed: {

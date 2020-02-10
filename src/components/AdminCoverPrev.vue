@@ -6,29 +6,31 @@
 
       <!-- Сам инпут мы не отображаем -->
       <input 
-        @change="sync"
+        id="cover"
         type="file" 
         accept="image/jpeg" 
         required 
-        id="cover" 
+        @change="sync" 
       >
       
       <!-- Отображаем лейбл к нему (в том случае если картинка еще не загружена) -->
       <label 
-        class="btn-add-cover"
-        v-if="!coverPrev" 
+        v-if="!coverPrev"
         for="cover"
-      >Выбрать изображение</label>
+        class="btn-add-cover" 
+      >Выбрать изображение
+      </label>
       
       <!-- Удаление обложки (если случайно залил не ту картинку) -->
       <span
         v-else
         class="close-btn"
         @click="deleteImage"
-      >X</span>
+      >X
+      </span>
+
     </div>
 
-    
   </div>
 </template>
 

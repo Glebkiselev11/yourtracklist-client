@@ -1,7 +1,12 @@
 <template>
   <!-- Компонент навигационной панели, которая отображается на всех страницах приложения -->
   <header class="navbar-wrap">
-    <img class="yt-logo" src="@/../public/img/logo/yt-logo.svg" @click="goToHomePage" alt="">
+    <img 
+      src="@/../public/img/logo/yt-logo.svg"
+      alt="Логотип"
+      class="yt-logo"  
+      @click="goToHomePage" 
+    >
 
     <!-- Сама навигация -->
     <ul class="navbar-link-list">
@@ -15,9 +20,9 @@
 
     <!-- Поиск по сайту -->
     <button 
-      @click="$store.commit('openSearchWindow')" 
-      class="search-button" 
       title="Поиск"
+      class="search-button" 
+      @click="$store.commit('openSearchWindow')" 
     >
       <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="10" cy="10" r="9.5" stroke="black"/>
@@ -28,7 +33,6 @@
     <Search 
       v-if="searchWindow"
       @close="$store.commit('closeSearchWindow')"
-    
     />
 
   </header>

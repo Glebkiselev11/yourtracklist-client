@@ -9,7 +9,11 @@
       
     </h1>
 
-    <img class="hero-logo" src="@/assets/yt3_white.png" alt="yourtracklist-logo">
+    <img
+      src="@/assets/yt3_white.png"
+      alt="yourtracklist-logo" 
+      class="hero-logo"  
+    >
 
   </div>
 </template>

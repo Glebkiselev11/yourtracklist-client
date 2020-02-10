@@ -1,6 +1,7 @@
 <template>
   <!-- Динамический класс для блокирования скрола во всем приложении, кроме окна поиска -->
-  <div id="app" 
+  <div 
+    id="app" 
     :class="searchWindow ? 'open-search' : ''"
   >
 

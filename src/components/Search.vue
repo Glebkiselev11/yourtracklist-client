@@ -1,39 +1,46 @@
 <template>
   <!-- Модальное окно с поиском по сайту -->
   <div class="wrap">
-    <div class="search-wrap" v-on-clickaway="away">
+    <div 
+      v-on-clickaway="away"
+      class="search-wrap" 
+    >
       <div class="container search-input-wrap">
+        
         <!-- Кнопка которая закрывает модальное окно поиска -->
-        <button class="search-close-btn" @click="$emit('close')">
+        <button 
+          class="search-close-btn" 
+          @click="$emit('close')"
+        >
           <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
             <line x1="1.35355" y1="0.859703" x2="22.5668" y2="22.0729" stroke="black"/>
             <line x1="0.646447" y1="21.8597" x2="21.8596" y2="0.6465" stroke="black"/>
           </svg>
         </button>
 
-        <input 
-          v-on:keyup="keyHandler"
-          v-model="searchQuery"  
-          ref="search" 
-          class="search-input" 
+        <input
+          v-model="searchQuery"
+          ref="search"
           type="text"
           placeholder="Введите имя исполнителя или название релиза / видео"
+          class="search-input" 
+          @keyup="keyHandler"
         >
 
         <!-- Сообщение об ошибке поиска -->
         <span 
           v-if="searchResult === 2"
           class="search-errors"
-        >Ничего не найдено</span>
+        >Ничего не найдено
+        </span>
 
-      
       </div>
 
       <!-- Нижнее окно куда выводим найденые релизы, авторов, видео -->
       <SearchResult 
         v-if="searchResult === 1"
-        @close="$emit('close')"
         :searchQuery="this.searchQuery"
+        @close="$emit('close')"
       />
       
 

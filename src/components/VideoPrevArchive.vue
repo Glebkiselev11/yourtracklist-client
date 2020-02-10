@@ -3,8 +3,8 @@
   <div class="wrap">
     <TopBar 
       title="Видео"
+      :count="count"
       @click="routerTo"
-      :count="this.count"
     />
 
     <!-- Здесь выводим видео -->

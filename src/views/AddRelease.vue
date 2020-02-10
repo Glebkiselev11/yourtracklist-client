@@ -1,27 +1,35 @@
 <template>
   <!-- Страница через которую мы будем добавлять новый релиз -->
   <!-- ! Тестовый компонент, на котором мы тестируем добавление через телеграм -->
-  <form class="form-wrap" @submit.prevent="addNewRelease">
+  <form 
+    class="form-wrap" 
+    @submit.prevent="addNewRelease"
+  >
     
       <!-- Стандартные поля -->
       <div class="input-wrap">
 
         <!-- Для добавления обложки -->
         <AdminCoverPrev
-          @cover="setCover"
           v-if="reload"
+          @cover="setCover"
         />
 
         <div class="input-item">
-          <input type="text" placeholder="Название релиза" v-model="name" required>
+          <input 
+            v-model="name"
+            type="text" 
+            placeholder="Название релиза"  
+            required
+          >
         </div>
 
         <!-- Компонент куда мы подгружаем всех возможных авторов с базы данных -->
         <treeselect
+          v-model="authors"
           :multiple="true"
           :options="possibleAuthors"
           placeholder="Выберите автора релиза"
-          v-model="authors"
           :required="true"
         />
         
@@ -29,10 +37,10 @@
 
         <!-- Выбираем теги для релиза -->
         <treeselect
+          v-model="tags"
           :multiple="true"
           :options="possibleTags"
           placeholder="Выберите теги релиза"
-          v-model="tags"
           :required="true"
         />
 
@@ -43,17 +51,24 @@
         />
 
         <div class="input-item">
-          <input type="date" id="date" v-model="releaseDate" required placeholder="Дата выхода релиза">
+          <input 
+            id="date"
+            v-model="releaseDate"
+            type="date"
+            placeholder="Дата выхода релиза"
+            required    
+          >
         </div>
 
       </div>
 
     
       <!-- Обертка под добавление треков -->
-      <AdminAddTracksPrev class="tracks-wrap" 
+      <AdminAddTracksPrev  
         v-if="reload"
         :selected-authors="authors"
         :selected-tags="tags"
+        class="tracks-wrap"
       />
 
 
@@ -61,7 +76,11 @@
     <Loader v-if="loading"/>
 
     <!-- Кнопка отправки релиза на сервер -->
-    <button v-else type="submit">Добавить</button>
+    <button 
+      v-else 
+      type="submit"
+    >Добавить
+    </button>
 
   </form>
 </template>

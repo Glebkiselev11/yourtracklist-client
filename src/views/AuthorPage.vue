@@ -20,11 +20,13 @@
           <h4 class="second-title">Теги</h4>
           
           <!-- Итерируем теги -->
-          <a class="tag-item"
+          <a 
             v-for="(tag, index) in authorInfo.tags" 
             :key="index"
+            class="tag-item"
             @click.prevent="routerTo('/releases-archive', tag)"
-          >{{tag}}</a>
+          >{{tag}}
+          </a>
         </div>
 
         <!-- А сюда социальный ссылки артиста -->
@@ -37,7 +39,8 @@
               :key="linkName" 
               :href="link"
               target="_blank"
-            >{{linkName}}</a>
+            >{{linkName}}
+            </a>
           </div>
         </div>
       </div>
@@ -68,6 +71,7 @@
 import VideoPrevArchive from '@/components/VideoPrevArchive.vue'
 import ReleasePrevArchive from '@/components/ReleasePrevArchive.vue'
 import {mapGetters} from 'vuex'
+
 export default {
   name: 'Author-page',
 

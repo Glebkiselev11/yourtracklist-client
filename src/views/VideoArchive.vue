@@ -5,7 +5,10 @@
     <!-- Верхний блок с заголовком и кнопкой по которой можно перейти к релизам, если они есть у этого автора -->
     <div class="archive-title-wrap">
       <!-- Локальное название артиста -->
-      <h1 class="archive-title" v-html="titleGenerator"></h1>
+      <h1 
+        v-html="titleGenerator"
+        class="archive-title" 
+      ></h1>
 
       <!-- Кнопка которая переходит к релизам артиста (если они у него есть) -->
       <ArrowButton 
@@ -28,10 +31,17 @@
       <Loader v-if="loading"/>
       
       <!-- Основное окно куда выводим видео -->
-      <div v-else class="window-wrap">
+      <div 
+        v-else 
+        class="window-wrap"
+      >
      
         <!-- Количество видео -->
-        <span class="number-of-releases" v-if="count > 0">Найдено {{count}} видео</span>
+        <span 
+          v-if="count > 0"
+          class="number-of-releases" 
+        >Найдено {{count}} видео
+        </span>
 
         <!-- Сюда итерируем сами релизы / миксы -->
         <div class="archive-wrap">
@@ -42,6 +52,7 @@
             :key="index"
             :video="video"
           />
+
         </div>
 
 
@@ -49,8 +60,8 @@
           а сама логика для работы с нашей таблицей лежит в @/mixins/pagination.mixin.js) -->
         <Paginate
           v-if="pageCount && (count > pageSize)"
-          :page-count="pageCount"
           v-model="pageNum"
+          :page-count="pageCount"
           :prev-text="'Назад'"
           :next-text="'Вперед'"
           :container-class="'pagination'"

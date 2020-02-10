@@ -16,10 +16,10 @@
           class="author-item"
         >
           <router-link 
-            
             :to="`/author/${author}`"
             class="author-link"
-            >{{track.authors_name[index]}}</router-link>{{track.authors_name.length - 1 != index ? ' & ' : ''}}
+          >{{track.authors_name[index]}}</router-link>{{track.authors_name.length - 1 != index ? ' & ' : ''}}
+        
         </span>
         
           —

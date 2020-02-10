@@ -1,9 +1,14 @@
 <template>
   <!-- Кнопка отвечающая за плей и паузу у трека -->
-  <span class="btn-audio-play" @click="$emit('playAudio')">
+  <span 
+    class="btn-audio-play" 
+    @click="$emit('playAudio')"
+  >
 
     <!-- Play -->
-    <svg v-if="isPlay === true" key="play-icon"
+    <svg 
+      v-if="isPlay"
+      key="play-icon"
       version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 512 512">
       <g>
       </g>
@@ -12,7 +17,9 @@
     </svg>
 
     <!-- Pause -->  
-    <svg v-else key="pause-icon"
+    <svg 
+      v-else 
+      key="pause-icon"
       version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 512 512">
       <g>
       </g>

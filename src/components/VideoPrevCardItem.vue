@@ -11,9 +11,9 @@
     <!-- Обложка -->
     <div class="cover-wrap">
       <a
-        @click.prevent="openVideo(video.authors, video.permalink)"
-        class="video-cover" 
         :style="{ 'backgroundImage' : 'url(' + `https://img.youtube.com/vi/${video.permalink}/hqdefault.jpg` + ')' }"
+        class="video-cover" 
+        @click.prevent="openVideo(video.authors, video.permalink)"
       > 
         <!-- Значок плея -->
         <VideoPlayButton 
@@ -31,12 +31,12 @@
     </div>
     
     <PrevInfo 
-      @close="$emit('close')"
       :date="video.date"
       :name="video.name"
       :authors="video.authors"
       :permalink="video.permalink" 
       :type="'video'"
+      @close="$emit('close')"
     />
   </div>
 </template>

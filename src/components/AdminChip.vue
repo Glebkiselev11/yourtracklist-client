@@ -1,15 +1,16 @@
 <template>
   <!-- Компонет чипса (одного, мы итерируем этот компонент) (используется только для выбора соц сетей) -->
   <span
-    class="chip-item"
     :style="`flex-grow: ${chip.length < 5 ? 1 : chip.length < 10 ? 2 : chip.length < 15 ? 3 : 4}`"
     :title="title ? title : chip"
+    class="chip-item"
   >{{chip}}
     <button
       :title="buttonTitleMessage"
-      @click.prevent="destroy"
       class="chip-item-btn"
-    >X</button>
+      @click.prevent="destroy"
+    >X
+    </button>
   </span>
 </template>
 
