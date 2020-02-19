@@ -2,6 +2,37 @@ import axios from 'axios'
 
 // ! Это Новый стор на добавление релизов в телеграм
 export default {
+  state: {
+    tracks: [], // Массив сформированных треков с информацией, которые отравляем уже на бэк
+  },
+  getters: {
+    tracks: s=> s.tracks,
+  },
+
+  mutations: {
+    // Добавляет 1 трек в массив
+    pushTrack(s, track) {
+      // Если нету нумерации трека (теги не проставлены в альбоме, то ставим номер исходя из кол-ва значений в массиве)
+      if (track.ordinalNumber == 0) {
+        track.ordinalNumber = s.tracks.length + 1
+      }
+      s.tracks.push(track)
+    },
+
+    // Синхронизирует новую информацию с треком по номеру в релизе
+    syncTracksOfNumber(s, track) {
+      for (let i = 0; i < s.tracks.length; i++) {
+        if (track.ordinalNumber === s.tracks[i].ordinalNumber) {
+          s.tracks[i] = track
+        }
+      }
+    },
+
+    clearTracks(s) {
+      s.tracks = []
+    },
+  },
+
   actions: {
     // Добавляет релиз в нашу коллекцию через телеграм
     async addRelease({commit}, formData) {
@@ -28,37 +59,7 @@ export default {
 
     
   },
-  mutations: {
+  
 
-    // Добавляет 1 трек в массив
-    pushTrack(s, track) {
-      // Если нету нумерации трека (теги не проставлены в альбоме, то ставим номер исходя из кол-ва значений в массиве)
-      if (track.ordinalNumber == 0) {
-        track.ordinalNumber = s.tracks.length + 1
-      }
-      
-      s.tracks.push(track)
-    },
-
-    // Синхронизирует новую информацию с треком по номеру в релизе
-    syncTracksOfNumber(s, track) {
-      for (let i = 0; i < s.tracks.length; i++) {
-        if (track.ordinalNumber === s.tracks[i].ordinalNumber) {
-          s.tracks[i] = track
-        }
-      }
-    },
-
-    clearTracks(s) {
-      s.tracks = []
-    },
-
-  },
-
-  state: {
-    tracks: [], // Массив сформированных треков с информацией, которые отравляем уже на бэк
-  },
-  getters: {
-    tracks: s=> s.tracks,
-  }
+  
 }

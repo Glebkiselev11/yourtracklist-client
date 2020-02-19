@@ -2,6 +2,32 @@ import axios from 'axios'
 
 // Через этот метод мы получаем карточку релиза с бэкенда
 export default {
+  state: {
+    releaseInfo: null, // Текущая информация о релизе
+    releaseTracks: null, // Массив треков для релиза
+  },
+
+  getters: {
+    releaseInfo: state => state.releaseInfo,
+    releaseTracks: state => state.releaseTracks
+  },
+
+  mutations: {
+    setReleaseInfo(state, releaseInfo) {
+      state.releaseInfo = releaseInfo
+    },
+    clearReleaseInfo(state) {
+      state.releaseInfo = null
+    },
+
+    setReleaseTracks(state, tracks) {
+      state.releaseTracks = tracks
+    },
+    clearReleaseTracks(state) {
+      state.releaseTracks = null
+    }
+  },
+
   actions: {
     async getReleaseInfo({commit}, formData) {
       try {
@@ -18,29 +44,7 @@ export default {
 
     }
   },
-  mutations: {
-    setReleaseInfo(state, releaseInfo) {
-      state.releaseInfo = releaseInfo
-    },
-    clearReleaseInfo(state) {
-      state.releaseInfo = null
-    },
-
-    setReleaseTracks(state, tracks) {
-      state.releaseTracks = tracks
-    },
-    clearReleaseTracks(state) {
-      state.releaseTracks = null
-    }
-  },
-  state: {
-    releaseInfo: null, // Текущая информация о релизе
-    releaseTracks: null, // Массив треков для релиза
-  },
-
-  getters: {
-    releaseInfo: state => state.releaseInfo,
-    releaseTracks: state => state.releaseTracks
-  }
+  
+  
   
 }

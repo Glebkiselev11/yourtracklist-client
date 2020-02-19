@@ -14,12 +14,6 @@ import search from './modules/search.js'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
   modules: {
     hero, 
     authors, 

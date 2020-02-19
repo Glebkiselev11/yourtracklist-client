@@ -5,6 +5,19 @@ import admitVideo from './admin-video.js'
 import addRelease from './add-release.js'
 
 export default {
+  modules: {
+    admitVideo,
+    addRelease,
+  },
+
+  state: {
+    statusForAuthor: null, // Статус о добавлении нового автора
+  },
+  
+  getters: {
+    statusForAuthor: s => s.statusForAuthor,
+  },
+
   actions: {
     // Добавляет автора в нашу коллекцию, доступно только для администратора
     async admin_addAuthor({commit}, formData) {
@@ -39,7 +52,6 @@ export default {
       }
     },
 
-
     // Получает с бэкенда список всех доступных тегов
     // Используем этот метод при добавлении автора, релиза, видео, трека
     async getTags() {
@@ -51,19 +63,7 @@ export default {
       }
     }
 
+  },
 
-  },
-  mutations: {
-
-  },
-  state: {
-    statusForAuthor: null, // Статус о добавлении нового автора
-  },
-  getters: {
-    statusForAuthor: s => s.statusForAuthor,
-  },
-  modules: {
-    admitVideo,
-    addRelease,
-  }
+  
 }

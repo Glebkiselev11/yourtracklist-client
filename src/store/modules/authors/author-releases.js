@@ -1,5 +1,15 @@
 // В этом модуле мы храним 4 последних релиза автора
 export default {
+  state: {
+    fourLastReleasesForAuthor: undefined, // Последние четыре релиза для автора
+    releasesCountForAuthor: 0, // Информация о том, сколько релизов у автора всего, чтобы если их 4 или меньше не показывать кнопку "показать больше"
+  },
+  
+  getters: {
+    fourLastReleasesForAuthor: s => s.fourLastReleasesForAuthor,
+    releasesCountForAuthor: s => s.releasesCountForAuthor,
+  }, 
+
   mutations: {
     setFourLastReleasesForAuthor(s, releases) {
       s.fourLastReleasesForAuthor = releases
@@ -15,12 +25,5 @@ export default {
       s.releasesCountForAuthor = 0
     }
   },
-  state: {
-    fourLastReleasesForAuthor: undefined, // Последние четыре релиза для автора
-    releasesCountForAuthor: 0, // Информация о том, сколько релизов у автора всего, чтобы если их 4 или меньше не показывать кнопку "показать больше"
-  },
-  getters: {
-    fourLastReleasesForAuthor: s => s.fourLastReleasesForAuthor,
-    releasesCountForAuthor: s => s.releasesCountForAuthor,
-  },
+  
 }

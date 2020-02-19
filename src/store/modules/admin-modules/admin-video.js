@@ -3,6 +3,66 @@
 import axios from 'axios'
 
 export default {
+  state: {
+    releaseDateOfVideo: '', // Дата выхода видео
+    videoName: '', // Название видео, которое мы подгружаем с ютуба
+    videoDuration: '', // Длительность видео
+    urlVideo: '', // Ссылка на видео, введя ее в инпут, мы по api получаем данные по видосу
+    statusForVideo: undefined, // Здесь храним статус ответа (загрузиллось ли оно в базу или нет)
+  },
+
+  getters: {
+    urlVideo: s => s.urlVideo,
+    videoDuration: s => s.videoDuration,
+    statusForVideo: s => s.statusForVideo,
+    videoName: s => s.videoName,
+    releaseDateOfVideo: s => s.releaseDateOfVideo,
+
+    // Возвращает id видео, просто обрезав ссылку (работает только с ютуб)
+    videoId(s) {
+      return s.urlVideo.substr(-11)
+    }
+  },
+
+  mutations: {
+    setStatusForVideo(s, statusMessage) {
+      s.statusForVideo = statusMessage
+    },
+
+    setVideoDuration(s, duration) {
+      s.videoDuration = duration
+    },
+
+    setReleaseDateOfVideo(s, date) {
+      s.releaseDateOfVideo = date.substring(0, 10)
+    },
+
+    setVideoName(s, videoName) {
+      s.videoName = videoName
+    },
+
+    setUrlVideo(s, urlVideo) {
+      s.urlVideo = urlVideo
+    },
+
+    clearDuration(s) {
+      s.duration = ''
+    },
+
+    clearVideoName(s) {
+      s.videoName = ''
+    },
+
+    clearReleaseDateOfVideo(s) {
+      s.releaseDateOfVideo = ''
+    },
+
+    clearUrlVideo(s) {
+      s.urlVideo = ''
+    },
+    
+  },
+
   actions: {
 
     // Добавляет новое видео в базу данных
@@ -51,63 +111,7 @@ export default {
 
   },
 
-  mutations: {
-    setStatusForVideo(state, statusMessage) {
-      state.statusForVideo = statusMessage
-    },
+  
 
-    setVideoDuration(state, duration) {
-      state.videoDuration = duration
-    },
-
-    setReleaseDateOfVideo(state, date) {
-      state.releaseDateOfVideo = date.substring(0, 10)
-    },
-
-    setVideoName(state, videoName) {
-      state.videoName = videoName
-    },
-
-    setUrlVideo(state, urlVideo) {
-      state.urlVideo = urlVideo
-    },
-
-    clearDuration(state) {
-      state.duration = ''
-    },
-
-    clearVideoName(state) {
-      state.videoName = ''
-    },
-
-    clearReleaseDateOfVideo(state) {
-      state.releaseDateOfVideo = ''
-    },
-
-    clearUrlVideo(state) {
-      state.urlVideo = ''
-    },
-    
-  },
-
-  state: {
-    releaseDateOfVideo: '', // Дата выхода видео
-    videoName: '', // Название видео, которое мы подгружаем с ютуба
-    videoDuration: '', // Длительность видео
-    urlVideo: '', // Ссылка на видео, введя ее в инпут, мы по api получаем данные по видосу
-    statusForVideo: undefined, // Здесь храним статус ответа (загрузиллось ли оно в базу или нет)
-  },
-
-  getters: {
-    urlVideo: s => s.urlVideo,
-    videoDuration: s => s.videoDuration,
-    statusForVideo: s => s.statusForVideo,
-    videoName: s => s.videoName,
-    releaseDateOfVideo: s => s.releaseDateOfVideo,
-
-    // Возвращает id видео, просто обрезав ссылку (работает только с ютуб)
-    videoId(s) {
-      return s.urlVideo.substr(-11)
-    }
-  }
+  
 }
