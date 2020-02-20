@@ -94,14 +94,12 @@ export default {
       const videoId = getters.videoId
 
       try {
-        // Получаем название видео и дату его публикации
-        const {data : {items : [info1]}} = await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=AIzaSyAE-fHuHMXHtztu9xlYb9CWp6e5YyTEZiA&fields=items(snippet(publishedAt, title))&part=snippet`)
-        commit('setVideoName', info1.snippet.title)
-        commit('setReleaseDateOfVideo', info1.snippet.publishedAt)
+        const {duration, date, name} = await axios.post('/api/admin/get-youtube-video-info', {videoId})
 
-        // Тут получаем продолжительность видео
-        const {data : {items : [info2]}} = await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=AIzaSyAE-fHuHMXHtztu9xlYb9CWp6e5YyTEZiA&fields=items(contentDetails(duration))&part=contentDetails`)
-        commit('setVideoDuration', info2.contentDetails.duration)
+        console.log(duration, date, name)
+        commit('setVideoName', name)
+        commit('setReleaseDateOfVideo', date)
+        commit('setVideoDuration', duration)
 
       } catch (error) {
         console.log(error)
