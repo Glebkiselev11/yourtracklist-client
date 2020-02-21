@@ -32,7 +32,7 @@ export default {
     async getReleaseInfo({commit}, formData) {
       try {
         // С бэкенда получаем информацию о релизе и массив с треками (пока без сами файлов треков)
-        const {data : {release, tracks}} = await await axios.post('/api/get-release-card', {formData})
+        const {data : {release, tracks}} = await axios.post('/api/get-release-card', {formData})
 
         console.log(tracks)
         commit('setReleaseInfo', release)
