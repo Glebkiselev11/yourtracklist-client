@@ -3,7 +3,7 @@
   <div class="wrap-button">
     <button
       v-if="title" 
-      :style="this.styles"
+      :style="styles"
       class="title"
       @click="buttonClick"
     >{{title}}</button>
@@ -15,9 +15,9 @@
       class="arrow" 
     >
       <svg width="51" height="30" viewBox="0 0 51 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <line :stroke="this.arrowColor" x1="4.37114e-08" y1="15.5" x2="50" y2="15.5"/>
-        <line :stroke="this.arrowColor" x1="36.3609" y1="0.653994" x2="50.2012" y2="15.0917"/>
-        <line :stroke="this.arrowColor" x1="35.8773" y1="29.4794" x2="50.315" y2="15.6391"/>
+        <line :stroke="arrowColor" x1="4.37114e-08" y1="15.5" x2="50" y2="15.5"/>
+        <line :stroke="arrowColor" x1="36.3609" y1="0.653994" x2="50.2012" y2="15.0917"/>
+        <line :stroke="arrowColor" x1="35.8773" y1="29.4794" x2="50.315" y2="15.6391"/>
       </svg>
     </span>
 
@@ -28,9 +28,9 @@
       class="arrow-back" 
     >
       <svg width="50" height="31" viewBox="0 0 50 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <line :stroke="this.arrowColor" x1="50" y1="14.8969" x2="0.652355" y2="14.8968"/>
-        <line :stroke="this.arrowColor" y1="-0.5" x2="20.3011" y2="-0.5" transform="matrix(-0.672854 -0.739775 0.703458 -0.710736 14.4697 30)"/>
-        <line :stroke="this.arrowColor" y1="-0.5" x2="20.2561" y2="-0.5" transform="matrix(-0.703458 0.710736 -0.672854 -0.739775 14.2495 0)"/>
+        <line :stroke="arrowColor" x1="50" y1="14.8969" x2="0.652355" y2="14.8968"/>
+        <line :stroke="arrowColor" y1="-0.5" x2="20.3011" y2="-0.5" transform="matrix(-0.672854 -0.739775 0.703458 -0.710736 14.4697 30)"/>
+        <line :stroke="arrowColor" y1="-0.5" x2="20.2561" y2="-0.5" transform="matrix(-0.703458 0.710736 -0.672854 -0.739775 14.2495 0)"/>
       </svg>
     </span>
 

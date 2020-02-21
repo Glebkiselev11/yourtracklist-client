@@ -48,18 +48,18 @@
 
     <!-- Здесь показываем 4 релиза автора -->
     <ReleasePrevArchive
-      v-show="this.fourLastReleasesForAuthor.length" 
+      v-show="fourLastReleasesForAuthor.length" 
       :author-permalink="authorInfo.permalink"
-      :four-latest-releases="this.fourLastReleasesForAuthor"
-      :count="this.releasesCountForAuthor"
+      :four-latest-releases="fourLastReleasesForAuthor"
+      :count="releasesCountForAuthor"
     />
 
     <!-- А тут 4 последних видео автора -->
     <VideoPrevArchive 
-      v-show="this.fourLastVideosForAuthor.length" 
+      v-show="fourLastVideosForAuthor.length" 
       :author-permalink="authorInfo.permalink"
-      :fourLatestVideo="this.fourLastVideosForAuthor"
-      :count="this.videosCountForAuthor"
+      :fourLatestVideo="fourLastVideosForAuthor"
+      :count="videosCountForAuthor"
     />
 
     </div>

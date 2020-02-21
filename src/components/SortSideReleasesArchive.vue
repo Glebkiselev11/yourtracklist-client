@@ -4,15 +4,15 @@
     
     <!-- Выбираем тип сортировки -->
     <SortSideSelect 
-      :sorting="this.sortingReleases"
+      :sorting="sortingReleases"
       @sorting="setSorting"
     />
 
     <!-- Вибираем количество треков в релизе -->
     <SortSideReleasesArchiveMinMaxTracks 
-      :min-tracks="this.minTracksOfReleases"
-      :max-tracks="this.maxTracksOfReleases"
-      :range-number-of-tracks="this.rangeNumberOfTracks"
+      :min-tracks="minTracksOfReleases"
+      :max-tracks="maxTracksOfReleases"
+      :range-number-of-tracks="rangeNumberOfTracks"
       @max="setMaxTracks"
       @min="setMinTracks"
     />

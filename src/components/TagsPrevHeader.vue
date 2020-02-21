@@ -3,7 +3,7 @@
   видео в предпросмотрева, то есть на главной, или же в поиске  -->
   <div class="release-tags">
     <span 
-      v-for="(tag, index) in this.tagsArray"
+      v-for="(tag, index) in tagsArray"
       :key="index"
     >
     <span v-if="index !== 0"> / </span>

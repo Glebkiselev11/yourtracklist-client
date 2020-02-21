@@ -27,7 +27,7 @@
 
           <!-- Здесь выводим ссылку на дискографию артиста, если он не один, то через цикл -->
           <h2   
-            v-for="(author, index) in this.releaseInfo.authors"
+            v-for="(author, index) in releaseInfo.authors"
             :key="index"
             class="author"
           >

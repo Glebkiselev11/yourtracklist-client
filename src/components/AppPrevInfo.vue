@@ -21,7 +21,7 @@
     <div class="author-name-wrap">
       
       <span 
-        v-for="(author, index) in this.authors"
+        v-for="(author, index) in authors"
         :key="index"
         class="author"
       >

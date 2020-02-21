@@ -12,8 +12,8 @@
 
       <!-- Кнопка которая переходит к видео записям артиста -->
       <ArrowButton 
-        v-if="this.thereIsVideos && this.localNameAuthor"
-        :title="'Видео ' + this.localNameAuthor"
+        v-if="thereIsVideos && localNameAuthor"
+        :title="'Видео ' + localNameAuthor"
         :arrow-color="'#000'"
         :forward="true"
         :styles="'color: black; font-size: 25px; font-weight: 300;'"

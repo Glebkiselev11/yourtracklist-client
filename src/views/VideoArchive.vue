@@ -12,8 +12,8 @@
 
       <!-- Кнопка которая переходит к релизам артиста (если они у него есть) -->
       <ArrowButton 
-        v-if="this.thereIsReleases && this.localNameAuthor"
-        :title="'Релизы ' + this.localNameAuthor"
+        v-if="thereIsReleases && localNameAuthor"
+        :title="'Релизы ' + localNameAuthor"
         :arrow-color="'#000'"
         :forward="true"
         :styles="'color: black; font-size: 25px; font-weight: 300;'"

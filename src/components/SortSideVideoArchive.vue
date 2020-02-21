@@ -4,7 +4,7 @@
     
     <!-- Выбираем тип сортировки -->
     <SortSideSelect 
-      :sorting="this.sortingVideo"
+      :sorting="sortingVideo"
       @sorting="setSorting"
     />
 
