@@ -1,10 +1,10 @@
-import lastReleases from './last-releases.js'
-import latestVideo from './latest-videos'
+import heroReleases from './heroReleases'
+import heroVideo from './heroVideo'
 
 // Основной модуль, под главную страницу
 export default {
   modules: {
-    lastReleases, 
-    latestVideo
+    heroReleases, 
+    heroVideo
   },
 }

@@ -1,6 +1,6 @@
 import axios from 'axios'
-import authorReleases from './author-releases'
-import authorVideo from './author-video'
+import authorReleases from './authorReleases'
+import authorVideo from './authorVideo'
 
 // Основной модуль, под Авторов
 export default {

@@ -2,7 +2,7 @@
 // Основной админский модуль
 import axios from 'axios'
 import admitVideo from './admin-video.js'
-import addRelease from './add-release.js'
+import addRelease from './addRelease.js'
 
 export default {
   modules: {

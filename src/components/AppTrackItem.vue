@@ -1,11 +1,7 @@
 <template>
   <!-- Компонент предназначен для 1 трека, который можно послушать (будет использоваться в релизах а потом и по отдельности) -->
     <div class="track-wrap">
-
-      
-
       <div class="left-side-track">
-
         <!-- Кнопка воспроизведение и паузы у трека -->
         <AppPlayPauseBtn 
           :isPlay="isPlay"
@@ -27,16 +23,12 @@
           —
         <!-- Название трека -->  
         <span class="track-name">{{track.name}}</span>
-
-
       </div>
 
       <!-- Длительность трека -->
       <span>{{computedDuration(track.duration)}}</span>
 
     </div>
-    
-
 </template>
 
 <script>
@@ -55,7 +47,10 @@ export default {
   ],
 
   props: {
-    track: Object
+    track: {
+      type: Object,
+      required: true,
+    }
   },
 
   data: () => ({
@@ -74,8 +69,6 @@ export default {
       }
     }
   },
-
-
 }
 </script>
 
