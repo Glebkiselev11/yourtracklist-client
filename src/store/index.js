@@ -10,6 +10,8 @@ import releaseCard from './modules/releaseCard'
 import adminModules from './modules/adminModules'
 import pagination from './modules/pagination'
 import search from './modules/search'
+import track from './modules/track'
+
 
 Vue.use(Vuex)
 
@@ -23,5 +25,6 @@ export default new Vuex.Store({
     adminModules, 
     pagination, 
     search,
+    track, 
   }
 })
