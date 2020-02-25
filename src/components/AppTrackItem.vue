@@ -1,6 +1,8 @@
 <template>
   <!-- Компонент предназначен для 1 трека, который можно послушать (будет использоваться в релизах а потом и по отдельности) -->
     <div class="track-wrap">
+
+
       <div class="left-side-track">
         <!-- Кнопка воспроизведение и паузы у трека -->
         <AppPlayPauseBtn 
@@ -55,17 +57,24 @@ export default {
 
   data: () => ({
     isPlay: false, // Инфа о том включен трек или нет
+    audioStream: null, // Аудио поток 
   }),
 
   methods: {
+
     playAudio() { // Воспроизводит аудио файл
+    
+      if (this.audioStream === null) { // Сначала создает поток, если его еще нет
+        this.audioStream = new Audio(`/api/track/${this.track.file_id}`)
+      } 
 
       if (this.isPlay == false) {
         this.isPlay = true // Указываем что мы включили аудио
+        this.audioStream.play()
         // this.track.audio.play()  // Включаем аудио файл
       } else {
         this.isPlay = false // Указываем что мы выключили аудио
-        // this.track.audio.pause() // Ставим на паузу аудио файл
+        this.audioStream.pause() // Ставим на паузу аудио файл
       }
     }
   },
