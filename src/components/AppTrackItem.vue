@@ -28,7 +28,15 @@
       </div>
 
       <!-- Длительность трека -->
-      <span>{{computedDuration(track.duration)}}</span>
+      <span>{{`${currentDuration} | ${computedDuration(track.duration)}`}}</span>
+
+      
+      <span class="progress-bar">
+        <span 
+          class="progress-bar-current"
+          :style="{ width: percentComplete + '%' }"
+        ></span>
+      </span>
 
     </div>
 </template>
@@ -58,7 +66,20 @@ export default {
   data: () => ({
     isPlay: false, // Инфа о том включен трек или нет
     audioStream: null, // Аудио поток 
+    currentSeconds: 0, // Текущее время трека
   }),
+
+  computed: {
+    currentDuration() { // Дополнительно преобразовывает секунды в формат времени
+      return this.computedDuration(this.currentSeconds)
+    },
+
+    percentComplete() { // Высчитываем процент для прогресс бара
+			return parseInt(this.currentSeconds / this.track.duration * 100);
+		},
+  
+  },
+
 
   methods: {
 
@@ -66,17 +87,26 @@ export default {
     
       if (this.audioStream === null) { // Сначала создает поток, если его еще нет
         this.audioStream = new Audio(`/api/track/${this.track.file_id}`)
+        
+        // Добавляю прослушку на обновление времени
+        this.audioStream.addEventListener('timeupdate', this.update);
       } 
 
+      // Включает / выключает трек
       if (this.isPlay == false) {
-        this.isPlay = true // Указываем что мы включили аудио
+        this.isPlay = true 
         this.audioStream.play()
-        // this.track.audio.play()  // Включаем аудио файл
       } else {
-        this.isPlay = false // Указываем что мы выключили аудио
-        this.audioStream.pause() // Ставим на паузу аудио файл
+        this.isPlay = false
+        this.audioStream.pause() 
       }
+    },
+
+    // Обновляем текущее время, отслеживая обновления на аудио элементе (то бишь эмулируем реактивность)
+    update() {
+      this.currentSeconds = parseInt(this.audioStream.currentTime);
     }
+
   },
 }
 </script>
@@ -86,6 +116,7 @@ export default {
   .track-wrap {
     display: flex;
     align-items: center;
+    position: relative;
   }
 
   /* Левая часть */
@@ -105,6 +136,21 @@ export default {
 
   .author-link:hover {
     border-bottom: 2px solid rgba(0, 0, 0, 0.829);
+  }
+
+
+  .progress-bar {
+    height: 3px;
+    width: 100%;
+    background: rgb(199, 199, 199);
+    position: absolute;
+    bottom: 0;
+  }
+
+  .progress-bar-current {
+    position: absolute;
+    background: black;
+    height: 3px;
   }
 
   
