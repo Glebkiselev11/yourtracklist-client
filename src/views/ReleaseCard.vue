@@ -111,19 +111,8 @@
           </div>
         </div>
         
-        <!-- Треки для релиза -->
-        <div class="release-tracks-wrap">
-
-          <!-- Компонент 1 трека -->
-          <AppTrackItem 
-            v-for="(track, i) of releaseTracks"
-            :key="i"
-            :track="track"
-            class="release-track-item"
-          />
-
-    
-        </div>
+        <!-- Плейлист с треками -->
+        <ReleasePlaylist />
         
       </div>
 
@@ -134,14 +123,14 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import AppTrackItem from '@/components/AppTrackItem'
+import ReleasePlaylist from '@/components/ReleasePlaylist'
 import duration from '@/mixins/duration.mixin.js'
 
 export default {
   name: 'ReleaseCard',
 
   components: {
-    AppTrackItem, // Циклом передаем туда информацию о 1 треке
+    ReleasePlaylist, 
   },
 
   mixins: [
@@ -152,7 +141,6 @@ export default {
     // Тут мы его получаем
     ...mapGetters([
       'releaseInfo', // Информация о релизе
-      'releaseTracks', // Треки релиза (пока только информация о треках, без файлов)
     ]),
   },
 
@@ -191,6 +179,7 @@ export default {
     routerTo(linkTo, tag) {
       this.$router.push({ path: linkTo , query: { ...this.$route.query, tag }})
     },
+
   },
   
 }
@@ -303,24 +292,6 @@ export default {
   /* Теги */
   .release-tags {
     margin-left: 65px;
-  }
-
-
-
-  /* Обертка под треки релиза */
-  .release-tracks-wrap {
-    margin-top: 50px;
-    border-top: 1px solid black;
-    padding-top: 50px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .release-track-item {
-    line-height: 2em;
-    display: flex;
-    justify-content: space-between;
-
   }
 
 </style>

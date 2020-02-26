@@ -30,7 +30,7 @@
       <div class="right-side-track">
         
         <input
-          v-show="isPlay || audioStream" 
+          v-show="isPlay" 
           v-model.number="trackVolume" 
           type="range" 
           min="0" 
@@ -40,15 +40,16 @@
 
         <!-- Длительность трека -->
         <span>{{`${currentDuration} | ${computedDuration(track.duration)}`}}</span>
-
-        
+      
       </div>
 
-      
-      
-      <span class="progress-bar">
+    
+      <span 
+        @click="seek"
+        class="progress-bar" 
+      >
         <span 
-          class="progress-bar-current"
+          class="progress-seeker"
           :style="{ width: percentComplete + '%' }"
         >
         </span>
@@ -77,22 +78,24 @@ export default {
     track: {
       type: Object,
       required: true,
+    },
+
+    currentSeconds: {
+      type: [String, Number]
+    },
+
+    isPlay: {
+      type: Boolean
     }
   },
-
-  data: () => ({
-    isPlay: false, // Инфа о том включен трек или нет
-    audioStream: null, // Аудио поток 
-    currentSeconds: 0, // Текущее время трека
-  }),
 
   computed: {
     trackVolume: {
       get() {
         return this.$store.getters.trackVolume
       },
-      set(volume) { // Устанавливаем в стейт и сразу в аудио поток, звук
-        this.audioStream.volume = volume / 100
+      set(volume) { // Устанавливаем в стейт и сразу в аудио поток громкость
+        this.$emit('setVolume', volume / 100)
         this.setTrackVolume(volume)
       }
     },
@@ -106,34 +109,23 @@ export default {
 		},
   },
 
-
-
   methods: {
     ...mapMutations(['setTrackVolume']),
 
     playAudio() { // Воспроизводит аудио файл
-      if (this.audioStream === null) { // Сначала создает поток, если его еще нет
-        this.audioStream = new Audio(`/api/track/${this.track.file_id}`)
-        // Добавляю прослушку на обновление времени
-        this.audioStream.addEventListener('timeupdate', this.update);
-        // Ставим локальную громкость трека
-        this.audioStream.volume = this.trackVolume / 100
-      } 
-
-      // Включает / выключает трек
-      if (this.isPlay == false) {
-        this.isPlay = true 
-        this.audioStream.play()
-      } else {
-        this.isPlay = false
-        this.audioStream.pause() 
-      }
+      this.$emit('playAudio', this.track.file_id)
     },
 
-    // Обновляем текущее время, отслеживая обновления на аудио элементе (то бишь эмулируем реактивность)
-    update() {
-      this.currentSeconds = parseInt(this.audioStream.currentTime);
-    }
+    seek(e) { // Выбираем место на прогресс баре с какого отрезка хотим включить трек
+			if (!this.isPlay) {
+				return;
+      }
+			const el = e.target.getBoundingClientRect();
+			const seekPos = (e.clientX - el.left) / el.width;
+
+      this.$emit('seek', parseInt(this.track.duration * seekPos))
+		},
+    
 
   },
 }
@@ -145,6 +137,7 @@ export default {
     display: flex;
     align-items: center;
     position: relative;
+    flex-wrap: wrap;
   }
 
   /* Левая часть */
@@ -169,7 +162,7 @@ export default {
     align-items: center;
   }
   .volume-range {
-    width: 50px;
+    width: 80px;
     margin-right: 5px;
   }
 
@@ -177,14 +170,20 @@ export default {
   .progress-bar {
     height: 3px;
     width: 100%;
-    background: rgb(199, 199, 199);
-    position: absolute;
+    cursor: pointer;
+    background: rgba(199, 199, 199, 0.438);
+    z-index: 2;
+    position: relative;
     bottom: 0;
   }
-  .progress-bar-current {
+  .progress-seeker {
     position: absolute;
+    z-index: -1;
     background: black;
     height: 3px;
+    bottom: 0;
+		left: 0;
+    top: 0;
   }
 
   
