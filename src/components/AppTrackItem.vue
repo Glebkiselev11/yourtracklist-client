@@ -39,7 +39,11 @@
         />
 
         <!-- Длительность трека -->
-        <span>{{`${currentDuration} | ${computedDuration(track.duration)}`}}</span>
+        <span :title="`${currentDuration} из ${computedDuration(track.duration)}`">
+          <span v-show="isPlay">{{currentDuration}}</span>
+          <span v-show="!isPlay">{{computedDuration(track.duration)}}</span>
+        </span>
+        
       
       </div>
 
@@ -86,6 +90,10 @@ export default {
 
     isPlay: {
       type: Boolean
+    },
+
+    audioIndex: {
+      type: Number, // Номер под которым этот трек идет в плейлисте
     }
   },
 
@@ -113,7 +121,10 @@ export default {
     ...mapMutations(['setTrackVolume']),
 
     playAudio() { // Воспроизводит аудио файл
-      this.$emit('playAudio', this.track.file_id)
+      this.$emit('playAudio', {
+        fileId: this.track.file_id, // Айди файла
+        audioIndex: this.audioIndex, // Индекс трека в плейлисте релиза
+      })
     },
 
     seek(e) { // Выбираем место на прогресс баре с какого отрезка хотим включить трек
