@@ -27,15 +27,31 @@
         <span class="track-name">{{track.name}}</span>
       </div>
 
-      <!-- Длительность трека -->
-      <span>{{`${currentDuration} | ${computedDuration(track.duration)}`}}</span>
+      <div class="right-side-track">
+        
+        <input
+          v-show="isPlay || audioStream" 
+          v-model.number="trackVolume" 
+          type="range" 
+          min="0" 
+          max="100"
+          class="volume-range"
+        />
 
+        <!-- Длительность трека -->
+        <span>{{`${currentDuration} | ${computedDuration(track.duration)}`}}</span>
+
+        
+      </div>
+
+      
       
       <span class="progress-bar">
         <span 
           class="progress-bar-current"
           :style="{ width: percentComplete + '%' }"
-        ></span>
+        >
+        </span>
       </span>
 
     </div>
@@ -44,6 +60,7 @@
 <script>
 import duration from '@/mixins/duration.mixin.js'
 import AppPlayPauseBtn from '@/components/AppPlayPauseBtn'
+import {mapMutations} from 'vuex'
 
 export default {
   name: 'AppTrackItem',
@@ -70,26 +87,37 @@ export default {
   }),
 
   computed: {
+    trackVolume: {
+      get() {
+        return this.$store.getters.trackVolume
+      },
+      set(volume) { // Устанавливаем в стейт и сразу в аудио поток, звук
+        this.audioStream.volume = volume / 100
+        this.setTrackVolume(volume)
+      }
+    },
+
     currentDuration() { // Дополнительно преобразовывает секунды в формат времени
       return this.computedDuration(this.currentSeconds)
     },
 
     percentComplete() { // Высчитываем процент для прогресс бара
-			return parseInt(this.currentSeconds / this.track.duration * 100);
+			return this.currentSeconds / this.track.duration * 100
 		},
-  
   },
 
 
+
   methods: {
+    ...mapMutations(['setTrackVolume']),
 
     playAudio() { // Воспроизводит аудио файл
-    
       if (this.audioStream === null) { // Сначала создает поток, если его еще нет
         this.audioStream = new Audio(`/api/track/${this.track.file_id}`)
-        
         // Добавляю прослушку на обновление времени
         this.audioStream.addEventListener('timeupdate', this.update);
+        // Ставим локальную громкость трека
+        this.audioStream.volume = this.trackVolume / 100
       } 
 
       // Включает / выключает трек
@@ -124,18 +152,25 @@ export default {
     display: flex;
     align-items: center;
   }
-
   .author-item {
     font-weight: 500;
     margin-right: .2em;
   }
-
   .track-name {
     margin-left: .2em;
   }
-
   .author-link:hover {
     border-bottom: 2px solid rgba(0, 0, 0, 0.829);
+  }
+
+
+  .right-side-track {
+    display: flex;
+    align-items: center;
+  }
+  .volume-range {
+    width: 50px;
+    margin-right: 5px;
   }
 
 
@@ -146,7 +181,6 @@ export default {
     position: absolute;
     bottom: 0;
   }
-
   .progress-bar-current {
     position: absolute;
     background: black;

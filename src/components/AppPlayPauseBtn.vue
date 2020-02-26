@@ -49,5 +49,6 @@ export default {
 
 .btn-audio-play svg {
   margin: auto;
+  cursor: pointer;
 }
 </style>
