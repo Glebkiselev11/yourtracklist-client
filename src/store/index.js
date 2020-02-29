@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // Модули
-import hero from './modules/hero'
+import home from './modules/home'
 import authors from './modules/authors'
 import releasesArchive from './modules/releasesArchive'
 import videoArchive from './modules/videoArchive'
@@ -13,18 +13,19 @@ import search from './modules/search'
 import track from './modules/track'
 
 
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    hero, 
-    authors, 
+    home, // Главная страницы
+    authors, // Все что связано с страницами авторов
     releasesArchive, 
     videoArchive, 
-    releaseCard, 
-    adminModules, 
+    releaseCard, // Карточка релиза
+    adminModules, // Админский модуль, который в будущем переедет в другое SPA
     pagination, 
-    search,
-    track
+    search, 
+    track, // Храним пока только громкость трека
   }
 })

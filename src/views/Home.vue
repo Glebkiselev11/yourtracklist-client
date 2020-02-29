@@ -1,7 +1,7 @@
 <template>
   <div class="home-wrap">
 
-    <!-- Промо блок в самом верху сайта, там мы показываем новости -->
+    <!-- Промо блок в самом верху главной страницы -->
     <TheHero />
 
     <!-- Промо блок с архивом релизов, где выводим 4 последних релиза -->
@@ -17,7 +17,6 @@
       :count="5"
     />
 
-
   </div>
 </template>
 
@@ -25,30 +24,46 @@
 import TheHero from '@/components/TheHero.vue'
 import ReleasePrevArchive from '@/components/ReleasePrevArchive.vue'
 import VideoPrevArchive from '@/components/VideoPrevArchive.vue'
-
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions, mapMutations} from 'vuex'
 
 export default {
   name: 'Home',
   components: {
-    ReleasePrevArchive, VideoPrevArchive, TheHero
+    ReleasePrevArchive, 
+    VideoPrevArchive, 
+    TheHero,
   },
 
   computed: {
-    // Забираем значения из стора
-    ...mapGetters(['fourLatestReleases', 'fourLatestVideos'])
+    ...mapGetters([
+      'fourLatestReleases', 
+      'fourLatestVideos'
+    ])
   },
 
   async mounted() {
     // При загрузке компонента вызываем релизы, видео для главной страницы
-    await this.$store.dispatch('getFourLatesReleases')
-    await this.$store.dispatch('getFourLatesVideos')
+    await this.getFourLatesReleases()
+    await this.getFourLatesVideos()
   },
 
   beforeDestroy() {
     // После закрытия главной страницы мы очищаем из стора загруженные данные, чтобы избежать утечки памяти
-    this.$store.commit('clearFourLatesReleases') // Релизы
-    this.$store.commit('clearFourLatesVideos') // Видео
+    this.clearFourLatesReleases()
+    this.clearFourLatesVideos()
+  },
+
+  methods: {
+    ...mapActions([
+      'getFourLatesReleases',
+      'getFourLatesVideos'
+    ]),
+
+    ...mapMutations([
+      'clearFourLatesReleases',
+      'clearFourLatesVideos'
+    ]),
+
   }
 }
 </script>

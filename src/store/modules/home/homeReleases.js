@@ -3,7 +3,7 @@ import axios from 'axios'
 // Методы для блока на главной странице, куда мы выводим 4 последних релиза
 export default {
   state: {
-    fourLatestReleases: null, // 4 Последних релиза, которые мы показывам на главной странице
+    fourLatestReleases: null, 
   },
 
   getters: {
@@ -29,7 +29,7 @@ export default {
         const {data} = await axios.post('/api/get-four-lates-releases')
         commit('setFourLatesReleases', data)
       } catch(error) {
-        console.log(error)
+        commit('setErrorApi', error.message)
       }
     }
   },
