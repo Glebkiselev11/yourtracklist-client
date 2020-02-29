@@ -104,10 +104,9 @@ export default {
       }
     },
 
-    seek(s) {
-      console.log(s)
+    seek(currentTime) {
       this.audioStream.pause()
-      this.audioStream.currentTime = s
+      this.audioStream.currentTime = currentTime
       this.audioStream.play()
     },
 
