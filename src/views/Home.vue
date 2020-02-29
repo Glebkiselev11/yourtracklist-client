@@ -8,15 +8,12 @@
     <ReleasePrevArchive 
       :four-latest-releases="fourLatestReleases"
       :error="errorOnReleases"
-      :count="5" 
     />
-    <!-- :count="5" потому что мы знаем что всего релизов всегда больше 4 (и 5 нам позволяет принудительно включить кнопку "показать больше") -->
 
     <!-- Промо блок с видео записями, где выводим 3 последних видоса -->
     <VideoPrevArchive 
       :four-latest-video="fourLatestVideos"
       :error="errorOnVideos"
-      :count="5"
     />
 
   </div>

@@ -3,7 +3,7 @@
   <div class="wrap">
     <TopBar 
       title="Видео"
-      :count="count"
+      :isShowButton="isShowButton"
       @click="routerTo"
     />
 
@@ -41,15 +41,26 @@ export default {
 
   props: {
     fourLatestVideo: Array, // Четыре видео (их может быть меньше, если например тут видео для определенного автора а у автора всего их 3 например)
-    //* Нижние пропсы нужны только в том случае когда мы этот компонент используем на странице автора
-    authorPermalink: String, // Ссылка на автора
-    count: Number, // Сколько видео всего у автора
-
     error: { // Сообщение об ошибке
       type: String,
       default: null
+    },
+
+    //* Нижние пропсы нужны только в том случае когда мы этот компонент используем на странице автора
+    authorPermalink: String, // Ссылка на автора
+    count: { // Сколько видео всего у автора
+      default: 5,
+      type: Number
+    }, 
+  },
+
+  computed: {
+    isShowButton() {
+      if (this.error || this.count < 4) {
+        return false
+      } 
+      return true
     }
-    
   },
 
   methods: {

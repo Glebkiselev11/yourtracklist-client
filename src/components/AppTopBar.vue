@@ -4,9 +4,9 @@
     <h2>{{title}}</h2>
     
     <AnimationButton
-      v-if="count > 4"
+      v-show="isShowButton"
       :title="'Показать больше'"
-      @click="click"
+      @click="$emit('click')"
     />
 
   </div>
@@ -23,13 +23,10 @@ export default {
 
   props: {
     title: String, // Заголовок
-    count: Number, // Количество всего релизов / видео (от этого зависит показываем ли мы кнопку или нет)
-  },
 
-  methods: {
-    // Отправляем родительскому компоненту сигнал, что кнопка нажата
-    click() {
-      this.$emit('click')
+    isShowButton: { // Решает показывать ли нам кнопку 'показать больше' или нет
+      type: Boolean,
+      default: false
     }
   },
 }
