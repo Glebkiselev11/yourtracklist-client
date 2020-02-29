@@ -7,15 +7,24 @@
       @click="routerTo"
     />
 
-    <!-- Здесь выводим видео -->
-    <div class="video-wrap">
+    <!-- Сообщение об ошибке -->
+    <ErrorMessage 
+      v-if="error"
+      key="error" 
+    >{{error}}
+    </ErrorMessage>
 
+    <!-- Здесь выводим видео -->
+    <div 
+      v-else
+      key="video"
+      class="video-wrap"
+    >
       <VideoItem 
         v-for="(video, index) in fourLatestVideo"
         :key="index"
         :video="video"
       />
-      
     </div>
   </div>
 </template>
@@ -35,6 +44,12 @@ export default {
     //* Нижние пропсы нужны только в том случае когда мы этот компонент используем на странице автора
     authorPermalink: String, // Ссылка на автора
     count: Number, // Сколько видео всего у автора
+
+    error: { // Сообщение об ошибке
+      type: String,
+      default: null
+    }
+    
   },
 
   methods: {

@@ -9,12 +9,15 @@ import { directive as onClickaway } from 'vue-clickaway' // Нужен для к
 import Loader from '@/components/AppLoader'
 import ConvertedDate from '@/filters/ConvertedDate'
 import ArrowButton from '@/components/AppArrowButton'
+import ErrorMessage from '@/components/AppErrorMessage' // Визуальное отображение ошибок
+
 import './registerServiceWorker'
 
 Vue.config.productionTip = false
 Vue.component('Paginate', Paginate)
 Vue.component('Loader', Loader)
 Vue.component('ArrowButton', ArrowButton)
+Vue.component('ErrorMessage', ErrorMessage)
 Vue.use('youtube', youtube)
 
 // Фильтры

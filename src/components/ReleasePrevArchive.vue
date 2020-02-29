@@ -10,8 +10,19 @@
       @click="routerTo"
     />
 
+    <!-- Сообщение об ошибке -->
+    <ErrorMessage 
+      v-if="error"
+      key="error" 
+    >{{error}}
+    </ErrorMessage>
+
     <!-- Обертка под релизы, который мы будем итерировать циклом -->
-    <div class="releases-wrap">
+    <div 
+      v-else
+      key="releases"
+      class="releases-wrap"
+    >
       
       <!-- Итерируем карточку релиза -->
       <ReleasePrevCardItem 
@@ -40,7 +51,12 @@ export default {
     fourLatestReleases: Array, // Четыре релиза (их может быть меньше, если например тут релизы для определенного автора а у автора всего их 3 например)
     // * Нижние пропсы нужны только в том случае когда мы этот компонент используем на странице автора
     authorPermalink: String, // Ссылка на автора
-    count: Number // Сколько релизов всего у автора
+    count: Number, // Сколько релизов всего у автора
+    
+    error: { // Сообщение об ошибке
+      type: String,
+      default: null
+    }
   },
   
   methods: {

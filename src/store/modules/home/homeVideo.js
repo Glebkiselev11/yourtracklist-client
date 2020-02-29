@@ -23,10 +23,14 @@ export default {
   actions: {
     async getFourLatesVideos({commit}) {
       try {
-        const {data} = await axios.post('/api/get-four-lates-videos')
+        const {data} = await axios.get('/api/get-four-lates-videos')
         commit('setFourLatesVideos', data)
       } catch(error) {
-        console.log(error)
+        if (error.response.data.message) {
+          throw error.response.data.message
+        } else {
+          throw 'Ошибка в подключении к серверу'
+        }
       }
     }
   },
