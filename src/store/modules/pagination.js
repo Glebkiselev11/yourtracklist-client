@@ -2,41 +2,41 @@ export default {
   // здесь у нас хранятся данные о пагинации, она у нас общая для всего,
   // главное во время отсюда очищать данные
   state: {
-    count: undefined, // Количество найденых релизов / видео / миксов
+    count: null, // Количество найденых релизов / видео / миксов
     pageSize: 9, // Количество релизов / миксов которое отображаем на 1 странице пагинации
-    pageCount: undefined, // Количество страниц пагинации
+    pageCount: null, // Количество страниц пагинации
     pageNum: 1, // Номер текущей страницы (по умолчанию 1)
   },
 
   getters: {
-    pageCount: state => state.pageCount,
-    pageSize: state => state.pageSize,
-    count: state => state.count,
-    pageNum: state => state.pageNum,
+    pageCount: s => s.pageCount,
+    pageSize: s => s.pageSize,
+    count: s => s.count,
+    pageNum: s => s.pageNum,
   },
   
   mutations: {
-    setPageCount(state, pageCount) {
-      state.pageCount = pageCount
+    setPageCount(s, pageCount) {
+      s.pageCount = pageCount
     },
 
     // Количество найденых релизов / миксов
-    setCount(state, count) {
-      state.count = count
+    setCount(s, count) {
+      s.count = count
     },
 
-    setPageNum(state, num) {
-      state.pageNum = num
+    setPageNum(s, num) {
+      s.pageNum = num
     },
 
 
     // Ниже методы для очистки стора
-    clearPageCount(state) {
-      state.pageCount = undefined
+    clearPageCount(s) {
+      s.pageCount = null
     },
 
-    clearCount(state) {
-      state.pageCount = undefined
+    clearCount(s) {
+      s.pageCount = null
     }
   },
 
