@@ -70,18 +70,18 @@
 <script>
 import VideoPrevArchive from '@/components/VideoPrevArchive.vue'
 import ReleasePrevArchive from '@/components/ReleasePrevArchive.vue'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions, mapMutations} from 'vuex'
 
 export default {
   name: 'Author-page',
 
   components: {
-    ReleasePrevArchive, VideoPrevArchive
+    ReleasePrevArchive, 
+    VideoPrevArchive,
   },
 
   data: () => ({
     loading: true,
-    fakeLastFourRel: []
   }),
 
   computed: {
@@ -95,7 +95,7 @@ export default {
   },
 
   async created() {
-    await this.$store.dispatch('getAuthorById', this.$route.params.permalink)
+    await this.getAuthorById(this.$route.params.permalink)
     this.loading = false
   },
 
@@ -105,27 +105,35 @@ export default {
     // совместного автора и корректно к нему перешел, там был некий баг, но благодаря этой штуке все окич
     this.loading = true
 
-    this.$store.commit('clearAuthorInfo') // Инфа об авторе
-    this.$store.commit('clearFourLastReleasesForAuthor') // Чистим из стора инфу о релизах
-    this.$store.commit('clearFourLastVideosForAuthor') // Чистим инфу о видосах
+    this.clearAuthorInfo()
+    this.clearFourLastReleasesForAuthor() 
+    this.clearFourLastVideosForAuthor() 
 
     // Подгружаем нового автора
-    await this.$store.dispatch('getAuthorById', to.params.permalink)
+    await this.getAuthorById(to.params.permalink)
 
-    // Отключаем лоадинг
-    this.loading = false
-    // И пускаем на страницу
-    next()
+    this.loading = false // Отключаем лоадинг
+    next() // И пускаем на страницу
   },
   
   beforeDestroy() {
     // После закрытия страницы автора, мы очищаем инфу о нем из стейта
-    this.$store.commit('clearAuthorInfo') // Инфа об авторе
-    this.$store.commit('clearFourLastReleasesForAuthor') // Чистим из стора инфу о релизах
-    this.$store.commit('clearFourLastVideosForAuthor') // Чистим инфу из стора о видео
+    this.clearAuthorInfo()
+    this.clearFourLastReleasesForAuthor() 
+    this.clearFourLastVideosForAuthor() 
   },
 
   methods: {
+    ...mapActions([
+      'getAuthorById', // Получает информацию об авторе, а так же его 4 релиза и видео
+    ]),
+    
+    ...mapMutations([
+      'clearAuthorInfo', // Чистит инфу об авторе
+      'clearFourLastReleasesForAuthor', // Чистит из стора инфу о релизах
+      'clearFourLastVideosForAuthor', // Чистит инфу о видосах
+    ]),
+
     // Перекидывает в архив (релизов, или миксов, и там ставит нужный тег в фильтр)
     routerTo(linkTo, tag) {
       this.$router.push({ path: linkTo , query: { ...this.$route.query, tag }})

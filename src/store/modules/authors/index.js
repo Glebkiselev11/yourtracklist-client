@@ -52,17 +52,21 @@ export default {
   actions: {
     // Получаем автора по ID, а так же 4 последних его релиза и 4 последних его видео
     async getAuthorById({commit}, permalink) {
-      const {data : {author, releases, releasesCount, videos, videosCount}} = await axios.post('/api/get-author-by-id', { permalink })
 
-      commit('setAuthorInfo', author)
-
-      commit('setFourLastReleasesForAuthor', releases)
-      commit('setReleasesCountForAuthor', releasesCount)
-
-      commit('setFourLastVideosForAuthor', videos)
-      commit('setVideosCountForAuthor', videosCount)
+      try {
+        const {data : {author, releases, releasesCount, videos, videosCount}} = await axios.post('/api/get-author-by-id', { permalink })
+        commit('setAuthorInfo', author)
+        commit('setFourLastReleasesForAuthor', releases)
+        commit('setReleasesCountForAuthor', releasesCount)
+        commit('setFourLastVideosForAuthor', videos)
+        commit('setVideosCountForAuthor', videosCount)
+      } catch (error) {
+        console.log('Ошибка в получении информации о авторе', error)
+      }
+      
     },
 
+    // * Админский модуль (Перенесем его в другое наше SPA в будущем)
     // Получаем всех возможных авторов из нашей базы (а именно их имена и пермалинки)
     async getAuthors() {
       try {
