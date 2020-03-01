@@ -11,7 +11,7 @@
     <ErrorMessage 
       v-if="error"
       key="error" 
-    >{{error}}
+    >{{error.message}}
     </ErrorMessage>
 
     <!-- Здесь выводим видео -->
@@ -41,8 +41,8 @@ export default {
 
   props: {
     fourLatestVideo: Array, // Четыре видео (их может быть меньше, если например тут видео для определенного автора а у автора всего их 3 например)
-    error: { // Сообщение об ошибке
-      type: String,
+    error: { // Объект с ошибкой
+      type: Error,
       default: null
     },
 

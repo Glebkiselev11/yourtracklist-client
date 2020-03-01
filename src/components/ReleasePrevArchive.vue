@@ -14,7 +14,7 @@
     <ErrorMessage 
       v-if="error"
       key="error" 
-    >{{error}}
+    >{{error.message}}
     </ErrorMessage>
 
     <!-- Обертка под релизы, который мы будем итерировать циклом -->
@@ -49,8 +49,8 @@ export default {
 
   props: {
     fourLatestReleases: Array, // Четыре релиза (их может быть меньше, если например тут релизы для определенного автора а у автора всего их 3 например)
-    error: { // Сообщение об ошибке
-      type: String,
+    error: { // Объект с ошибкой
+      type: Error,
       default: null
     },
     

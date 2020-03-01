@@ -1,4 +1,5 @@
 import axios from 'axios'
+import errorHelper from '@/store/errorHelper'
 
 // Модуль для главной страницы, где мы с бэкенда подгружаем 4 последних видео
 export default {
@@ -26,11 +27,7 @@ export default {
         const {data} = await axios.get('/api/get-four-lates-videos')
         commit('setFourLatesVideos', data)
       } catch(error) {
-        if (error.response.data.message) {
-          throw error.response.data.message
-        } else {
-          throw 'Ошибка в подключении к серверу'
-        }
+        throw new Error(errorHelper(error))
       }
     }
   },

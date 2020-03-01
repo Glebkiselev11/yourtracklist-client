@@ -1,4 +1,5 @@
 import axios from 'axios'
+import errorHelper from '@/store/errorHelper'
 
 // Методы для блока на главной странице, куда мы выводим 4 последних релиза
 export default {
@@ -29,11 +30,7 @@ export default {
         const {data} = await axios.get('/api/get-four-lates-releases')
         commit('setFourLatesReleases', data)
       } catch(error) {
-        if (error.response.data.message) {
-          throw error.response.data.message
-        } else {
-          throw 'Ошибка в подключении к серверу'
-        }
+        throw new Error(errorHelper(error))
       }
     }
   },
