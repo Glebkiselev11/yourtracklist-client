@@ -1,4 +1,5 @@
 import axios from 'axios'
+import errorHelper from '@/store/errorHelper'
 
 // Модуль через который мы получаем список видео, для архива
 export default {
@@ -131,8 +132,7 @@ export default {
         }
 
       } catch (error) {
-        
-        console.log(error)
+        throw new Error(errorHelper(error))
       }
 
     }

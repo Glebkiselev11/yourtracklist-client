@@ -1,4 +1,5 @@
 import axios from 'axios'
+import errorHelper from '@/store/errorHelper'
 
 // ! Это Новый стор на добавление релизов в телеграм
 export default {
@@ -35,7 +36,7 @@ export default {
 
   actions: {
     // Добавляет релиз в нашу коллекцию через телеграм
-    async addRelease({commit}, formData) {
+    async addRelease(_, formData) {
       try {
         const {data} = await axios.post('/api/add-release-telegram', formData)
 
@@ -43,7 +44,8 @@ export default {
 
         console.log(data)
 
-        // TODO: Обрабатываем ошибки базы данных
+        // TODO: Унести эту обработку на бэкенд
+        // Обрабатываем ошибки базы данных
         if (data.code === '23505') {response.message = 'Такой релиз уже есть в базе'; response.status = 'error'}
         // if (data.code === '42P18') {statusMessage.message = 'Обязательно укажите хотя бы одну ссылку и тег'; statusMessage.status = 'error'}
         if (data === 'ok') {response.message = 'Релиз успешно добавлен'; response.status = 'ok'}
@@ -51,8 +53,8 @@ export default {
         return response
 
       } catch(error) {
-        console.log(commit)
         console.log('Ошибка в отправке релиза на бэкенд / Error on submit release on backend', error)
+        throw new Error(errorHelper(error))
       }
 
     },

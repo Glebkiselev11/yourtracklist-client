@@ -1,4 +1,5 @@
 import axios from 'axios'
+import errorHelper from '@/store/errorHelper'
 
 // Через этот метод мы получаем карточку релиза с бэкенда
 export default {
@@ -39,7 +40,7 @@ export default {
         commit('setReleaseTracks', tracks)
 
       } catch (error) {
-        console.log(error)
+        throw new Error(errorHelper(error))
       }
 
     }

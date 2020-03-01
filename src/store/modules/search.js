@@ -1,4 +1,5 @@
 import axios from 'axios'
+import errorHelper from '@/store/errorHelper'
 
 // Основной модуль, под поиск по сайту
 export default {
@@ -105,7 +106,7 @@ export default {
         }
 
       } catch (error) {
-        console.log(error)
+        throw new Error(errorHelper(error))
       }
     },
 

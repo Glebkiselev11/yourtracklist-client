@@ -1,4 +1,5 @@
 import axios from 'axios'
+import errorHelper from '@/store/errorHelper'
 
 // Модуль через который мы получаем список релизов, для архива
 export default {
@@ -168,6 +169,7 @@ export default {
         
       } catch (error) {
         console.log('Ошибка в получении релизов с бэкенда / Error on getting releases from backend', error)
+        throw new Error(errorHelper(error))
       }
     }
   },

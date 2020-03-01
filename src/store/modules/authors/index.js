@@ -1,6 +1,7 @@
 import axios from 'axios'
 import authorReleases from './authorReleases'
 import authorVideo from './authorVideo'
+import errorHelper from '@/store/errorHelper'
 
 // Основной модуль, под Авторов
 export default {
@@ -61,7 +62,7 @@ export default {
         commit('setFourLastVideosForAuthor', videos)
         commit('setVideosCountForAuthor', videosCount)
       } catch (error) {
-        console.log('Ошибка в получении информации о авторе', error)
+        throw new Error(errorHelper(error))
       }
       
     },
@@ -73,7 +74,7 @@ export default {
         const {data} = await axios.post('/api/get-authors-list')
         return data // И данные возвращаем в компонент (AuthorSelectList.vue)
       } catch (error) {
-        console.log('Ошибка в запросе /api/get-authors-list', error)
+        throw new Error(errorHelper(error))
       }
     }
   },

@@ -1,6 +1,6 @@
 // Админский модуль для добавления видео записей в базу данных
-
 import axios from 'axios'
+import errorHelper from '@/store/errorHelper'
 
 export default {
   state: {
@@ -84,8 +84,7 @@ export default {
 
         commit('setStatusForVideo', statusMessage)
       } catch (error) { 
-        console.log(error)
-        
+        throw new Error(errorHelper(error))
       }
     },
     
@@ -95,14 +94,11 @@ export default {
 
       try {
         const {duration, date, name} = await axios.post('/api/admin/get-youtube-video-info', {videoId})
-
-        console.log(duration, date, name)
         commit('setVideoName', name)
         commit('setReleaseDateOfVideo', date)
         commit('setVideoDuration', duration)
-
       } catch (error) {
-        console.log(error)
+        throw new Error(errorHelper(error))
       }
       
     }

@@ -3,6 +3,7 @@
 import axios from 'axios'
 import admitVideo from './admin-video.js'
 import addRelease from './addRelease.js'
+import errorHelper from '@/store/errorHelper'
 
 export default {
   modules: {
@@ -34,21 +35,20 @@ export default {
 
         commit('setStatusForAuthor', statusMessage)
       } catch(error) {
-        console.log(error)
+        throw new Error(errorHelper(error))
       }
       
     },
 
     // Проверяет есть ли такая соц сеть в нашей базе, исходя из ссылки
-    async checkSocialLink ({commit}, link) {
+    async checkSocialLink (_, link) {
       
       try {
         const {data : {socialDefined}} = await axios.post('/api/check-social', {link})
         
         return { socialDefined, link}
       } catch (error) {
-        console.log(error)
-        console.log(commit)
+        throw new Error(errorHelper(error))
       }
     },
 
@@ -59,7 +59,7 @@ export default {
         const {data : tags} = await axios.post('/api/get-tags')
         return tags // И возвращаю их сразу в компонент (TagsSelectList.vue)
       } catch (error) {
-        console.log(error)
+        throw new Error(errorHelper(error))
       }
     }
 
